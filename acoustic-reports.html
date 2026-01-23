@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>讀懂聲學測試報告｜BOSS Design</title>
+  <meta name="description" content="為什麼讀懂聲學測試報告、辨別真實性與可信度，是辦公室設計的第一個專業？" />
+
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --text: rgba(255,255,255,.88);
+      --muted: rgba(255,255,255,.62);
+      --line: rgba(255,255,255,.12);
+      --accent: #7dd3fc;
+      --accent2:#a78bfa;
+      --mark: rgba(125,211,252,.22);
+      --warn: rgba(251,191,36,.22);
+      --ok: rgba(34,197,94,.20);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --max: 1080px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(125,211,252,.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 15%, rgba(167,139,250,.16), transparent 60%),
+        radial-gradient(900px 600px at 35% 90%, rgba(34,197,94,.10), transparent 55%),
+        var(--bg);
+      line-height: 1.7;
+    }
+
+    a{ color: var(--accent); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 60px; }
+
+    /* Header */
+    .hero{
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background: conic-gradient(from 220deg, rgba(125,211,252,.18), rgba(167,139,250,.16), rgba(34,197,94,.10), rgba(125,211,252,.18));
+      filter: blur(40px);
+      opacity:.55;
+      transform: rotate(8deg);
+      pointer-events:none;
+    }
+    .hero > *{ position:relative; }
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.3px;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(125,211,252,.15);
+    }
+    h1{
+      margin: 14px 0 6px;
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1.25;
+      letter-spacing: .2px;
+    }
+    .sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 70ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .card strong{ color: rgba(255,255,255,.93); }
+
+    .pillrow{ display:flex; flex-wrap: wrap; gap:10px; margin-top: 10px; }
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .pill b{ color: rgba(255,255,255,.88); }
+
+    mark{
+      background: var(--mark);
+      color: rgba(255,255,255,.92);
+      padding: 0 .25em;
+      border-radius: 8px;
+    }
+
+    /* Tabs */
+    .tabs{
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .tabbar{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .tabbtn{
+      appearance:none;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.82);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 14px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .tabbtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    .tabbtn[aria-selected="true"]{
+      border-color: rgba(125,211,252,.45);
+      background: rgba(125,211,252,.14);
+      color: rgba(255,255,255,.95);
+    }
+    .tabpanes{ padding: 18px; }
+    .pane{ display:none; }
+    .pane.active{ display:block; animation: fade .18s ease; }
+    @keyframes fade{ from{ opacity:.4; transform: translateY(2px);} to{ opacity:1; transform: translateY(0);} }
+
+    /* Content blocks */
+    .h2{
+      font-size: 18px;
+      margin: 4px 0 12px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .badge{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+    .lead{
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.90);
+      font-size: 16px;
+    }
+    .muted{ color: var(--muted); }
+
+    .callout{
+      border: 1px solid rgba(125,211,252,.25);
+      background: rgba(125,211,252,.10);
+      border-radius: 16px;
+      padding: 14px 14px;
+      margin: 12px 0;
+    }
+    .callout.warn{
+      border-color: rgba(251,191,36,.28);
+      background: var(--warn);
+    }
+    .callout.ok{
+      border-color: rgba(34,197,94,.26);
+      background: var(--ok);
+    }
+    .callout .title{
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    ul,ol{ margin: 10px 0 10px 20px; padding:0; }
+    li{ margin: 6px 0; }
+
+    hr{
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 18px 0;
+    }
+
+    /* Images */
+    .imggrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .imggrid{ grid-template-columns: 1fr; }
+    }
+    .imgcard{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      overflow:hidden;
+      cursor: zoom-in;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .imgcard:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(125,211,252,.28); }
+    .imgcard img{ width: 100%; height: auto; display:block; }
+    .imgcap{
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--line);
+    }
+
+    /* Footer */
+    .footer{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      opacity:.9;
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.75);
+      padding: 18px;
+      z-index: 9999;
+    }
+    .lightbox.open{ display:flex; }
+    .lightbox figure{
+      margin:0;
+      max-width: min(1040px, 96vw);
+      max-height: 90vh;
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+    }
+    .lightbox img{
+      display:block;
+      width: 100%;
+      height: auto;
+      max-height: 82vh;
+      object-fit: contain;
+      background: rgba(0,0,0,.25);
+    }
+    .lightbox figcaption{
+      padding: 10px 12px;
+      color: rgba(255,255,255,.75);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    .closebtn{
+      position: fixed;
+      top: 14px; right: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.9);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .closebtn:hover{ background: rgba(255,255,255,.12); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="kicker"><span class="dot"></span> BOSS Design｜Acoustic Literacy</div>
+      <h1>為什麼「讀懂聲學測試報告」並辨別其<strong>真實性</strong>與<strong>可信度</strong>，是辦公室設計的第一個專業？</h1>
+      <p class="sub">
+        因為在辦公室設計裡，隔音不是美感問題，而是<strong>責任問題</strong>。專業設計師第一個要會的，是能讀懂報告、看懂標章，知道哪些數據可以用、哪些承諾不能開。
+      </p>
+
+      <div class="grid">
+        <section class="card">
+          <p class="lead">
+            一位真正專業的室內設計師，在設計辦公室時，第一個最重要的能力不是畫圖或選材料，
+            而是能不能正確解讀聲學測試報告，並辨別報告上的 <mark>認證標章</mark>。
+          </p>
+          <div class="pillrow">
+            <div class="pill"><b>STC</b> vs 現場</div>
+            <div class="pill"><b>NIC</b> 受門/縫/吸音影響</div>
+            <div class="pill"><b>RT60</b> 影響聽覺舒適</div>
+            <div class="pill"><b>ILAC-MRA</b> 國際互認</div>
+          </div>
+        </section>
+
+        <aside class="card">
+          <div class="callout warn">
+            <div class="title">設計端最常踩雷的三件事</div>
+            <ul>
+              <li>把 <strong>STC</strong> 當成「現場隔音保證」</li>
+              <li>把「實驗室數據」直接承諾給客戶</li>
+              <li>沒有拆解「牆體 vs 門」的弱點與責任</li>
+            </ul>
+          </div>
+          <p class="muted" style="margin:0;">
+            一旦爭議發生，回頭追溯的不是施工技巧，而是「設計判斷是否合理、引用的報告是否可信」。
+          </p>
+        </aside>
+      </div>
+    </header>
+
+    <main class="tabs" id="tabs">
+      <nav class="tabbar" role="tablist" aria-label="聲學報告分頁">
+        <button class="tabbtn" role="tab" aria-selected="true" aria-controls="pane-1" id="tab-1">核心觀點</button>
+        <button class="tabbtn" role="tab" aria-selected="false" aria-controls="pane-2" id="tab-2">責任邊界線</button>
+        <button class="tabbtn" role="tab" aria-selected="false" aria-controls="pane-3" id="tab-3">策略判斷</button>
+        <button class="tabbtn" role="tab" aria-selected="false" aria-controls="pane-4" id="tab-4">認證與真偽辨識</button>
+      </nav>
+
+      <section class="tabpanes">
+        <!-- Pane 1 -->
+        <article class="pane active" id="pane-1" role="tabpanel" aria-labelledby="tab-1">
+          <div class="h2">
+            核心觀點 <span class="badge">隔音 = 責任</span>
+          </div>
+
+          <p class="lead"><strong>在辦公室設計裡，隔音不是美感問題，而是責任問題。</strong></p>
+          <p class="muted">
+            因為隔音牽涉到：員工隱私、會議保密、主管室干擾、HR 談話、法務與投標文件，甚至牽動外商驗收與顧問審查。
+          </p>
+
+          <div class="callout ok">
+            <div class="title">真正專業的第一眼</div>
+            <p style="margin:0;">
+              不是先看數字，而是先看：<mark>報告來源是否可信？是否具備國際互認的標章？</mark>
+            </p>
+          </div>
+
+          <hr />
+
+          <p class="muted" style="margin-top:0;">
+            你可以把「聲學報告」視為一份：<strong>設計師可以站得住腳的證據</strong>。沒有證據，只剩感覺；有證據，才有邊界與尊嚴。
+          </p>
+        </article>
+
+        <!-- Pane 2 -->
+        <article class="pane" id="pane-2" role="tabpanel" aria-labelledby="tab-2">
+          <div class="h2">
+            1️⃣ 聲學報告，是「設計責任的邊界線」 <span class="badge">Risk Boundary</span>
+          </div>
+
+          <p class="muted">
+            STC、Rw、NIC、RT60、實驗室測試、現場測試——這些不是工程商才需要懂的，而是<strong>設計端必須理解的語言</strong>。
+          </p>
+
+          <div class="callout warn">
+            <div class="title">沒有讀懂報告就做承諾，常見後果</div>
+            <ul>
+              <li>把 <strong>STC</strong> 當成「現場隔音保證」</li>
+              <li>把「實驗室數據」直接承諾給客戶</li>
+              <li>沒有區分「牆體」與「門」的聲學弱點</li>
+            </ul>
+          </div>
+
+          <p>
+            一旦爭議發生，最後都會回到：<strong>設計責任本身</strong>（你當初引用了什麼報告？你是否誤用數據？你是否說明限制？）。
+          </p>
+
+          <div class="callout">
+            <div class="title">設計師要能講清楚的句子</div>
+            <ul>
+              <li>「這是實驗室 STC，現場 NIC 仍受門縫、回風、吸音條件影響。」</li>
+              <li>「我們可以做到合理上限，但也會保留未來升級的路徑。」</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Pane 3 -->
+        <article class="pane" id="pane-3" role="tabpanel" aria-labelledby="tab-3">
+          <div class="h2">
+            2️⃣ 聲學不是產品，是一套「策略判斷」 <span class="badge">Strategy</span>
+          </div>
+
+          <p class="muted">
+            報告不是答案，而是限制條件；隔音不是單一材料，而是系統整合（門、牆、縫隙、空調、吸音條件都會影響結果）。
+          </p>
+
+          <div class="callout ok">
+            <div class="title">真正的專業不是「我用了隔音玻璃」</div>
+            <p style="margin:0;">
+              而是：<strong>我知道在這個預算與條件下，合理的隔音上限在哪裡</strong>，並且清楚哪些地方要保留未來升級的可能性。
+            </p>
+          </div>
+
+          <hr />
+
+          <div class="h2" style="margin-top:0;">3️⃣ 能讀懂報告，設計才有「專業尊嚴」 <span class="badge">Trust</span></div>
+
+          <p>當設計師能清楚說出：</p>
+          <ul>
+            <li>為什麼這個配置只能做到 <strong>NIC 約 28～30</strong></li>
+            <li>為什麼<strong>門</strong>是整體隔音的瓶頸</li>
+            <li>為什麼現在不做雙層，但系統必須能升級</li>
+          </ul>
+
+          <p class="muted">
+            客戶聽到的不是技術名詞，而是「值得信任的判斷」。這也是為什麼外商與顧問更信任「懂報告的人」，而不是「講感覺的人」。
+          </p>
+        </article>
+
+        <!-- Pane 4 -->
+        <article class="pane" id="pane-4" role="tabpanel" aria-labelledby="tab-4">
+          <div class="h2">
+            認證與真偽辨識 <span class="badge">ILAC-MRA / TAF</span>
+          </div>
+
+          <div class="callout">
+            <div class="title">檢查問題（第一眼就要問）</div>
+            <p style="margin:0;">
+              <mark>你看到的隔音測試報告是否同時具備兩個標章？還是只有一個？或沒有任何標章？</mark>
+            </p>
+          </div>
+
+          <div class="imggrid">
+            <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg" data-cap="香港通過國際認證的實驗室報告常見的雙標章（JEB 報告常見）">
+              <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg" alt="JEB report marks">
+              <div class="imgcap">香港國際認證實驗室｜雙標章示意（JEB 常見）</div>
+            </div>
+
+            <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg" data-cap="大陸通過國際認證的實驗室報告常見的雙標章（MAARS / TRL 報告常見）">
+              <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg" alt="MAARS TRL report marks">
+              <div class="imgcap">大陸國際認證實驗室｜雙標章示意（MAARS / TRL 常見）</div>
+            </div>
+
+            <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" data-cap="台灣國際互認報告常見：TAF + ILAC-MRA（BOSS 提供的報告可見）">
+              <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" alt="TAF + ILAC-MRA marks">
+              <div class="imgcap">台灣｜TAF + ILAC-MRA（BOSS 可提供）</div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="callout ok">
+            <div class="title">什麼是 ILAC-MRA？</div>
+            <p style="margin:0;">
+              <strong>International Laboratory Accreditation Cooperation – Mutual Recognition Arrangement</strong><br>
+              白話：報告上有 <mark>ILAC-MRA</mark>，代表這份測試報告在主要國家體系中具備「互相承認」的可信度基礎。
+            </p>
+          </div>
+
+          <ol>
+            <li><strong>實驗室是國際級認證</strong><br>需符合 ISO/IEC 17025，並進入國際互認體系。</li>
+            <li><strong>測試報告更具通用性</strong><br>對跨國企業、外商設計、國際顧問專案通常是基本門檻。</li>
+            <li><strong>工程與合約文件更站得住腳</strong><br>更適合作為招標、合約附件、驗收、爭議鑑定的證據依據。</li>
+          </ol>
+
+          <div class="callout warn">
+            <div class="title">沒有 ILAC-MRA 不一定是假，但風險更高</div>
+            <ul>
+              <li>可能只在當地有效，國際不一定承認</li>
+              <li>無法確保品質一致性與可追溯性</li>
+              <li>外商、顧問、標案情境常有退件風險</li>
+              <li><strong>風險多數由使用者自行承擔</strong></li>
+            </ul>
+          </div>
+
+          <hr />
+
+          <div class="h2">在台灣常見：只有 TAF 標章 <span class="badge">Local OK</span></div>
+          <div class="imggrid" style="grid-template-columns: 1fr;">
+            <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/TAF-logo.jpg" data-cap="TAF 是台灣國家級認證單位，代表符合 ISO/IEC 17025，但不必然等於國際互認。">
+              <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/TAF-logo.jpg" alt="TAF logo">
+              <div class="imgcap">TAF＝台灣合格（不必然＝國際互認）</div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="title">一句話總結（你原本的核心立場）</div>
+            <p style="margin:0;">
+              我們的立場很清楚：隔音性能數據應盡量來自具備 <mark>ILAC-MRA</mark> 互認體系的實驗室。隔音不是話術，不是感覺，而是可被驗證的工程事實。
+            </p>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <div class="footer">
+      © BOSS Design｜Acoustic-first office design.（此頁可直接放入 GitHub Pages）
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="closebtn" id="closebtn" aria-label="關閉">關閉 ✕</button>
+    <figure>
+      <img id="lbimg" alt="">
+      <figcaption id="lbcap"></figcaption>
+    </figure>
+  </div>
+
+  <script>
+    // Tabs
+    const tabs = document.getElementById('tabs');
+    const btns = [...tabs.querySelectorAll('.tabbtn')];
+    const panes = [...tabs.querySelectorAll('.pane')];
+
+    function openTab(id){
+      btns.forEach(b => b.setAttribute('aria-selected', String(b.id === id)));
+      panes.forEach(p => p.classList.toggle('active', p.getAttribute('aria-labelledby') === id));
+    }
+
+    btns.forEach(b => {
+      b.addEventListener('click', () => openTab(b.id));
+      b.addEventListener('keydown', (e) => {
+        const i = btns.indexOf(b);
+        if(e.key === 'ArrowRight'){ btns[(i+1)%btns.length].focus(); }
+        if(e.key === 'ArrowLeft'){ btns[(i-1+btns.length)%btns.length].focus(); }
+        if(e.key === 'Enter' || e.key === ' '){ openTab(b.id); }
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbimg = document.getElementById('lbimg');
+    const lbcap = document.getElementById('lbcap');
+    const closebtn = document.getElementById('closebtn');
+
+    function openLightbox(src, cap){
+      lbimg.src = src;
+      lbimg.alt = cap || 'image';
+      lbcap.textContent = cap || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbimg.src = '';
+      lbcap.textContent = '';
+    }
+
+    document.querySelectorAll('.imgcard').forEach(card => {
+      card.addEventListener('click', () => openLightbox(card.dataset.full, card.dataset.cap));
+    });
+    closebtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if(e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  </script>
+</body>
+</html>

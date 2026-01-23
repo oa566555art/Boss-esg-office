@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>聲學報告白皮書｜讀懂、辨真偽、控風險｜BOSS Design</title>
+  <meta name="description" content="辦公室設計的第一個專業：讀懂聲學測試報告並辨別真實性與可信度。" />
+
+  <style>
+    :root{
+      --bg: #f5f6f7;
+      --panel: #ffffff;
+      --panel-soft: #fafafa;
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: #e5e5ea;
+
+      --accent: #0071e3;      /* Apple 藍 */
+      --accent-soft: #e8f1fb;
+
+      --good: #34c759;
+      --warn: #ff9f0a;
+
+      --shadow: 0 12px 40px rgba(0,0,0,.08);
+      --radius: 22px;
+      --radius-lg: 28px;
+
+      --max: 1180px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont,
+                   "SF Pro Text","PingFang TC","Noto Sans TC",
+                   "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(#ffffff, #f5f6f7);
+      line-height: 1.75;
+    }
+
+    a{ color: var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    /* Layout */
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap: 22px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; }
+      .aside{ display:none; }
+    }
+
+    /* Top bar (Apple white) */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.78);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 10px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      color: rgba(29,29,31,.92);
+      font-size: 13px;
+      letter-spacing:.3px;
+      white-space:nowrap;
+    }
+    .logoDot{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 7px rgba(0,113,227,.12);
+    }
+    .cta{ display:flex; gap:10px; flex-wrap:wrap; }
+    .btn{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      color: rgba(29,29,31,.92);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,1);
+      border-color: rgba(0,113,227,.25);
+    }
+
+    /* Hero */
+    .hero{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(250,250,250,1));
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      position: relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-35%;
+      background:
+        radial-gradient(closest-side at 20% 20%, rgba(0,113,227,.14), transparent 60%),
+        radial-gradient(closest-side at 80% 10%, rgba(88,86,214,.12), transparent 60%),
+        radial-gradient(closest-side at 40% 90%, rgba(52,199,89,.10), transparent 60%);
+      filter: blur(26px);
+      opacity:.8;
+      pointer-events:none;
+    }
+    .hero > *{ position:relative; }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing:.3px;
+    }
+    h1{
+      margin: 14px 0 8px;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.15;
+      letter-spacing: .2px;
+    }
+    .sub{
+      margin: 0;
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .stats{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 680px){
+      .stats{ grid-template-columns: 1fr; }
+    }
+    .stat{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.85);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .stat .num{
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .stat .lab{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.9);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.05);
+    }
+    .sec-title{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .sec-title h2{
+      margin:0;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    .tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .lead{
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: rgba(29,29,31,.92);
+    }
+    .muted{ color: var(--muted); }
+    hr{
+      border:none;
+      border-top: 1px solid var(--line);
+      margin: 18px 0;
+    }
+
+    mark{
+      background: rgba(0,113,227,.12);
+      color: rgba(29,29,31,.98);
+      padding: 0 .25em;
+      border-radius: 8px;
+    }
+
+    /* Callouts */
+    .callout{
+      border-radius: 18px;
+      padding: 14px 14px;
+      border: 1px solid var(--line);
+      background: var(--panel-soft);
+      margin: 12px 0;
+    }
+    .callout .t{
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .callout.good{
+      border-color: rgba(52,199,89,.25);
+      background: rgba(52,199,89,.10);
+    }
+    .callout.warn{
+      border-color: rgba(255,159,10,.25);
+      background: rgba(255,159,10,.12);
+    }
+
+    ul,ol{ margin: 10px 0 10px 20px; padding:0; }
+    li{ margin: 7px 0; }
+
+    /* Image cards */
+    .imggrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .imggrid{ grid-template-columns: 1fr; }
+    }
+    .imgcard{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      cursor: zoom-in;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    }
+    .imgcard:hover{
+      transform: translateY(-1px);
+      border-color: rgba(0,113,227,.25);
+      background: rgba(255,255,255,1);
+    }
+    .imgcard img{ width:100%; height:auto; display:block; }
+    .imgcap{
+      padding: 10px 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Aside (floating TOC) */
+    .aside{
+      position: sticky;
+      top: 72px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.82);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .aside .h{
+      font-weight: 800;
+      font-size: 13px;
+      color: rgba(29,29,31,.92);
+      letter-spacing: .2px;
+      margin-bottom: 8px;
+    }
+    .toc{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .toc a{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.75);
+      color: rgba(29,29,31,.90);
+      text-decoration:none;
+      transition: background .12s ease, border-color .12s ease, transform .12s ease;
+    }
+    .toc a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,1);
+      border-color: rgba(0,113,227,.25);
+    }
+    .toc a.active{
+      border-color: rgba(0,113,227,.35);
+      background: var(--accent-soft);
+      color: rgba(29,29,31,.98);
+    }
+    .toc small{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    /* Mobile bottom mini toc */
+    .mobileToc{ display:none; }
+    @media (max-width: 980px){
+      .mobileToc{
+        display:flex;
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,.82);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow);
+        z-index: 60;
+        overflow:auto;
+      }
+      .mobileToc a{
+        flex: 0 0 auto;
+        padding: 10px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,.85);
+        color: rgba(29,29,31,.90);
+        text-decoration:none;
+        font-size: 13px;
+      }
+      .mobileToc a.active{
+        border-color: rgba(0,113,227,.35);
+        background: var(--accent-soft);
+        color: rgba(29,29,31,.98);
+      }
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,.72);
+      padding: 18px;
+      z-index: 9999;
+    }
+    .lightbox.open{ display:flex; }
+    .lightbox figure{
+      margin:0;
+      max-width: min(1120px, 96vw);
+      max-height: 90vh;
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 20px 70px rgba(0,0,0,.35);
+    }
+    .lightbox img{
+      display:block;
+      width: 100%;
+      height: auto;
+      max-height: 82vh;
+      object-fit: contain;
+      background: rgba(0,0,0,.10);
+    }
+    .lightbox figcaption{
+      padding: 10px 12px;
+      color: rgba(255,255,255,.86);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.18);
+    }
+    .closebtn{
+      position: fixed;
+      top: 14px; right: 14px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.14);
+      color: rgba(255,255,255,.95);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .closebtn:hover{ background: rgba(255,255,255,.20); }
+
+    .footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* Apple-style reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .8s ease-out, transform .8s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal.delay-1{ transition-delay: .05s; }
+    .reveal.delay-2{ transition-delay: .10s; }
+    .reveal.delay-3{ transition-delay: .15s; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      html,body{ scroll-behavior:auto; }
+      .reveal{ opacity:1; transform:none; transition:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="logoDot"></span> BOSS Design｜Acoustic Whitepaper</div>
+      <div class="cta">
+        <button class="btn" data-jump="#sec-0">回到頂部</button>
+        <button class="btn" data-jump="#sec-4">看 ILAC-MRA</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- Main -->
+    <main>
+      <!-- Hero -->
+      <section class="hero reveal show" id="sec-0">
+        <div class="kicker">白皮書｜把隔音從「話術」變成「證據」</div>
+        <h1>讀懂聲學測試報告，並辨別真實性與可信度<br>是辦公室設計的第一個專業</h1>
+        <p class="sub">
+          在辦公室設計裡，隔音不是美感問題，而是<strong>責任問題</strong>。專業設計師第一眼看的不是數字，
+          而是：報告是否可被信任？標章是否具備可追溯與互認的證據力？
+        </p>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="num">責任邊界</div>
+            <div class="lab">報告 = 設計責任的邊界線</div>
+          </div>
+          <div class="stat">
+            <div class="num">策略整合</div>
+            <div class="lab">隔音 = 系統策略，不是單一材料</div>
+          </div>
+          <div class="stat">
+            <div class="num">證據可信</div>
+            <div class="lab">ILAC-MRA = 國際互認的關鍵線索</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 1 -->
+      <section class="section reveal" id="sec-1" data-title="核心觀點">
+        <div class="sec-title">
+          <h2>核心觀點：隔音不是美感問題，而是責任問題</h2>
+          <div class="tag">Why it matters</div>
+        </div>
+
+        <p class="lead reveal delay-1">
+          一位真正專業的室內設計師，在設計辦公室時，第一個最重要的能力不是畫圖或選材料，
+          而是能不能正確解讀聲學測試報告，並辨別報告上面的 <mark>認證標章</mark>。
+        </p>
+
+        <div class="callout good reveal delay-2">
+          <div class="t">專業設計師的第一眼</div>
+          不是先看 STC 數字，而是先確認：<mark>這份報告是否可信？是否能被追溯？是否具備互認體系？</mark>
+        </div>
+
+        <p class="muted reveal delay-3">
+          因為隔音牽涉到：員工隱私、會議保密、主管室干擾、HR 談話、法務與投標文件，以及外商顧問對文件的審查標準。
+        </p>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="section reveal" id="sec-2" data-title="責任邊界線">
+        <div class="sec-title">
+          <h2>1️⃣ 聲學報告，是「設計責任的邊界線」</h2>
+          <div class="tag">Risk boundary</div>
+        </div>
+
+        <p class="muted">
+          STC、Rw、NIC、RT60、實驗室測試、現場測試——這些不是工程商的事，而是<strong>設計端必須理解的語言</strong>。
+        </p>
+
+        <div class="callout warn">
+          <div class="t">設計端最常踩雷的三件事</div>
+          <ul>
+            <li>把 <strong>STC</strong> 當成現場隔音保證</li>
+            <li>把實驗室數據直接承諾給客戶</li>
+            <li>沒有區分「牆體」與「門」的聲學弱點</li>
+          </ul>
+        </div>
+
+        <p>
+          一旦爭議發生，最後都會回到：<strong>設計責任本身</strong>——你引用了什麼報告？你是否誤用數據？
+          你是否把「限制條件」講清楚？
+        </p>
+
+        <div class="callout">
+          <div class="t">你可以直接用在客戶簡報的兩句話</div>
+          <ul>
+            <li>「這是實驗室 STC，現場 NIC 仍受門縫、回風、吸音條件影響。」</li>
+            <li>「我們會做到合理上限，同時保留未來升級的路徑。」</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="section reveal" id="sec-3" data-title="策略判斷">
+        <div class="sec-title">
+          <h2>2️⃣ 聲學不是產品，是一套「策略判斷」</h2>
+          <div class="tag">Strategy</div>
+        </div>
+
+        <p class="muted">
+          報告不是答案，而是<strong>限制條件</strong>。隔音不是單一材料，而是<strong>系統整合</strong>：
+          門、牆、縫隙、空調、吸音條件，全部都會影響結果。
+        </p>
+
+        <div class="callout good">
+          <div class="t">真正的專業不是「我用了隔音玻璃」</div>
+          而是：<strong>我知道在這個預算與條件下，合理的隔音上限在哪裡</strong>，
+          同時也清楚哪些地方必須保留未來升級的可能性。
+        </div>
+
+        <hr />
+
+        <div class="sec-title" style="margin-top:0;">
+          <h2>3️⃣ 能讀懂報告，設計才有「專業尊嚴」</h2>
+          <div class="tag">Trust</div>
+        </div>
+
+        <ul>
+          <li>為什麼這個配置只能做到 NIC 約 28～30</li>
+          <li>為什麼<strong>門</strong>是整體隔音的瓶頸</li>
+          <li>為什麼現在不做雙層，但系統必須能升級</li>
+        </ul>
+
+        <p class="muted">
+          客戶聽到的不只是技術，而是一種值得信任的專業判斷。
+          外商、跨國企業、ESG 稽核單位，永遠更信任「懂報告的人」，而不是「講感覺的人」。
+        </p>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="section reveal" id="sec-4" data-title="認證與真偽辨識">
+        <div class="sec-title">
+          <h2>認證與真偽辨識：先看標章，再談數字</h2>
+          <div class="tag">Verification</div>
+        </div>
+
+        <div class="callout">
+          <div class="t">檢查問題（第一眼就要問）</div>
+          <p style="margin:0;">
+            <mark>你所看到的隔音測試報告是否同時具備兩個標章？還是只有一個？或是沒有任何標章？</mark>
+          </p>
+        </div>
+
+        <div class="imggrid">
+          <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg"
+               data-cap="香港通過國際認證的實驗室所產出的報告常見雙標章（JEB 報告常見）">
+            <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg" alt="JEB report marks">
+            <div class="imgcap">香港國際認證實驗室｜雙標章示意（JEB 常見）</div>
+          </div>
+
+          <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg"
+               data-cap="大陸通過國際認證的實驗室所產出的報告常見雙標章（MAARS、TRL 報告常見）">
+            <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg" alt="MAARS TRL report marks">
+            <div class="imgcap">大陸國際認證實驗室｜雙標章示意（MAARS / TRL 常見）</div>
+          </div>
+
+          <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg"
+               data-cap="台灣國際互認報告常見：TAF + ILAC-MRA（BOSS 可提供）">
+            <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" alt="TAF + ILAC-MRA marks">
+            <div class="imgcap">台灣｜TAF + ILAC-MRA（BOSS 可提供）</div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="callout good">
+          <div class="t">什麼是 ILAC-MRA？</div>
+          <p style="margin:0;">
+            <strong>International Laboratory Accreditation Cooperation – Mutual Recognition Arrangement</strong><br>
+            白話：報告上有 <mark>ILAC-MRA</mark>，代表這份報告在主要國家體系中具備互認的可信度基礎。
+          </p>
+        </div>
+
+        <ol>
+          <li><strong>實驗室是國際級認證</strong><br>需符合 ISO/IEC 17025 並納入互認體系。</li>
+          <li><strong>報告更具通用性</strong><br>對跨國企業、外商設計、國際顧問專案通常是基本門檻。</li>
+          <li><strong>工程與合約文件更站得住腳</strong><br>更適合作為招標、合約附件、驗收、爭議鑑定的證據依據。</li>
+        </ol>
+
+        <div class="callout warn">
+          <div class="t">沒有 ILAC-MRA 不一定是假，但風險更高</div>
+          <ul>
+            <li>可能只在當地有效，國際不一定承認</li>
+            <li>品質一致性與可追溯性較難被確認</li>
+            <li>外商、顧問、標案情境常有退件風險</li>
+            <li><strong>風險多數由使用者自行承擔</strong></li>
+          </ul>
+        </div>
+
+        <hr />
+
+        <div class="sec-title" style="margin-top:0;">
+          <h2>在台灣常見：只有 TAF 標章</h2>
+          <div class="tag">Local OK</div>
+        </div>
+
+        <div class="imggrid" style="grid-template-columns: 1fr;">
+          <div class="imgcard" data-full="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/TAF-logo.jpg"
+               data-cap="TAF 是台灣國家級認證單位，代表符合 ISO/IEC 17025，但不必然等於國際互認。">
+            <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/TAF-logo.jpg" alt="TAF logo">
+            <div class="imgcap">TAF＝台灣合格（不必然＝國際互認）</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <div class="t">一句話總結（你的主張）</div>
+          <p style="margin:0;">
+            我們的立場很清楚：隔音性能數據應盡量來自具備 <mark>ILAC-MRA</mark> 互認體系的實驗室。
+            隔音不是話術，不是感覺，而是可被驗證的工程事實。
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <div class="footer">
+        © BOSS Design｜Acoustic-first office design.（此頁可直接放入 GitHub Pages）
+      </div>
+    </main>
+
+    <!-- Aside: Floating TOC -->
+    <aside class="aside" aria-label="浮動目錄">
+      <div class="h">本頁目錄（自動高亮）</div>
+      <ul class="toc" id="toc">
+        <li><a href="#sec-0" data-target="sec-0"><strong>頂部</strong><br><small>白皮書主張</small></a></li>
+        <li><a href="#sec-1" data-target="sec-1"><strong>核心觀點</strong><br><small>隔音 = 責任</small></a></li>
+        <li><a href="#sec-2" data-target="sec-2"><strong>責任邊界線</strong><br><small>報告 = 風險邊界</small></a></li>
+        <li><a href="#sec-3" data-target="sec-3"><strong>策略判斷</strong><br><small>系統整合思維</small></a></li>
+        <li><a href="#sec-4" data-target="sec-4"><strong>認證與真偽</strong><br><small>ILAC-MRA / TAF</small></a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Mobile bottom TOC -->
+  <nav class="mobileToc" id="mToc" aria-label="手機浮動目錄">
+    <a href="#sec-1" data-target="sec-1">核心觀點</a>
+    <a href="#sec-2" data-target="sec-2">責任邊界</a>
+    <a href="#sec-3" data-target="sec-3">策略判斷</a>
+    <a href="#sec-4" data-target="sec-4">認證真偽</a>
+  </nav>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="closebtn" id="closebtn" aria-label="關閉">關閉 ✕</button>
+    <figure>
+      <img id="lbimg" alt="">
+      <figcaption id="lbcap"></figcaption>
+    </figure>
+  </div>
+
+  <script>
+    // Jump buttons
+    document.querySelectorAll('[data-jump]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-jump');
+        const el = document.querySelector(sel);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lbimg = document.getElementById('lbimg');
+    const lbcap = document.getElementById('lbcap');
+    const closebtn = document.getElementById('closebtn');
+
+    function openLightbox(src, cap){
+      lbimg.src = src;
+      lbimg.alt = cap || 'image';
+      lbcap.textContent = cap || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      lbimg.src = '';
+      lbcap.textContent = '';
+    }
+    document.querySelectorAll('.imgcard').forEach(card=>{
+      card.addEventListener('click', ()=> openLightbox(card.dataset.full, card.dataset.cap));
+    });
+    closebtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+
+    // Scrollspy
+    const tocLinks = [...document.querySelectorAll('#toc a')];
+    const mobileLinks = [...document.querySelectorAll('#mToc a')];
+    const sections = ['sec-0','sec-1','sec-2','sec-3','sec-4']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+
+    const setActive = (id)=>{
+      tocLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+      mobileLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+    };
+
+    const spy = new IntersectionObserver((entries)=>{
+      const visible = entries
+        .filter(e=>e.isIntersecting)
+        .sort((a,b)=> b.intersectionRatio - a.intersectionRatio);
+      if(visible.length){ setActive(visible[0].target.id); }
+    }, {
+      threshold: [0.2, 0.35, 0.5, 0.65, 0.8],
+      rootMargin: "-15% 0px -70% 0px"
+    });
+    sections.forEach(sec => spy.observe(sec));
+    setActive('sec-0');
+
+    // Apple-style reveal (once)
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+    reveals.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
