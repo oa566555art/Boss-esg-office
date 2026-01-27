@@ -1,13 +1,26 @@
 <style>
-  /* Minimal, safe arrow enhancement */
-  p[data-start="1623"].arrow-big {
+  /* Minimal centering + arrow enhancement */
+  .center-wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 8px 12px 28px;
+  }
+
+  .center-wrap p[data-start="1623"].arrow-big {
     font-size: 36px;
     line-height: 1;
     margin: 0.2em 0 0.6em;
     color: #0b57d0;
     text-shadow: 0 6px 16px rgba(11, 87, 208, 0.18);
   }
+
+  .center-wrap img {
+    max-width: 100%;
+    height: auto;
+  }
 </style>
+
+<div class="center-wrap">
 
 <h2 data-end="1616" data-start="1585">如果業主沒有給聲學標準，<span style="background-color:#ffff00;">我們不能假裝沒這件事。</span></h2>
 
@@ -57,3 +70,5 @@
 
 <p><br />
 &nbsp;</p>
+
+</div>
