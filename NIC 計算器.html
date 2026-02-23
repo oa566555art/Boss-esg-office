@@ -1,0 +1,78 @@
+
+
+<meta charset="UTF-8">
+<title>NIC Calculator</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+}
+input {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 12px;
+}
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.result {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.note {
+    font-size: 14px;
+    color: #555;
+    margin-top: 20px;
+}
+</style>
+
+
+
+
+<h2>NIC Calculator</h2>
+
+<p>Formula: NIC = STC_eq − 10 log₁₀ ( S / A )</p>
+
+<label>Equivalent STC (dB)</label>
+<input type="number" id="stcEq" value="42">
+
+<label>Wall Area S (㎡)</label>
+<input type="number" id="areaS" value="8">
+
+<label>Receiving Room Absorption A (Sabin)</label>
+<input type="number" id="absorptionA" value="2">
+
+<button onclick="calculateNIC()">Calculate NIC</button>
+
+<div class="result" id="result"></div>
+
+<div class="note">
+Typical Office Condition:<br>
+10 log(S/A) usually ≈ 6~8 dB
+</div>
+
+<script>
+function calculateNIC() {
+
+    let STCeq = parseFloat(document.getElementById("stcEq").value);
+    let S = parseFloat(document.getElementById("areaS").value);
+    let A = parseFloat(document.getElementById("absorptionA").value);
+
+    if (S <= 0 || A <= 0) {
+        document.getElementById("result").innerHTML = "S and A must be greater than 0.";
+        return;
+    }
+
+    let deduction = 10 * Math.log10(S / A);
+    let NIC = STCeq - deduction;
+
+    document.getElementById("result").innerHTML =
+        "NIC ≈ " + NIC.toFixed(2) + " dB";
+}
+</script>
+
+
+

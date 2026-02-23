@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acoustic Tools</title>
+
+<!-- MathJax: 顯示數學公式 -->
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Chart.js: 畫曲線圖 -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+  :root{
+    --bg:#000000;
+    --card:#111111;
+    --text:#ffffff;
+    --muted:#ffffff;
+    --line:#ffffff;
+    --accent:#ffffff;
+    --accent2:#ffffff;
+    --warn:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color:var(--text);
+  }
+  header{
+    padding:28px 18px 12px;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .wrap{max-width:1100px;margin:0 auto;}
+  .title{
+    display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;
+  }
+  h1{margin:0;font-size:28px;letter-spacing:0.3px;}
+  .tag{
+    font-size:12px;
+    color:var(--text);
+    background:#111;
+    padding:4px 10px;
+    border-radius:999px;
+    font-weight:700;
+  }
+  .sub{margin-top:10px;color:var(--text);line-height:1.6;}
+  nav{
+    margin-top:16px;
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+  nav a{
+    text-decoration:none;
+    color:var(--text);
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:12px;
+    background:rgba(255,255,255,0.05);
+  }
+  nav a:hover{border-color:rgba(255,255,255,0.25);}
+  main{padding:18px;}
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:14px;
+  }
+  .card{
+    grid-column: span 12;
+    background:var(--card);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    padding:16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+  @media(min-width: 900px){
+    .half{grid-column: span 6;}
+  }
+  h2{margin:0 0 6px;font-size:18px;color:var(--text);}
+  .desc{color:var(--text);margin:0 0 12px;line-height:1.6;}
+  .row{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:10px;
+  }
+  @media(min-width: 650px){
+    .row.two{grid-template-columns: 1fr 1fr;}
+    .row.three{grid-template-columns: 1fr 1fr 1fr;}
+  }
+  label{font-size:13px;color:var(--text);display:block;margin:0 0 6px;}
+  input{
+    width:100%;
+    padding:10px 10px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.12);
+    background:rgba(7,10,15,0.55);
+    color:var(--text);
+    outline:none;
+  }
+  input:focus{border-color:rgba(110,231,255,0.6);}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  button{
+    cursor:pointer;
+    padding:10px 14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.05);
+    color:var(--text);
+    font-weight:700;
+  }
+  button:hover{border-color:rgba(255,255,255,0.28);}
+  .out{
+    margin-top:12px;
+    padding:12px;
+    border-radius:14px;
+    border:1px dashed rgba(255,255,255,0.18);
+    background:rgba(7,10,15,0.35);
+    color:var(--text);
+  }
+  .out b{color:var(--accent);}
+  .hint{
+    margin-top:10px;
+    color:var(--text);
+    font-size:13px;
+    line-height:1.6;
+  }
+  .formula{
+    margin:10px 0 0;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.10);
+    background:rgba(0,0,0,0.35);
+    overflow:auto;
+  }
+  .divider{
+    height:1px;
+    background:rgba(255,255,255,0.07);
+    margin:14px 0;
+  }
+  footer{
+    padding:18px;
+    color:var(--muted);
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.06);
+  }
+  canvas{max-width:100%;}
+  .warn{color:var(--warn);font-weight:700;}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <h1>NIC 和 STC 的換算公式<div class="formula">
+        \[
+        NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
+        \]
+      </div></h1>
+      <div class="tag">STC / NIC / EQ</div>
+    </div>
+    <div class="sub">
+      STC<sub>eq</sub> = 等效 STC（綜合牆面不同材質的 STC）<br/>
+      S = 牆面面積（平方公尺）<br/>
+      A = 接收房吸音量（Sabin）<br/>
+    <nav>
+      <a href="#tool-eqstc">等效 STC</a>
+      <a href="#tool-nic">NIC 計算器</a>
+      <a href="#tool-curve">門比例曲線</a>
+      <a href="#tool-reverse">反推門 STC</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <!-- 1) 等效 STC -->
+    <section id="tool-eqstc" class="card half">
+      <h2>① 等效 STC（牆 + 門）</h2>
+      <p class="desc">以「聲能 + 面積加權」計算整面牆體的等效隔音值。</p>
+      <p class="desc">
+        NIC聲學的換算公式的STC必須代入等效STC的原因是,因為每一段牆面都有自己的實驗室數值：門、玻璃牆、輕隔間牆各有不同的隔音能力；
+        當門所在這道牆又有一半是玻璃、另一半是輕隔間牆時，就要把玻璃和輕隔間的隔音數字也納入計算，
+        再一起加權成一個代表整面牆的單一 dB，這個值就是等效 STC。
+        實務上有玻璃牆的場域通常只有門與玻璃兩種構成，要同時出現玻璃 ＋ 輕隔間的機會較少，因此我們的工具目前只提供玻璃牆與門的輸入欄位；若有其他材質，可先用相同的面積加權概念自行換算再帶入。
+      </p>
+
+      <div class="row two">
+        <div>
+          <label>牆 STC (dB)</label>
+          <input id="eq_wall_stc" type="number" value="45" />
+        </div>
+        <div>
+          <label>牆面積 (㎡)</label>
+          <input id="eq_wall_area" type="number" value="6" />
+        </div>
+        <div>
+          <label>門 STC (dB)</label>
+          <input id="eq_door_stc" type="number" value="38" />
+        </div>
+        <div>
+          <label>門面積 (㎡)</label>
+          <input id="eq_door_area" type="number" value="2" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="calcEqSTC()">計算等效 STC</button>
+      </div>
+
+      <div class="out" id="eq_out">
+        輸入後按「計算等效 STC」。
+      </div>
+
+      <div class="formula">
+        \[
+        TL_{eq}=
+        -10\log_{10}\left(
+        \frac{S_w10^{-TL_w/10}+S_d10^{-TL_d/10}}{S_w+S_d}
+        \right)
+        \]
+      </div>
+
+      <div class="hint">
+        <span class="warn">重點：</span>等效 STC 不是算術平均；門通常是最弱環節。
+      </div>
+    </section>
+
+    <!-- 2) NIC -->
+    <section id="tool-nic" class="card half">
+      <h2>② NIC 計算器</h2>
+      <p class="desc">依公式計算 NIC（輸入 等效STC~STCeq、牆面積~S、接收房吸音量~A）。</p>
+
+      <div class="row three">
+        <div>
+          <label>STCeq (dB)</label>
+          <input id="nic_stceq" type="number" value="42" />
+        </div>
+        <div>
+          <label>S 受測面積 (㎡)</label>
+          <input id="nic_s" type="number" value="8" />
+        </div>
+        <div>
+          <label>A 接收房吸音量 (Sabin)</label>
+          <input id="nic_a" type="number" value="2" step="0.1" min="0" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="calcNIC()">計算 NIC</button>
+      </div>
+
+      <div class="out" id="nic_out">
+        輸入後按「計算 NIC」。
+      </div>
+
+      <div class="formula">
+        \[
+        NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
+        \]
+      </div>
+
+      <p class="desc">
+        若接收房（分貝計）所在位置吸音量來自多種材質，可用吸音係數(α)×面積加總計算：
+        \[
+        A = \alpha_1 S_1 + \alpha_2 S_2 + \alpha_3 S_3 + \dots
+        \]
+        例如玻璃牆、門板與天花的吸音係數都可以獨立輸入，乘上各自面積後累加，就能得出整個接收房的 Sabin 值。
+      </p>
+
+      <div class="hint">
+        一般辦公室常見：\(10\log_{10}(S/A)\) 約落在 6～8 dB（視接收空間吸音而定）。
+      </div>
+    </section>
+
+    <!-- 3) 曲線 -->
+    <section id="tool-curve" class="card">
+      <h2>③ 門面積比例 × 等效 STC 曲線</h2>
+      <p class="desc">固定牆 STC 與門 STC，掃描門面積比例（1%~50%）並繪出等效 STC 曲線。</p>
+
+      <div class="row three">
+        <div>
+          <label>牆 STC (dB)</label>
+          <input id="curve_wall_stc" type="number" value="45" />
+        </div>
+        <div>
+          <label>門 STC (dB)</label>
+          <input id="curve_door_stc" type="number" value="38" />
+        </div>
+        <div>
+          <label>總面積 (㎡)（用於顯示，不影響比例曲線）</label>
+          <input id="curve_total_area" type="number" value="8" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="drawCurve()">生成曲線</button>
+      </div>
+
+      <div class="out" id="curve_out">
+        生成後可用來說明「門比例越大，等效 STC 越快下降」的非線性特性。
+      </div>
+
+      <canvas id="curveChart" height="120"></canvas>
+    </section>
+
+    <!-- 4) 反推門 STC -->
+    <section id="tool-reverse" class="card">
+      <h2>④ 目標等效 STC → 反推門 STC</h2>
+      <p class="desc">已知目標 STCeq、牆 STC、牆/門面積，反推出「門需要多少 STC」。</p>
+
+      <div class="row two">
+        <div>
+          <label>目標 STCeq (dB)</label>
+          <input id="rev_target" type="number" value="42" />
+        </div>
+        <div>
+          <label>牆 STC (dB)</label>
+          <input id="rev_wall_stc" type="number" value="45" />
+        </div>
+        <div>
+          <label>牆面積 (㎡)</label>
+          <input id="rev_wall_area" type="number" value="6" />
+        </div>
+        <div>
+          <label>門面積 (㎡)</label>
+          <input id="rev_door_area" type="number" value="2" />
+        </div>
+      </div>
+
+      <div class="btns">
+        <button onclick="reverseDoorSTC()">反推門 STC</button>
+      </div>
+
+      <div class="out" id="rev_out">
+        輸入後按「反推門 STC」。
+      </div>
+
+      <div class="hint">
+        若出現無法計算，通常代表：目標 STCeq 過高、或門比例過大、或牆體本身不足以支撐該目標。
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  Acoustic Tools • For engineering estimation & communication • ©
+</footer>
+
+<script>
+  // ===== 共用：輸入檢查 =====
+  function mustPositive(...vals){
+    return vals.every(v => Number.isFinite(v) && v > 0);
+  }
+
+  // ===== 1) 等效 STC =====
+  function calcEqSTC(){
+    const TLw = parseFloat(document.getElementById("eq_wall_stc").value);
+    const Sw  = parseFloat(document.getElementById("eq_wall_area").value);
+    const TLd = parseFloat(document.getElementById("eq_door_stc").value);
+    const Sd  = parseFloat(document.getElementById("eq_door_area").value);
+
+    const out = document.getElementById("eq_out");
+
+    if(!mustPositive(TLw,Sw,TLd,Sd)){
+      out.innerHTML = "請確認 STC 與面積皆 > 0。";
+      return;
+    }
+
+    const St = Sw + Sd;
+    const TLeq = -10 * Math.log10(
+      (Sw*Math.pow(10,-TLw/10) + Sd*Math.pow(10,-TLd/10)) / St
+    );
+
+    out.innerHTML = `等效 STC（STCeq / TLeq）≈ <b>${TLeq.toFixed(2)} dB</b><br/>
+                     （牆 ${TLw}dB×${Sw}㎡，門 ${TLd}dB×${Sd}㎡）`;
+  }
+
+  // ===== 2) NIC =====
+  function calcNIC(){
+    const STCeq = parseFloat(document.getElementById("nic_stceq").value);
+    const S = parseFloat(document.getElementById("nic_s").value);
+    const A = parseFloat(document.getElementById("nic_a").value);
+
+    const out = document.getElementById("nic_out");
+
+    if(!mustPositive(STCeq,S,A)){
+      out.innerHTML = "請確認 STCeq、S、A 皆 > 0。";
+      return;
+    }
+
+    const deduction = 10 * Math.log10(S / A);
+    const NIC = STCeq - deduction;
+
+    out.innerHTML =
+      `10·log₁₀(S/A) = <b>${deduction.toFixed(2)} dB</b><br/>
+       NIC ≈ <b>${NIC.toFixed(2)} dB</b>`;
+  }
+
+  // ===== 3) 曲線 =====
+  let chartInstance = null;
+
+  function drawCurve(){
+    const TLw = parseFloat(document.getElementById("curve_wall_stc").value);
+    const TLd = parseFloat(document.getElementById("curve_door_stc").value);
+    const totalArea = parseFloat(document.getElementById("curve_total_area").value);
+    const out = document.getElementById("curve_out");
+
+    if(!mustPositive(TLw,TLd,totalArea)){
+      out.innerHTML = "請確認 STC 與總面積皆 > 0。";
+      return;
+    }
+
+    const labels = [];
+    const data = [];
+
+    // door ratio: 1% to 50%
+    for(let r=0.01; r<=0.50+1e-9; r+=0.01){
+      const Sd = totalArea * r;
+      const Sw = totalArea - Sd;
+      const TLeq = -10 * Math.log10(
+        (Sw*Math.pow(10,-TLw/10) + Sd*Math.pow(10,-TLd/10)) / (Sw+Sd)
+      );
+      labels.push(Math.round(r*100));
+      data.push(TLeqRound(TLeq));
+    }
+
+    const ctx = document.getElementById("curveChart").getContext("2d");
+
+    if(chartInstance) chartInstance.destroy();
+
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Equivalent STC (dB)',
+          data: data,
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.25
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Door Area Ratio (%)' } },
+          y: { title: { display: true, text: 'Equivalent STC (dB)' } }
+        }
+      }
+    });
+
+    out.innerHTML =
+      `已生成：牆 STC ${TLw}，門 STC ${TLd}（門比例 1%~50%）。<br/>
+       提醒：曲線呈非線性下降，門比例越大，等效 STC 越快被拉低。`;
+  }
+
+  function TLeqRound(x){
+    return Math.round(x*100)/100;
+  }
+
+  // ===== 4) 反推門 STC =====
+  function reverseDoorSTC(){
+    const target = parseFloat(document.getElementById("rev_target").value);
+    const TLw = parseFloat(document.getElementById("rev_wall_stc").value);
+    const Sw = parseFloat(document.getElementById("rev_wall_area").value);
+    const Sd = parseFloat(document.getElementById("rev_door_area").value);
+
+    const out = document.getElementById("rev_out");
+
+    if(!mustPositive(target,TLw,Sw,Sd)){
+      out.innerHTML = "請確認目標 STCeq、STC 與面積皆 > 0。";
+      return;
+    }
+
+    const St = Sw + Sd;
+
+    // 由等效公式解出門的能量項
+    // 10^(-target/10) = (Sw*10^(-TLw/10) + Sd*10^(-TLd/10)) / St
+    // Sd*10^(-TLd/10) = 10^(-target/10)*St - Sw*10^(-TLw/10)
+    // 10^(-TLd/10) = [10^(-target/10)*St - Sw*10^(-TLw/10)] / Sd
+    // TLd = -10*log10( ... )
+
+    const rhs = (Math.pow(10,-target/10) * St) - (Sw * Math.pow(10,-TLw/10));
+    const energyDoor = rhs / Sd;
+
+    if(energyDoor <= 0 || !Number.isFinite(energyDoor)){
+      out.innerHTML =
+        `無法計算（energyDoor ≤ 0）。<br/>
+         可能原因：目標 STCeq <b>過高</b>，或牆體 STC <b>不足</b>，或門比例 <b>過大</b>。`;
+      return;
+    }
+
+    const TLd = -10 * Math.log10(energyDoor);
+
+    out.innerHTML =
+      `所需門 STC ≈ <b>${TLd.toFixed(2)} dB</b><br/>
+       （目標 STCeq ${target}，牆 ${TLw}dB×${Sw}㎡，門 ${Sd}㎡）`;
+  }
+</script>
+
+</body>
+</html>

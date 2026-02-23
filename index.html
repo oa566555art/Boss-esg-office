@@ -1,588 +1,770 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BossDesign 博斯設計</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maars Living Walls 台灣代理｜可拆卸式隔間・聲學・ESG</title>
+  <meta name="description" content="Maars Living Walls 台灣代理商｜玻璃隔間、實牆、Room-in-Room、聲學與防火配置。以『可拆卸、可搬移、可升級』打造可長期演進的辦公空間資產。" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Maars Living Walls 台灣代理｜可拆卸式隔間・聲學・ESG" />
+  <meta property="og:description" content="玻璃隔間、實牆、Room-in-Room、聲學與防火配置。以『可拆卸、可搬移、可升級』打造可長期演進的辦公空間資產。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:url" content="https://your-domain.tw/" />
+  <meta property="og:image" content="assets/og-cover.jpg" />
+
+  <meta name="theme-color" content="#0b0f14" />
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;600;700&display=swap');
     :root{
-      --bg:#f5f5f7;
+      --bg:#f5f7fa;
+      --bg-2:#eef2f7;
       --card:#ffffff;
-      --text:#1d1d1f;
-      --muted:#6e6e73;
-      --line:#e5e5ea;
-      --accent:#749fa1;
-      --accent2:#5f8b8d;
-      --shadow: 0 16px 40px rgba(0,0,0,0.06);
-      --radius: 18px;
+      --text:#1b3c59;
+      --muted:#64748b;
+      --line:#d9e1ea;
+      --accent:#c5a065;
+      --accent-2:#ff6700;
+      --navy-dark:#12293f;
+      --max:1180px;
+      --r:18px;
     }
-    *{box-sizing:border-box;}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family: Arial, sans-serif;
+      font-family: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
       color:var(--text);
-      background:
-        radial-gradient(1200px 500px at -10% -20%, rgba(116,159,161,0.12), transparent 62%),
-        radial-gradient(900px 400px at 110% -10%, rgba(116,159,161,0.10), transparent 64%),
-        var(--bg);
+      line-height:1.7;
     }
-    a{color:inherit; text-decoration:none;}
-    .wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
-    header{
-      position:sticky; top:0;
-      background: rgba(245,245,247,0.9);
-      backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
-      z-index: 20;
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .topbar{
+      position:fixed; top:0; left:0; right:0; z-index:80;
+      backdrop-filter: blur(8px);
+      background: rgba(18,41,63,.88);
+      border-bottom:1px solid rgba(255,255,255,.15);
     }
     .nav{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
+      padding:14px 0; gap:16px;
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-weight:800;
-      letter-spacing:0.2px;
+      text-decoration:none;
     }
     .logo{
-      width:34px; height:34px; border-radius:10px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: var(--shadow);
+      width:20px; height:20px; border-radius:0;
+      background: var(--accent-2);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      flex:0 0 auto;
     }
+    .brand b{
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#fff;
+      font-family: "Cinzel", serif;
+      font-weight:600;
+    }
+    .brand .sub{font-size:12px; color:rgba(255,255,255,.74); letter-spacing:.8px}
     .menu{
-      display:flex; gap:14px; flex-wrap:wrap;
-      color:var(--muted);
-      font-size:14px;
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .menu a{padding:8px 10px; border-radius:10px;}
-    .menu a:hover{
-      background: rgba(116,159,161,0.12);
-      color: var(--text);
-    }
-
-    /* Hero */
-    .hero{padding:56px 0 22px;}
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:22px;
-      align-items:stretch;
-    }
-    .hero-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:32px;
-    }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
+    .menu a{
+      text-decoration:none;
+      color:#fff;
       font-size:13px;
-      padding:7px 12px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      padding:8px 10px;
       border-radius:999px;
-      background: rgba(116,159,161,0.12);
-      color:#4b6f70;
-      border:1px solid rgba(116,159,161,0.22);
-      margin-bottom:14px;
+      border:1px solid transparent;
     }
-    h1{
-      margin:0 0 10px;
-      font-size:38px;
-      line-height:1.15;
-      letter-spacing:-0.4px;
+    .menu a:hover{
+      color:var(--accent);
+      border-color:rgba(197,160,101,.45);
+      background: rgba(255,255,255,.06);
     }
-    .lead{
-      margin:0 0 18px;
-      font-size:18px;
-      line-height:1.75;
-      color:var(--muted);
-    }
-    .btns{display:flex; gap:10px; flex-wrap:wrap;}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-weight:700;
-      font-size:14px;
-    }
-    .btn.primary{
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border:1px solid rgba(95,139,141,0.9);
-      color:#ffffff;
-      box-shadow: 0 12px 24px rgba(95,139,141,0.28);
-    }
-    .btn:hover{transform: translateY(-1px);}
-    .btn.primary:hover{
-      filter: brightness(1.03);
-      box-shadow: 0 16px 28px rgba(95,139,141,0.32);
-    }
-    .stats{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      margin-top:18px;
-    }
-    .stat{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      background:#fff;
-    }
-    .stat b{display:block; font-size:18px;}
-    .stat span{font-size:13px; color:var(--muted);}
-
-    .side-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:22px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .side-card h3{margin:0; font-size:16px;}
-    .side-item{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      background:#fff;
-    }
-    .side-item .t{font-weight:800; margin-bottom:6px;}
-    .side-item .d{color:var(--muted); font-size:14px; line-height:1.6;}
-
-    /* Sections */
-    section{padding:26px 0;}
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:18px;
-      margin-bottom:14px;
-    }
-    .section-title h2{
-      margin:0;
-      font-size:22px;
-      letter-spacing:-0.2px;
-    }
-    .section-title p{margin:0; color:var(--muted); font-size:14px;}
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-    .card h3{margin:0 0 8px; font-size:16px;}
-    .card p{margin:0; color:var(--muted); font-size:14px; line-height:1.65;}
-    .pill{
-      display:inline-block;
-      font-size:12px;
-      padding:6px 10px;
+      padding:10px 16px;
       border-radius:999px;
-      background: rgba(116,159,161,0.12);
-      color:#4b6f70;
-      margin-bottom:10px;
+      border:1px solid rgba(255,255,255,.55);
+      background: transparent;
+      text-decoration:none;
+      gap:8px;
+      font-weight:600;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      cursor:pointer;
+      color:#fff;
     }
-    .case{
-      height:140px;
-      border-radius:14px;
-      border:1px dashed rgba(116,159,161,0.26);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(244,250,250,0.98));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--muted);
-      font-size:14px;
-      margin-bottom:12px;
+    .btn:hover{background:rgba(255,255,255,.08)}
+    .btn.primary{
+      border:1px solid var(--accent);
+      background: var(--accent);
+      color:#fff;
+    }
+    .btn.ghost{
+      background: transparent;
+      border:1px solid rgba(255,255,255,.45);
+      color:#fff;
+    }
+    .section .btn{
+      color:var(--text);
+      border-color: var(--text);
+      background: #fff;
+    }
+    .section .btn:hover{ background: #f7fafc; }
+    .section .btn.primary{
+      color:#fff;
+      background: var(--text);
+      border-color: var(--text);
     }
 
-    /* Contact */
-    .contact{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
+    .menuBtn{display:none}
+    @media (max-width: 920px){
+      .menu{display:none}
+      .menuBtn{display:inline-flex}
     }
-    .input{
+
+    dialog{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background: rgba(255,255,255,.98);
+      color:var(--text);
+      width:min(580px, 92vw);
+    }
+    dialog::backdrop{background: rgba(15,15,15,.45)}
+    .mList{display:grid; gap:6px; margin:10px 0 0}
+    .mList a{
+      padding:10px 12px;
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--text);
+      letter-spacing:.8px;
+      text-transform:uppercase;
+      font-size:13px;
+    }
+    .mList a:hover{background:rgba(0,0,0,.06); color:var(--text)}
+
+    .hero{
+      padding:128px 0 56px;
+      min-height:100vh;
+      position:relative;
+      background:
+        linear-gradient(rgba(18,41,63,.75), rgba(18,41,63,.82)),
+        url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+    }
+    .heroGrid{
+      display:grid; gap:18px;
+      grid-template-columns: 1.28fr .72fr;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){ .heroGrid{grid-template-columns:1fr} }
+    .hCard{
+      background: rgba(10,24,38,.55);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius: var(--r);
+      padding:24px;
+      box-shadow: 0 12px 36px rgba(0,0,0,.25);
+      color:#fff;
+      animation: rise .7s ease both;
+    }
+    .kicker{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      font-size:12px; color:var(--accent); letter-spacing:1.5px; text-transform:uppercase;
+    }
+    .pill{
+      font-size:11px; padding:4px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(255,255,255,.06);
+    }
+    h1{
+      margin:12px 0 12px; font-size:52px; line-height:1.06;
+      font-family: "Noto Serif TC", serif;
+      letter-spacing:1px;
+      color:#fff;
+    }
+    @media (max-width: 520px){ h1{font-size:34px} }
+    .lead{color:rgba(255,255,255,.82); font-size:16px; margin:0 0 18px}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .quickLinks{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .quickLinks .btn{
+      border-color: var(--accent);
+      background: rgba(197,160,101,.18);
+      color:#fff;
+    }
+    .quickLinks .btn:hover{
+      background: rgba(197,160,101,.30);
+    }
+
+    .metaGrid{display:grid; grid-template-columns:1fr; gap:12px}
+    .metaItem{
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.06);
+    }
+    .metaItem small{display:block; color:rgba(255,255,255,.72)}
+    .metaItem b{color:#fff}
+    .tagRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tag{
+      font-size:11px; color:var(--muted);
+      border:1px solid var(--line);
+      padding:4px 10px; border-radius:999px;
+      letter-spacing:.6px; text-transform:uppercase;
+    }
+    .hCard .tag{
+      color:rgba(255,255,255,.86);
+      border-color:rgba(255,255,255,.28);
+      background: rgba(255,255,255,.04);
+    }
+
+    .section{padding:50px 0}
+    .section h2{
+      margin:0 0 12px; font-size:30px;
+      font-family: "Noto Serif TC", serif;
+      text-transform:uppercase; letter-spacing:1.4px;
+    }
+    .section p{margin:0 0 16px; color:var(--muted)}
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns: repeat(2, 1fr)} }
+    @media (max-width: 620px){ .grid{grid-template-columns: 1fr} }
+
+    .card{
+      border:1px solid var(--line);
+      background: var(--card);
+      border-radius: var(--r);
+      padding:18px;
+      box-shadow: 0 8px 22px rgba(18,41,63,.08);
+      animation: rise .7s ease both;
+    }
+    .card h3{margin:2px 0 8px; font-size:18px}
+    .card ul{margin:0; padding-left:18px; color:var(--muted)}
+    .split{
+      display:grid; gap:14px;
+      grid-template-columns: 1fr 1fr;
+      align-items:start;
+    }
+    @media (max-width: 920px){ .split{grid-template-columns:1fr} }
+
+    .projects{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 980px){ .projects{grid-template-columns: repeat(2, 1fr)} }
+    @media (max-width: 620px){ .projects{grid-template-columns: 1fr} }
+
+    .ph{
+      height:180px; border-radius:14px;
+      border:1px dashed var(--line);
+      background:
+        linear-gradient(135deg, rgba(0,0,0,.08), rgba(0,0,0,0) 60%),
+        var(--bg-2);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(16,18,20,.6);
+      font-weight:600;
+      margin-bottom:14px;
+      text-align:center;
+      padding:10px;
+      letter-spacing:1px; text-transform:uppercase; font-size:12px;
+    }
+
+    .note{
+      font-size:12px;
+      color:var(--muted);
+      border-left: 3px solid var(--accent);
+      padding:8px 10px;
+      background: #fff;
+      border-radius: 10px;
+    }
+
+    .hr{
+      height:1px;
+      background: var(--line);
+      margin:18px 0;
+    }
+
+    form{display:grid; gap:10px}
+    input, textarea{
       width:100%;
-      padding:12px 12px;
       border-radius:12px;
       border:1px solid var(--line);
+      background: #fff;
+      color:var(--text);
+      padding:12px 12px;
       outline:none;
-      font-size:14px;
     }
-    textarea.input{min-height:110px; resize:vertical;}
+    textarea{min-height:120px; resize:vertical}
 
-    footer{
-      padding:26px 0 40px;
+    .footer{
+      padding:30px 0 44px;
+      border-top:1px solid var(--line);
       color:var(--muted);
       font-size:13px;
-      text-align:center;
+    }
+    .fine{opacity:.92}
+
+    .badgeRow{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:10px;
+    }
+    .badge{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: #fff;
+      color:var(--text);
+      font-size:12px;
+      letter-spacing:.4px;
+    }
+    .dot{
+      width:6px; height:6px; border-radius:999px;
+      background: var(--accent);
+    }
+    .iconCalc{
+      width:14px;
+      height:14px;
+      border:2px solid currentColor;
+      border-radius:3px;
+      display:inline-block;
+      position:relative;
+      flex:0 0 auto;
+    }
+    .iconCalc::after{
+      content:"";
+      position:absolute;
+      left:2px;
+      right:2px;
+      top:50%;
+      height:2px;
+      transform:translateY(-50%);
+      background: currentColor;
+      opacity:.75;
     }
 
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero-grid{grid-template-columns: 1fr;}
-      .grid{grid-template-columns: 1fr;}
-      .stats{grid-template-columns: 1fr;}
-      .contact{grid-template-columns: 1fr;}
-      h1{font-size:32px;}
+    @keyframes rise{
+      from{opacity:0; transform:translateY(14px)}
+      to{opacity:1; transform:translateY(0)}
     }
-  
-    /* WeWork/Apple-like cards */
-    .grid{ align-items: stretch; }
-    .card{ height:100%; display:flex; flex-direction:column; gap:10px; }
-    .card:hover{ transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0,0,0,0.10); }
-    .card .link{
-      margin-top:auto;
-      display:inline-flex;
-      font-weight:700;
-      font-size:14px;
-      color: #0ea5e9;
+    @media (prefers-reduced-motion: reduce){
+      .hCard, .card{animation:none}
     }
-    .card.card-linkout{
-      border:1px solid rgba(14,165,233,0.22);
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(240,249,255,0.9));
-    }
-
   </style>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Maars Living Walls 台灣代理（你的公司名稱）",
+    "url":"https://your-domain.tw/",
+    "email":"sales@yourcompany.tw",
+    "telephone":"+886-xx-xxxx-xxxx",
+    "address":{
+      "@type":"PostalAddress",
+      "addressCountry":"TW",
+      "addressRegion":"Taiwan",
+      "addressLocality":"Taipei / Taichung",
+      "streetAddress":"（填寫地址）"
+    },
+    "sameAs":[
+      "https://maarslivingwalls.com/"
+    ]
+  }
+  </script>
 </head>
 
 <body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span class="logo" aria-hidden="true"></span>
+        <div>
+          <b>Maars｜台灣代理</b><br>
+          <span class="sub">Living Walls · 可拆卸式隔間系統</span>
+        </div>
+      </a>
 
-<header>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>BossDesign｜商空設計 辦公室設計 建築設計</div>
-      </div>
-      <nav class="menu">
-        <a href="#why">為何 ESG</a>
-        <a href="#how">我們如何設計</a>
-        <a href="#cases">案例</a>
+      <nav class="menu" aria-label="主選單">
+        <a href="#solutions">系統</a>
+        <a href="#value">價值</a>
+        <a href="#process">流程</a>
+        <a href="#projects">案例</a>
+        <a href="#resources">資源</a>
+        <a href="white.html">白皮書</a>
+        <a href="good.html">NIC/STC</a>
         <a href="#contact">聯絡</a>
+        <a class="btn" href="#contact">索取型錄</a>
       </nav>
+
+      <a class="btn menuBtn" href="javascript:void(0)" id="openMenu">選單</a>
     </div>
   </div>
-</header>
 
-<main>
-  <div class="wrap">
-    <div class="hero">
-      <div class="hero-grid">
-
-        <div class="hero-card">
-          <h1>企業載體的設計者 “辦公室” “廠辦” “餐廳”</h1>
-
-<p class="lead" style="font-size:20px;font-weight:600;margin-bottom:6px;">
-  Creators of Corporate Platforms
-</p>
-
-<p class="lead">
-  以 ESG 思維，設計可移動、可升級、可延續的辦公室，
-  讓每一次裝修成為可長期運作的企業資產。
-</p>
-
-          <div class="btns">
-            <a class="btn primary" href="#contact">預約諮詢</a>
-            <a class="btn" href="#cases">看案例</a>
-          </div>
-
-          <div class="stats">
-            <div class="stat">
-              <b>少拆除</b>
-              <span>降低粉塵與廢棄物</span>
-            </div>
-            <div class="stat">
-              <b>可移動</b>
-              <span>隔間 / 會議室可重組</span>
-            </div>
-            <div class="stat">
-              <b>可升級</b>
-              <span>保留聲學與機能升級</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="side-card">
-          <h3>你可能正在面臨</h3>
-
-          <div class="side-item">
-            <div class="t">組織變動，空間跟不上</div>
-            <div class="d">座位、人數、部門配置常變，傳統固定隔間很快就不適用。</div>
-          </div>
-
-          <div class="side-item">
-            <div class="t">搬家等於全部重做</div>
-            <div class="d">投入一次，退租就報廢。成本與浪費都很驚人。</div>
-          </div>
-
-          <div class="side-item">
-            <div class="t">要安靜，卻怕預算爆掉</div>
-            <div class="d">我們用「策略」而不是只靠昂貴產品，先滿足現況，再保留未來升級。</div>
-          </div>
-        </div>
-
-      </div>
+  <!-- Mobile menu -->
+  <dialog id="menuDialog" aria-label="行動版選單">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:6px 4px 2px;">
+      <b>快速導覽</b>
+      <a class="btn" href="javascript:void(0)" id="closeMenu">關閉</a>
     </div>
+    <div class="mList">
+      <a href="#solutions" data-close>系統</a>
+      <a href="#value" data-close>價值</a>
+      <a href="#process" data-close>流程</a>
+      <a href="#projects" data-close>案例</a>
+      <a href="#resources" data-close>資源</a>
+      <a href="white.html">白皮書</a>
+      <a href="good.html">NIC/STC</a>
+      <a href="#contact" data-close>聯絡</a>
+    </div>
+  </dialog>
 
-    <section id="why">
-      <div class="section-title">
-        <h2>為何要用 ESG 思維做辦公室？</h2>
-        <p>把成本、環境、效率放在同一套設計邏輯</p>
-      </div>
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="wrap heroGrid">
+      <section class="hCard">
+        <div class="kicker">
+          <span class="pill">台灣授權代理 博斯事業</span>
+          <span class="pill">辦公室｜科技｜金融｜醫療｜教育</span>
+          <span class="pill">ESG / 可拆卸 / 可搬移</span>
+        </div>
+
+        <h1>把隔間做成「資產」<br>可拆卸、可搬移、可升級</h1>
+
+        <p class="lead">
+          我們提供 Maars Living Walls 系統隔間整合服務：玻璃隔間、實牆、Room-in-Room、聲學與防火配置，
+          協助設計端在「預算、規範、未來變動」之間做出可驗收、可演進的最穩配置。
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="#contact">預約諮詢 / 取得型錄</a>
+          <a class="btn ghost" href="#solutions">看系統分類</a>
+          <a class="btn" href="https://maarslivingwalls.com/" target="_blank" rel="noopener">前往原廠網站</a>
+        </div>
+        <div class="quickLinks">
+          <a class="btn" href="white.html">白皮書</a>
+          <a class="btn" href="good.html"><span class="iconCalc" aria-hidden="true"></span> 聲學計算公式</a>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="badgeRow">
+          <span class="badge"><span class="dot"></span> 設計端支援：規格策略 / 節點邏輯</span>
+          <span class="badge"><span class="dot"></span> 工程端整合：天花 / 空調 / 消防界面</span>
+          <span class="badge"><span class="dot"></span> 升級路徑：先做到位，後續可加強</span>
+        </div>
+
+      </section>
+
+      <aside class="hCard">
+        <div class="metaGrid">
+          <div class="metaItem">
+            <small>聯絡電話</small>
+            <b>+886-xx-xxxx-xxxx</b>
+          </div>
+          <div class="metaItem">
+            <small>Email</small>
+            <b>sales@yourcompany.tw</b>
+          </div>
+          <div class="metaItem">
+            <small>服務區域</small>
+            <b>台北｜台中｜全台專案</b>
+          </div>
+          <div class="metaItem">
+            <small>快速需求</small>
+            <div class="tagRow">
+              <span class="tag">玻璃隔間</span>
+              <span class="tag">聲學</span>
+              <span class="tag">防火</span>
+              <span class="tag">Room-in-Room</span>
+              <span class="tag">維修保養</span>
+              <span class="tag">搬遷重組</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Solutions -->
+  <section id="solutions" class="section">
+    <div class="wrap">
+      <h2>系統與解決方案</h2>
+      <p>以「透明、隱私、聲學、法規、未來變動」五個維度，為你配置最合適的組合。</p>
 
       <div class="grid">
         <div class="card">
-          <div class="pill">E · Environment</div>
-          <h3>降低拆除與重複浪費</h3>
-          <p>減少固定隔間比例，導入可拆卸的系統隔間與可搬移的空間模組，讓裝修更可持續。</p>
-        </div>
-        <div class="card">
-          <div class="pill">S · Social</div>
-          <h3>提升工作品質與舒適度</h3>
-          <p>以光、噪音控制、動線、會議室彈性配置，打造更健康、專注、可協作的環境。</p>
-        </div>
-        <div class="card">
-          <div class="pill">G · Governance</div>
-          <h3>把風險管理做進裝修</h3>
-          <p>以規範與策略降低爭議：隔音可驗證、可升級，避免完工後才「補救」的高成本。</p>
-        </div>
-      </div>
-    </section>
-
-   <section id="how">
-  <div class="section-title">
-    <h2>我們如何設計</h2>
-    <p>不是先畫圖，而是先為企業的未來做決策</p>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>① 定義十年後仍成立的條件</h3>
-      <p>
-        在設計之前，我們先理解企業未來的成長、重組與搬遷可能，
-        把「不確定性」視為設計的必要條件，而不是風險。
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>② 降低不可逆施工</h3>
-      <p>
-        我們刻意降低固定隔間比例，優先採用可拆卸、可移動、可重組的系統，
-        讓空間能快速回應組織變動，而不需要重新拆除。
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>③ 隔音是一種策略</h3>
-      <p>
-        隔音不是一次到位的產品選擇，而是可依需求升級的策略。
-        我們在結構與細節上預留未來提升的可能，避免完工後的補救成本。
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>④ 把搬遷當成設計條件</h3>
-      <p>
-        我們從一開始就設計可搬走、可再利用的資產比例，
-        讓裝修不再隨著退租而報廢，真正成為可延續的企業資產。
-      </p>
-    </div>
-  
-    <div class="card card-linkout">
-      <h3>⑤ 聲學報告白皮書</h3>
-      <p>
-        隔音不是美感問題，而是責任問題。<br/>
-        我們用可驗證的聲學測試報告，說清楚隔音邏輯、風險邊界與升級策略。
-      </p>
-      <a class="link" href="white.html">閱讀白皮書 →</a>
-    </div>
-</div>
-</section>
-
-    <section id="cases">
-  <div class="section-title">
-    <h2>案例分享</h2>
-    <p>不是展示照片，而是說清楚我們如何幫企業做出正確決策</p>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h3>上市公司半導體設備協力廠-快速成長企業的空間彈性</h3>
-      <p>
-        <b>背景問題：</b><br/>
-        企業快速擴編，原有空間無法應付會議與專注需求，
-        若大量固定隔間，將限制未來調整彈性。
-      </p>
-      <p>
-        <b>我們的策略：</b><br/>
-        導入可拆卸、可移動的玻璃會議室系統，
-        在不破壞結構的前提下建立必要機能。
-      </p>
-      <p>
-        <b>實際成果：</b><br/>
-        空間可隨組織變動重新配置，
-        大幅降低未來二次裝修與拆除成本。
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Apple手機保護殼公司-隔音需求與預算之間的平衡</h3>
-      <p>
-        <b>背景問題：</b><br/>
-        企業需要安靜環境，但未設定明確隔音標準，
-        一次到位的高規格方案預算壓力過大。
-      </p>
-      <p>
-        <b>我們的策略：</b><br/>
-        將隔音視為可升級的策略，
-        先滿足現況需求，同時預留未來提升的結構相容性。
-      </p>
-      <p>
-        <b>實際成果：</b><br/>
-        初期即達成可接受的隔音效果，
-        並避免完工後才補救所產生的爭議與額外成本。
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>Apple手機保護殼公司-把搬遷納入設計條件</h3>
-      <p>
-        <b>背景問題：</b><br/>
-        企業預期數年內可能搬遷，
-        卻不希望現在的裝修在退租時全部報廢。
-      </p>
-      <p>
-        <b>我們的策略：</b><br/>
-        從設計初期即規劃可搬走、可重組的資產比例，
-        讓裝修具備延續性。
-      </p>
-      <p>
-        <b>實際成果：</b><br/>
-        搬遷時可保留並重複使用大量既有裝修，
-        裝修成本從一次性支出，轉為可延續的企業資產。
-      </p>
-    </div>
-  </div>
-<section id="about">
-  <div class="section-title">
-    <h2>關於我們</h2>
-    <p>我們如何看待辦公室設計這件事</p>
-  </div>
-
-  <div class="card">
-    <p><b>我們是企業載體的創造者。</b></p>
-
-    <p>
-      在多數裝修專案中，空間被視為一次性的消耗品；
-      但我們選擇把辦公室視為能夠陪伴企業成長、調整與搬遷的長期載體。
-    </p>
-
-    <p>
-      多年來，我們看過太多企業因為組織變動而反覆拆除與重做，
-      問題不在施工，而在於一開始沒有把未來納入設計邏輯。
-    </p>
-
-    <p>
-      因此，我們從經營者的角度出發，
-      在設計的第一步就思考十年後仍然成立的條件，
-      讓空間能隨企業演變，而不是被空間綁住。
-    </p>
-
-    <p>
-      對我們而言，ESG 不是口號，
-      而是透過可拆卸、可移動、可升級的設計策略，
-      實際降低浪費、提升使用品質，並減少未來風險。
-    </p>
-
-    <p>
-      我們的角色，是協助企業在有限預算內，
-      做出對未來最有彈性的空間決策，
-      讓每一次裝修都能成為可延續的企業資產。
-    </p>
-  </div>
-</section>
-
-</section>
-
-    <section id="esg-fanxuan-link">
-      <div class="section-title">
-        <h2>ESG 案例專題</h2>
-        <p>帆宣案例系列（連結閱讀）</p>
-      </div>
-
-      <div class="card">
-        <h3 style="margin-top:0;">帆宣｜台積電關鍵協力商的 ESG 辦公室思維（系列）</h3>
-        <p>
-          這是一組完整的 ESG 辦公室案例：從決策邏輯、空間系統，到長期資產管理，
-          用一間企業的真實需求，把「ESG 不是材料，而是決策」講清楚。
-        </p>
-        <div style="margin-top:10px;">
-          <a class="btn primary" href="esg-fanxuan.html">閱讀帆宣 ESG 系列 →</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="section-title">
-        <h2>聯絡我們</h2>
-        <p>把你的需求簡單寫下來，我們用策略幫你控成本與風險</p>
-      </div>
-
-      <div class="contact">
-        <div class="card">
-          <h3>快速資訊</h3>
-          <p>📍 台北 / 台中</p>
-          <p>📩 Email：ding@beautifuljeb.tw</p>
-          <p>☎️ Phone：0222650351</p>
-          <p style="margin-top:10px;color:var(--muted);font-size:14px;line-height:1.7;">
-            
-          </p>
-          <div style="margin-top:14px;">
-            <a class="btn primary" href="mailto:yourname@example.com">寄信給我們</a>
-            <a class="btn" href="#why">回到上方</a>
+          <h3>雙層玻璃隔間</h3>
+          <ul>
+            <li>會議室、主管室、敏感討論區</li>
+            <li>可搭配不同門型與五金策略</li>
+            <li>可規劃「先達標、後升級」路徑</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">隔音</span><span class="tag">隱私</span><span class="tag">專業感</span>
           </div>
         </div>
 
         <div class="card">
-          <h3>留下需求（示意表單）</h3>
-          <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-top:0;">
-            
-          </p>
+          <h3>單層玻璃隔間</h3>
+          <ul>
+            <li>採光通透、動線清晰</li>
+            <li>適合開放協作區、展示區</li>
+            <li>可與實牆混搭形成分區層次</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">通透</span><span class="tag">採光</span><span class="tag">分區</span>
+          </div>
+        </div>
 
-          <div style="display:grid; gap:10px; margin-top:12px;">
-            <input class="input" placeholder="公司名稱 / 聯絡人" />
-            <input class="input" placeholder="Email / 電話" />
-            <textarea class="input" placeholder="簡述需求：坪數、人數、是否需要隔音、是否可能搬遷..."></textarea>
-            <a class="btn primary" 
-   href="https://forms.gle/MVp8iGZwHaGBkWaZA" 
-   target="_blank">
-   送出需求
-</a>
+        <div class="card">
+          <h3>實牆 / 封閉隔間</h3>
+          <ul>
+            <li>機房、保密區、背景噪音高區域</li>
+            <li>可做飾面統一、提升整體完成度</li>
+            <li>與玻璃搭配：透明 + 隱私兼具</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">封閉</span><span class="tag">整潔</span><span class="tag">秩序</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Room-in-Room</h3>
+          <ul>
+            <li>快速建立電話亭/專注室/小會議室</li>
+            <li>降低拆改與停工成本</li>
+            <li>搬遷後可重組再利用</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">快速</span><span class="tag">可搬移</span><span class="tag">高彈性</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>聲學策略配置</h3>
+          <ul>
+            <li>用「門 + 牆 + 縫隙 + 界面」整體思維</li>
+            <li>避免只升級牆、卻被門與縫隙拖累</li>
+            <li>可提供可驗收的策略建議與選型</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">策略</span><span class="tag">可驗收</span><span class="tag">可升級</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>防火 / 法規需求</h3>
+          <ul>
+            <li>依專案需求協作規範與配置</li>
+            <li>與設計/機電/消防顧問界面整合</li>
+            <li>把責任邊界寫清楚，降低風險</li>
+          </ul>
+          <div class="tagRow">
+            <span class="tag">法規</span><span class="tag">界面</span><span class="tag">風險控制</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:14px;">
+        你可以把「系統名稱、型號、數據」放到第二層頁面（solutions.html），首頁保持概念清晰、讓客戶先願意聯絡你。
+      </div>
+    </div>
+  </section>
+
+  <!-- Value -->
+  <section id="value" class="section">
+    <div class="wrap split">
+      <div class="card">
+        <h2>你買到的不只是隔間</h2>
+        <p>
+          在台灣，多數專案最難的不是「選哪一款」，而是：
+          如何在預算內做到合理效果、又保留未來強化的可能，並把責任邊界清楚寫進規格與圖說。
+        </p>
+        <ul style="color:var(--muted); margin:0; padding-left:18px;">
+          <li>前期：把需求翻譯成可落地的規格與配置策略</li>
+          <li>中期：整合天花、空調、消防等界面，降低現場風險</li>
+          <li>後期：可維修、可搬遷重組、可追加升級，讓隔間像資產</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>ESG 不是口號，是成本與效率</h2>
+        <p>
+          「可拆卸、可重複使用」的隔間思維，能直接降低拆除廢棄物與重工成本，
+          也縮短因空間調整造成的停工時間。
+        </p>
+        <div class="tagRow">
+          <span class="tag">降低廢棄物</span>
+          <span class="tag">縮短停工</span>
+          <span class="tag">搬遷可重用</span>
+          <span class="tag">長期可維修</span>
+        </div>
+        <div class="hr"></div>
+        <p class="note">
+          你之後如果要做成「ESG Office」主題頁，這裡可以加入你的方法論：模組化、循環設計、Room-in-Room 作為企業資產等。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process" class="section">
+    <div class="wrap">
+      <h2>服務流程</h2>
+      <p>把「規格、預算、驗收」講清楚，設計公司與業主才會放心把關鍵空間交給你。</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>1｜需求盤點</h3>
+          <ul>
+            <li>坪數、部門配置、會議頻率</li>
+            <li>噪音來源：走廊/開放區/機電</li>
+            <li>是否有聲學/防火/認證需求</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>2｜策略配置</h3>
+          <ul>
+            <li>單層/雙層/實牆混搭分區</li>
+            <li>門型與五金策略：先達標、可升級</li>
+            <li>把「不可見的縫隙」當作重點</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>3｜丈量與圖說</h3>
+          <ul>
+            <li>現場確認：樓板、天花、柱位</li>
+            <li>機電/消防界面協調，避免返工</li>
+            <li>關鍵節點收邊與責任邊界清楚化</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>4｜施工與驗收</h3>
+          <ul>
+            <li>排程、保護、進場與清潔</li>
+            <li>關鍵空間的完成度檢查</li>
+            <li>必要時協助現場調整與微調</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>5｜維修保養</h3>
+          <ul>
+            <li>門扇調整、五金維護、耗材更換</li>
+            <li>長期使用的穩定性與成本管理</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>6｜搬遷重組 / 升級</h3>
+          <ul>
+            <li>空間變動：拆卸、搬移、重組</li>
+            <li>隔音/隱私追加：在不大拆的前提下加強</li>
+          </ul>
         </div>
       </div>
     </div>
-    </section>
+  </section>
 
-    <footer>
-      © <span id="y"></span> BossDesign. All rights reserved.
-    </footer>
-  </div>
-</main>
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <div class="wrap">
+      <h2>台灣案例</h2>
+      <p>請放你自己的案例照片（實拍/授權）。每個案例建議用一句話講清楚「用什麼配置解決什麼問題」。</p>
 
-<script>
-  document.getElementById("y").textContent = new Date().getFullYear();
-</script>
+      <div class="projects">
+        <div class="card">
+          <div class="ph">案例照片 1（assets/project-1.jpg）</div>
+          <h3>跨國企業｜台北</h3>
+          <p class="fine">雙層玻璃＋門牆配套｜強化會議隱私與可驗收隔音表現</p>
+        </div>
+        <div class="card">
+          <div class="ph">案例照片 2（assets/project-2.jpg）</div>
+          <h3>科技公司｜台中</h3>
+          <p class="fine">單層玻璃＋實牆混搭｜透明採光與分區秩序同時成立</p>
+        </div>
+        <div class="card">
+          <div class="ph">案例照片 3（assets/project-3.jpg）</div>
+          <h3>共享空間｜台北</h3>
+          <p class="fine">Room-in-Room｜快速擴增可租用小會議室與專注艙</p>
+        </div>
+      </div>
 
-</body>
-</html>
+      <div class="note" style="margin-top:14px;">
+        想做 SEO：把每個案例做成獨立頁（/projects/xxx.html），首頁只放摘要與導流。
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources" class="section">
+    <div class="wrap split">
+      <div class="card">
+        <h2>下載 / 資源</h2>
+        <p>把你常用的「型錄、規格、維修說明」集中，設計師會更願意把你當作可依靠的供應商。</p>
+
+        <div class="grid" style="grid-template-columns:1fr; gap:10px;">
+          <div class="card" style="background:rgba(255,255,255,.03)">
+            <h3 style="margin:0 0 6px;">代理商型錄（PDF）</h3>
+            <p class="fine" style="margin:0 0 10px;">放你自己的檔案，例如：assets/maars-tw-brochure.pdf</p>
+            <a class="btn" href="assets/maars-tw-brochure.pdf" target="_blank" rel="noopener">下載 PDF</a>
+          </div>
+
+          <div class="card" style="background:rgba(255,255,255,.03)">
+            <h3 style="margin:0 0 6px;">微信文章參考（外部連結）</h3>
+            <p class="fine" style="margin:0 0 10px;">
+              你提供的文章連結我先放在這裡。之後你把重點貼給我，我會把內容「內嵌成本站文章頁」，風格完全一致。
+            </p>
+            <a class="btn" href="https://mp.weixin.qq.com/s/NhhpDM-xXj0GeGu2MiKT5Q" target="_blank" rel="noopener">前往閱讀</a>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:12px;">
+          你要「風格一致」：最好的做法是把微信文章轉成本站的 /insights/article-xxx.html，
+          這樣不受外站限制，也更利於搜尋與分享。
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>常見問題</h2>
+        <div class="hr"></div>
+
+        <h3 style="margin:0 0 6px; font-size:18px;">Q1｜為什麼要可拆卸？</h3>
+        <p class="fine" style="margin:0 0 12px;">
+          因為辦公空間一定會變：組織調整、擴編、搬遷。可拆卸能把「拆除浪費」變成「重組再利用」。
+        </p>
+
+        <h3 style="margin:0 0 6px; font-size:18px;">Q2｜隔音只看牆夠嗎？</h3>
+        <p class="fine" style="margin:0 0 12px;">
+          不夠。門、縫隙、天花與地板界面，常常才是最後成敗關鍵，所以需要用策略整體配置。
+        </p>
+
+        <div class="hr"></div>
+        <h3 style="margin:0 0 6px; font-size:18px;">Know-how｜讀懂聲學測試報告</h3>
+        <p class="fine" style="margin:0 0 12px;">
+          將白皮書重點摘要成設計端可用的判讀框架，避免把實驗室數據直接承諾給客戶。
+        </p>
+        <ul style="color:var(--muted); margin:0 0 12px; padding-left:18px;">
+          <li>先看報告是否可追溯、是否具備互認標章（如 ILAC-MRA），再談數字。</li>
+          <li>隔音是系統策略：門、牆、縫隙、空調與吸音條件需一起判斷。</li>
+          <li>報告是責任邊界：清楚限制條件，保留未來升級路徑。</li>
+        </ul>
+        <div class="ctaRow">
+          <a class="btn" href="white.html">閱讀完整白皮書</a>
+          <a class="btn" href="good.html"><span class="iconCalc" aria-hidden="true"></span> NIC 和 STC 的換算公式</a>
+        </div>

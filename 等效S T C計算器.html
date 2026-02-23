@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Equivalent STC Calculator（等效隔音值計算器）</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 40px auto;
+    line-height: 1.6;
+}
+input {
+    width: 100%;
+    padding: 6px;
+    margin: 6px 0 12px 0;
+}
+button {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Equivalent STC Calculator（等效隔音值計算器）</h2>
+
+<label>Wall STC (dB) 牆面隔音等級</label>
+<input type="number" id="wallSTC" value="45">
+
+<label>Wall Area (㎡) 牆面面積</label>
+<input type="number" id="wallArea" value="6">
+
+<label>Door STC (dB) 門片隔音等級</label>
+<input type="number" id="doorSTC" value="38">
+
+<label>Door Area (㎡) 門片面積</label>
+<input type="number" id="doorArea" value="2">
+
+<button onclick="calculateSTC()">Calculate（計算）</button>
+
+<div class="result" id="result"></div>
+
+<script>
+function calculateSTC() {
+
+    let wallSTC = parseFloat(document.getElementById("wallSTC").value);
+    let wallArea = parseFloat(document.getElementById("wallArea").value);
+    let doorSTC = parseFloat(document.getElementById("doorSTC").value);
+    let doorArea = parseFloat(document.getElementById("doorArea").value);
+
+    let totalArea = wallArea + doorArea;
+
+    let TL_eq = -10 * Math.log10(
+        (wallArea * Math.pow(10, -wallSTC/10) +
+         doorArea * Math.pow(10, -doorSTC/10))
+        / totalArea
+    );
+
+    document.getElementById("result").innerHTML =
+        "Equivalent STC（等效隔音值）≈ " + TL_eq.toFixed(2) + " dB";
+
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BOSS Acoustic Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+}
+input{
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 10px;
+}
+button{
+    padding: 8px 16px;
+    margin: 5px 0;
+}
+.section{
+    margin-bottom: 40px;
+}
+canvas{
+    margin-top:20px;
+}
+.result{
+    font-weight:bold;
+    font-size:18px;
+}
+</style>
+</head>
+<body>
+
+<h2>BOSS Acoustic – Equivalent STC Calculator</h2>
+
+<div class="section">
+<h3>① 多段牆體計算</h3>
+
+<label>Wall STC</label>
+<input type="number" id="wallSTC" value="45">
+
+<label>Wall Area (㎡)</label>
+<input type="number" id="wallArea" value="6">
+
+<label>Door STC</label>
+<input type="number" id="doorSTC" value="38">
+
+<label>Door Area (㎡)</label>
+<input type="number" id="doorArea" value="2">
+
+<button onclick="calculate()">Calculate Equivalent STC</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<div class="section">
+<h3>② 門比例曲線圖</h3>
+
+<label>門 STC</label>
+<input type="number" id="doorSTC_chart" value="38">
+
+<label>牆 STC</label>
+<input type="number" id="wallSTC_chart" value="45">
+
+<button onclick="drawChart()">Generate Curve</button>
+
+<canvas id="chart"></canvas>
+</div>
+
+<div class="section">
+<h3>③ 反推所需門 STC</h3>
+
+<label>目標 等效 STC</label>
+<input type="number" id="targetSTC" value="42">
+
+<label>牆 STC</label>
+<input type="number" id="wallSTC_rev" value="45">
+
+<label>牆面積 (㎡)</label>
+<input type="number" id="wallArea_rev" value="6">
+
+<label>門面積 (㎡)</label>
+<input type="number" id="doorArea_rev" value="2">
+
+<button onclick="reverseCalc()">反推門 STC</button>
+
+<div class="result" id="reverseResult"></div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let wSTC = parseFloat(document.getElementById("wallSTC").value);
+let wArea = parseFloat(document.getElementById("wallArea").value);
+let dSTC = parseFloat(document.getElementById("doorSTC").value);
+let dArea = parseFloat(document.getElementById("doorArea").value);
+
+let total = wArea + dArea;
+
+let TL_eq = -10 * Math.log10(
+(wArea*Math.pow(10,-wSTC/10)+
+dArea*Math.pow(10,-dSTC/10))/total
+);
+
+document.getElementById("result").innerHTML =
+"Equivalent STC ≈ " + TL_eq.toFixed(2) + " dB";
+}
+
+function drawChart(){
+
+let wSTC = parseFloat(document.getElementById("wallSTC_chart").value);
+let dSTC = parseFloat(document.getElementById("doorSTC_chart").value);
+
+let ratios = [];
+let results = [];
+
+for(let r=0.01; r<=0.5; r+=0.01){
+
+let wallArea = 1-r;
+let doorArea = r;
+
+let TL_eq = -10 * Math.log10(
+(wallArea*Math.pow(10,-wSTC/10)+
+doorArea*Math.pow(10,-dSTC/10))
+);
+
+ratios.push((r*100).toFixed(0));
+results.push(TL_eq);
+}
+
+new Chart(document.getElementById("chart"),{
+type:'line',
+data:{
+labels:ratios,
+datasets:[{
+label:"Equivalent STC",
+data:results,
+fill:false
+}]
+}
+});
+}
+
+function reverseCalc(){
+
+let target = parseFloat(document.getElementById("targetSTC").value);
+let wSTC = parseFloat(document.getElementById("wallSTC_rev").value);
+let wArea = parseFloat(document.getElementById("wallArea_rev").value);
+let dArea = parseFloat(document.getElementById("doorArea_rev").value);
+
+let total = wArea + dArea;
+
+let required = -10*Math.log10(
+((Math.pow(10,-target/10)*total -
+wArea*Math.pow(10,-wSTC/10))/dArea)
+);
+
+document.getElementById("reverseResult").innerHTML =
+"所需門 STC ≈ " + required.toFixed(2) + " dB";
+
+}
+
+</script>
+
+</body>
+</html>

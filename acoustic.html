@@ -1,230 +1,325 @@
-<style>
-  /* Acoustic article: embeddable standard (scoped) */
-  .acoustic-embed {
-    --text: #1f2328;
-    --muted: #57606a;
-    --line: #d0d7de;
-    --accent: #0b57d0;
-    --mark-bg: #fff59d;
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>聲學報告解讀｜BossDesign</title>
+  <meta name="description" content="讀懂聲學測試報告與標章，降低設計責任風險。" />
 
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
-    line-height: 1.85;
-    font-size: 16px;
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 8px 4px 28px;
-    word-break: break-word;
-  }
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --card:#ffffff;
+      --text:#1d1d1f;
+      --muted:#6e6e73;
+      --line:#e5e5ea;
+      --accent:#749fa1;
+      --accent2:#5f8b8d;
+      --shadow: 0 16px 40px rgba(0,0,0,0.06);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 500px at -10% -20%, rgba(116,159,161,0.12), transparent 62%),
+        radial-gradient(900px 400px at 110% -10%, rgba(116,159,161,0.10), transparent 64%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1100px; margin:0 auto; padding:0 20px}
+    .topbar{
+      position:sticky; top:0;
+      background: rgba(245,245,247,0.9);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+      z-index: 20;
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800;
+      letter-spacing:0.2px;
+    }
+    .brand b{letter-spacing:.2px}
+    .brand .sub{font-size:12px; color:var(--muted)}
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+      flex:0 0 auto;
+    }
+    .menu{
+      display:flex; gap:14px; flex-wrap:wrap;
+      color:var(--muted); font-size:14px; align-items:center;
+    }
+    .menu a{padding:8px 10px; border-radius:10px;}
+    .menu a:hover{
+      background: rgba(116,159,161,0.12);
+      color: var(--text);
+    }
+    .crumb{
+      font-size:12px; color:var(--muted);
+      display:flex; gap:8px; align-items:center;
+    }
+    .crumb a{color:var(--muted)}
+    .hero{padding:56px 0 22px}
+    .hero-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:32px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px;
+      padding:7px 12px;
+      border-radius:999px;
+      background: rgba(116,159,161,0.12);
+      color:#4b6f70;
+      border:1px solid rgba(116,159,161,0.22);
+      margin-bottom:14px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:38px;
+      line-height:1.15;
+      letter-spacing:-0.4px;
+    }
+    .lead{
+      margin:0 0 18px;
+      font-size:18px;
+      line-height:1.75;
+      color:var(--muted);
+    }
+    section{padding:26px 0;}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+    footer{
+      padding:30px 0 40px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+    }
 
-  .acoustic-embed * {
-    box-sizing: border-box;
-  }
+    /* Embedded article styles */
+    .acoustic-embed {
+      --text: #1f2328;
+      --muted: #57606a;
+      --line: #d0d7de;
+      --accent: #0b57d0;
+      --mark-bg: #fff59d;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      line-height: 1.85;
+      font-size: 16px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 8px 4px 28px;
+      word-break: break-word;
+    }
+    .acoustic-embed * { box-sizing: border-box; }
+    .acoustic-embed h2,
+    .acoustic-embed h3 {
+      line-height: 1.45;
+      margin: 1.9em 0 0.7em;
+      color: var(--text);
+    }
+    .acoustic-embed h2 { font-size: 28px; margin-top: 0.4em; }
+    .acoustic-embed h3 { font-size: 20px; }
+    .acoustic-embed p { margin: 0.7em 0; }
+    .acoustic-embed strong { color: var(--text); }
+    .acoustic-embed mark {
+      background: var(--mark-bg);
+      padding: 0 0.2em;
+      border-radius: 4px;
+    }
+    .acoustic-embed hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 2em 0 1.5em;
+    }
+    .acoustic-embed ul,
+    .acoustic-embed ol {
+      margin: 0.6em 0 1em 1.25em;
+      padding: 0;
+    }
+    .acoustic-embed li { margin: 0.35em 0; }
+    .acoustic-embed img {
+      display: block;
+      margin: 0.8em 0 1.1em;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      max-width: 100%;
+      height: auto;
+    }
+    .acoustic-embed figure { margin: 1em 0 1.25em; }
+    .acoustic-embed figcaption {
+      margin-top: 0.55em;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .acoustic-embed a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="index.html" aria-label="回到首頁">
+        <span class="logo" aria-hidden="true"></span>
+        <div>
+          <b>Maars｜台灣代理</b><br>
+          <span class="sub">Living Walls · 可拆卸式隔間系統</span>
+        </div>
+      </a>
 
-  .acoustic-embed h2,
-  .acoustic-embed h3 {
-    line-height: 1.45;
-    margin: 1.9em 0 0.7em;
-    color: var(--text);
-  }
+      <nav class="menu" aria-label="主選單">
+        <a href="index.html#solutions">系統</a>
+        <a href="index.html#value">價值</a>
+        <a href="index.html#process">流程</a>
+        <a href="index.html#projects">案例</a>
+        <a href="index.html#resources">資源</a>
+        <a href="index.html#contact">聯絡</a>
+      </nav>
+    </div>
+  </div>
 
-  .acoustic-embed h2 {
-    font-size: 28px;
-    margin-top: 0.4em;
-  }
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="tag">Know-how</div>
+        <h1>讀懂聲學測試報告，降低責任風險</h1>
+        <p class="lead">整合標章辨識、測試條件與設計邊界，避免把實驗室數據直接承諾給客戶。</p>
+      </div>
+    </section>
 
-  .acoustic-embed h3 {
-    font-size: 20px;
-  }
+    <section class="card">
+      <section class="acoustic-embed" aria-label="聲學報告可嵌入版本">
+        <h2><strong>為什麼說「讀懂聲學測試報告」並辨別測試報告的<mark>真實性</mark>、以及<mark>可信度</mark>，是辦公室設計的第一個專業？</strong></h2>
 
-  .acoustic-embed p {
-    margin: 0.7em 0;
-  }
+        <p><strong>因為在辦公室設計裡，隔音不是美感問題，而是責任問題。</strong></p>
 
-  .acoustic-embed strong {
-    color: var(--text);
-  }
+        <p>一位真正專業的室內設計師，在設計辦公室時，第一個最重要的能力，不是畫圖，也不是選材料，</p>
 
-  .acoustic-embed mark {
-    background: var(--mark-bg);
-    padding: 0 0.2em;
-    border-radius: 4px;
-  }
+        <p><strong>而是能不能正確解讀各種聲學測試報告，辨別測試報告上面的各樣的<mark>認證標章則是最基本的能力</mark></strong></p>
 
-  .acoustic-embed hr {
-    border: 0;
-    border-top: 1px solid var(--line);
-    margin: 2em 0 1.5em;
-  }
+        <h3><strong>1️⃣ 聲學報告，是「設計責任的邊界線」</strong></h3>
 
-  .acoustic-embed ul,
-  .acoustic-embed ol {
-    margin: 0.6em 0 1em 1.25em;
-    padding: 0;
-  }
+        <p>STC、Rw、NIC、RT60、實驗室測試、現場測試——這些不是工程商的事，而是<strong>設計端必須理解的語言</strong>。</p>
 
-  .acoustic-embed li {
-    margin: 0.35em 0;
-  }
+        <p>因為一旦設計師在沒有讀懂報告的情況下：</p>
 
-  .acoustic-embed img {
-    display: block;
-    margin: 0.8em 0 1.1em;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    max-width: 100%;
-    height: auto;
-  }
+        <ul>
+          <li>把 STC 當成現場隔音保證</li>
+          <li>把實驗室數據直接承諾給客戶</li>
+          <li>沒有區分「牆體」與「門」的聲學弱點</li>
+        </ul>
 
-  .acoustic-embed figure {
-    margin: 1em 0 1.25em;
-  }
+        <p>那麼未來所有的爭議，<strong>都會回到設計責任本身</strong>。</p>
 
-  .acoustic-embed figcaption {
-    margin-top: 0.55em;
-    color: var(--muted);
-    font-size: 14px;
-  }
+        <h3><strong>2️⃣ 聲學不是產品，是一套「策略判斷」</strong></h3>
 
-  .acoustic-embed a {
-    color: var(--accent);
-  }
-</style>
+        <p>專業設計師懂得：</p>
 
-<section class="acoustic-embed" aria-label="聲學報告可嵌入版本">
-  <h2><strong>為什麼說「讀懂聲學測試報告」並辨別測試報告的<mark>真實性</mark>、以及<mark>可信度</mark>，是辦公室設計的第一個專業？</strong></h2>
+        <ul>
+          <li>報告不是答案，而是<strong>限制條件</strong></li>
+          <li>隔音不是單一材料，而是<strong>系統整合</strong></li>
+          <li>門、牆、縫隙、空調、吸音條件，全部都會影響結果</li>
+        </ul>
 
-<p><strong>因為在辦公室設計裡，隔音不是美感問題，而是責任問題。</strong></p>
+        <p>所以真正的專業，不是「我用了隔音玻璃」，而是——</p>
 
-<p>一位真正專業的室內設計師，在設計辦公室時，第一個最重要的能力，不是畫圖，也不是選材料，</p>
+        <p>👉 <strong>我知道在這個預算與條件下，合理的隔音上限在哪裡</strong></p>
+        <p>👉 <strong>我也清楚，哪些地方必須保留未來升級的可能性</strong></p>
 
-<p><strong>而是能不能正確解讀各種聲學測試報告，辨別測試報告上面的各樣的<mark>認證標章則是最基本的能力</mark></strong></p>
+        <h3><strong>3️⃣ 能讀懂報告，設計才有「專業尊嚴」</strong></h3>
 
-<h3><strong>1️⃣ 聲學報告，是「設計責任的邊界線」</strong></h3>
+        <p>當設計師能清楚說出：</p>
 
-<p>STC、Rw、NIC、RT60、實驗室測試、現場測試——這些不是工程商的事，而是<strong>設計端必須理解的語言</strong>。</p>
+        <ul>
+          <li>為什麼這個配置只能做到 NIC 約 28～30</li>
+          <li>為什麼門是整體隔音的瓶頸</li>
+          <li>為什麼現在不做雙層，但系統必須能升級</li>
+        </ul>
 
-<p>因為一旦設計師在沒有讀懂報告的情況下：</p>
+        <p>客戶聽到的，不只是技術，而是一種<strong>值得信任的專業判斷</strong>。</p>
 
-<ul>
-  <li>把 STC 當成現場隔音保證</li>
-  <li>把實驗室數據直接承諾給客戶</li>
-  <li>沒有區分「牆體」與「門」的聲學弱點</li>
-</ul>
+        <p>這也是為什麼——外商、跨國企業、ESG 稽核單位，永遠更信任「懂報告的人」，而不是「講感覺的人」。</p>
 
-<p>那麼未來所有的爭議，<strong>都會回到設計責任本身</strong>。</p>
+        <hr>
 
-<h3><strong>2️⃣ 聲學不是產品，是一套「策略判斷」</strong></h3>
+        <p><mark>你所看到的隔音測試報告是否同時具備兩個標章呢？還是只有一個標章？或是沒有任何標章？</mark></p>
 
-<p>專業設計師懂得：</p>
+        <figure>
+          <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg" alt="香港實驗室報告上的兩個國際認證標章">
+          <figcaption><mark>⬇️ 這是香港通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 JEB 的測試報告常常可以看到）</mark></figcaption>
+        </figure>
 
-<ul>
-  <li>報告不是答案，而是<strong>限制條件</strong></li>
-  <li>隔音不是單一材料，而是<strong>系統整合</strong></li>
-  <li>門、牆、縫隙、空調、吸音條件，全部都會影響結果</li>
-</ul>
+        <figure>
+          <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg" alt="大陸實驗室報告上的兩個國際認證標章">
+          <figcaption><mark>⬇️ 這是大陸通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 MAARS、TRL 的測試報告常常可以看到）</mark></figcaption>
+        </figure>
 
-<p>所以真正的專業，不是「我用了隔音玻璃」，而是——</p>
+        <figure>
+          <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" alt="台灣實驗室報告上的 TAF 與 ILAC-MRA 標章">
+          <figcaption><mark>⬇️ 這是台灣通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 BOSS 所提出的測試報告可以看到）</mark></figcaption>
+        </figure>
 
-<p>👉 <strong>我知道在這個預算與條件下，合理的隔音上限在哪裡</strong></p>
-<p>👉 <strong>我也清楚，哪些地方必須保留未來升級的可能性</strong></p>
+        <p>真正專業的人，第一眼看的不是數字，而是：有沒有 ILAC-MRA 標誌？</p>
 
-<h3><strong>3️⃣ 能讀懂報告，設計才有「專業尊嚴」</strong></h3>
+        <h3><strong>什麼是 ILAC-MRA？</strong></h3>
 
-<p>當設計師能清楚說出：</p>
+        <p>ILAC-MRA 全名是：</p>
+        <p><strong>International Laboratory Accreditation Cooperation – Mutual Recognition Arrangement</strong></p>
 
-<ul>
-  <li>為什麼這個配置只能做到 NIC 約 28～30</li>
-  <li>為什麼門是整體隔音的瓶頸</li>
-  <li>為什麼現在不做雙層，但系統必須能升級</li>
-</ul>
+        <p>中文常翻為：國際實驗室認證聯盟－相互承認協議。</p>
 
-<p>客戶聽到的，不只是技術，而是一種<strong>值得信任的專業判斷</strong>。</p>
+        <p>白話來說：只要報告上有 ILAC-MRA 標誌，代表這份測試報告被全球主要國家互相承認。</p>
 
-<p>這也是為什麼——外商、跨國企業、ESG 稽核單位，永遠更信任「懂報告的人」，而不是「講感覺的人」。</p>
+        <h3><strong>有 ILAC-MRA，代表什麼實質意義？</strong></h3>
 
-<hr>
+        <ol>
+          <li>
+            <strong>實驗室是國際級認證</strong><br>
+            該實驗室必須通過 ISO / IEC 17025，被國家級認證機構認可，再被納入 ILAC 國際互認體系（等於是「實驗室界的護照」）。
+          </li>
+          <li>
+            <strong>測試報告全球通用</strong><br>
+            有 ILAC-MRA 的報告，不需要每到一個國家重新測試，對跨國企業、外商設計、國際品牌來說是基本門檻。
+          </li>
+          <li>
+            <strong>具有法律與工程效力</strong><br>
+            可用在工程驗收、合約附件、招標技術文件、爭議鑑定與法律證據。換句話說，這是一份「可以負責任」的報告。
+          </li>
+        </ol>
 
-<p><mark>你所看到的隔音測試報告是否同時具備兩個標章呢？還是只有一個標章？或是沒有任何標章？</mark></p>
+        <p>沒有 ILAC-MRA 的報告，不代表一定是假的，但代表：</p>
 
-<figure>
-  <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/LINE_P20260122_174140049.jpg" alt="香港實驗室報告上的兩個國際認證標章">
-  <figcaption><mark>⬇️ 這是香港通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 JEB 的測試報告常常可以看到）</mark></figcaption>
-</figure>
+        <ul>
+          <li>只在當地有效，國際不一定承認</li>
+          <li>無法保證實驗室品質一致性</li>
+          <li><strong>在外商、顧問、標案中常被退件</strong></li>
+          <li><strong>風險完全由使用者自行承擔</strong></li>
+        </ul>
+      </section>
+    </section>
+  </main>
 
-<figure>
-  <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1769075073379.jpg" alt="大陸實驗室報告上的兩個國際認證標章">
-  <figcaption><mark>⬇️ 這是大陸通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 MAARS、TRL 的測試報告常常可以看到）</mark></figcaption>
-</figure>
-
-<figure>
-  <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" alt="台灣實驗室報告上的 TAF 與 ILAC-MRA 標章">
-  <figcaption><mark>⬇️ 這是台灣通過國際認證的實驗室所產出的報告會<strong>同時出現</strong>的兩個標章。（在 BOSS 所提出的測試報告可以看到）</mark></figcaption>
-</figure>
-
-<p>真正專業的人，第一眼看的不是數字，而是：有沒有 ILAC-MRA 標誌？</p>
-
-<h3><strong>什麼是 ILAC-MRA？</strong></h3>
-
-<p>ILAC-MRA 全名是：</p>
-<p><strong>International Laboratory Accreditation Cooperation – Mutual Recognition Arrangement</strong></p>
-
-<p>中文常翻為：國際實驗室認證聯盟－相互承認協議。</p>
-
-<p>白話來說：只要報告上有 ILAC-MRA 標誌，代表這份測試報告被全球主要國家互相承認。</p>
-
-<h3><strong>有 ILAC-MRA，代表什麼實質意義？</strong></h3>
-
-<ol>
-  <li>
-    <strong>實驗室是國際級認證</strong><br>
-    該實驗室必須通過 ISO / IEC 17025，被國家級認證機構認可，再被納入 ILAC 國際互認體系（等於是「實驗室界的護照」）。
-  </li>
-  <li>
-    <strong>測試報告全球通用</strong><br>
-    有 ILAC-MRA 的報告，不需要每到一個國家重新測試，對跨國企業、外商設計、國際品牌來說是基本門檻。
-  </li>
-  <li>
-    <strong>具有法律與工程效力</strong><br>
-    可用在工程驗收、合約附件、招標技術文件、爭議鑑定與法律證據。換句話說，這是一份「可以負責任」的報告。
-  </li>
-</ol>
-
-<p>沒有 ILAC-MRA 的報告，不代表一定是假的，但代表：</p>
-
-<ul>
-  <li>只在當地有效，國際不一定承認</li>
-  <li>無法保證實驗室品質一致性</li>
-  <li><strong>在外商、顧問、標案中常被退件</strong></li>
-  <li><strong>風險完全由使用者自行承擔</strong></li>
-</ul>
-
-<p>我們的立場很清楚：所有隔音性能數據，必須來自 ILAC-MRA 國際互認實驗室。隔音不是話術，不是感覺，而是可以被驗證的工程事實。</p>
-
-<p><strong>一句話總結：看到 ILAC-MRA，才是真正可信的測試報告。</strong></p>
-
-<hr>
-
-<h3><strong>在台灣你可能常看到：隔音測試報告只有一個標章</strong></h3>
-
-<figure>
-  <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/TAF-logo.jpg" alt="TAF 實驗室認證標誌">
-</figure>
-
-<p>很多人以為：有 TAF = 國際認證，但其實不完全正確。</p>
-
-<p>TAF 是台灣的國家級實驗室認證單位，代表這間實驗室符合 ISO / IEC 17025 的專業標準。</p>
-
-<p><strong>簡單說：TAF = 台灣合格，不一定 = 國際通用。</strong></p>
-
-<p>那什麼才是「真正國際互認」？只有當測試報告同時出現：</p>
-
-<p><strong>TAF 標誌 + ILAC-MRA 標誌</strong> 才更具證據力，能用於外商與國際顧問專案，並可作為標案、合約、驗收依據。</p>
-
-<figure>
-  <img src="https://www.beautifuljeb.tw/uploads/userfiles/NewFolder/1768143506720.jpg" alt="同時出現 TAF 與 ILAC-MRA 的認證標章">
-</figure>
-
-  <p><mark><strong>才有證據力</strong></mark></p>
-</section>
+  <footer>
+    © BossDesign. All rights reserved.
+  </footer>
+</body>
+</html>
