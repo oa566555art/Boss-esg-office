@@ -1,485 +1,539 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NIC 和 STC 的換算公式</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Acoustic Tools</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-<!-- MathJax: 顯示數學公式 -->
-<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-
-<style>
-  :root{
-    --bg:#000000;
-    --card:#111111;
-    --text:#ffffff;
-    --muted:#ffffff;
-    --line:#ffffff;
-    --accent:#ffffff;
-    --accent2:#ffffff;
-    --warn:#ffffff;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color:var(--text);
-  }
-  header{
-    padding:28px 18px 12px;
-    border-bottom:1px solid rgba(255,255,255,0.06);
-  }
-  .wrap{max-width:1100px;margin:0 auto;}
-  .title{
-    display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;
-  }
-  h1{margin:0;font-size:28px;letter-spacing:0.3px;}
-  .tag{
-    font-size:12px;
-    color:var(--text);
-    background:#111;
-    padding:4px 10px;
-    border-radius:999px;
-    font-weight:700;
-  }
-  .sub{margin-top:10px;color:var(--text);line-height:1.6;}
-  nav{
-    margin-top:16px;
-    display:flex;gap:10px;flex-wrap:wrap;
-  }
-  nav a{
-    text-decoration:none;
-    color:var(--text);
-    padding:8px 12px;
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:12px;
-    background:rgba(255,255,255,0.05);
-  }
-  nav a:hover{border-color:rgba(255,255,255,0.25);}
-  main{padding:18px;}
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap:14px;
-  }
-  .card{
-    grid-column: span 12;
-    background:var(--card);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:18px;
-    padding:16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
-  }
-  @media(min-width: 900px){
-    .half{grid-column: span 6;}
-  }
-  h2{margin:0 0 6px;font-size:18px;color:var(--text);}
-  .desc{color:var(--text);margin:0 0 12px;line-height:1.6;}
-  .row{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:10px;
-  }
-  @media(min-width: 650px){
-    .row.two{grid-template-columns: 1fr 1fr;}
-    .row.three{grid-template-columns: 1fr 1fr 1fr;}
-  }
-  label{font-size:13px;color:var(--text);display:block;margin:0 0 6px;}
-  input{
-    width:100%;
-    padding:10px 10px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.12);
-    background:rgba(7,10,15,0.55);
-    color:var(--text);
-    outline:none;
-  }
-  input:focus{border-color:rgba(110,231,255,0.6);}
-  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;}
-  button{
-    cursor:pointer;
-    padding:10px 14px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.3);
-    background:rgba(255,255,255,0.05);
-    color:var(--text);
-    font-weight:700;
-  }
-  button:hover{border-color:rgba(255,255,255,0.28);}
-  .out{
-    margin-top:12px;
-    padding:12px;
-    border-radius:14px;
-    border:1px dashed rgba(255,255,255,0.18);
-    background:rgba(7,10,15,0.35);
-    color:var(--text);
-  }
-  .out b{color:var(--accent);}
-  .hint{
-    margin-top:10px;
-    color:var(--text);
-    font-size:13px;
-    line-height:1.6;
-  }
-  .formula{
-    margin:10px 0 0;
-    padding:10px 12px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.10);
-    background:rgba(0,0,0,0.35);
-    overflow:auto;
-  }
-  .divider{
-    height:1px;
-    background:rgba(255,255,255,0.07);
-    margin:14px 0;
-  }
-  footer{
-    padding:18px;
-    color:var(--muted);
-    text-align:center;
-    border-top:1px solid rgba(255,255,255,0.06);
-  }
-  canvas{max-width:100%;}
-  .warn{color:var(--warn);font-weight:700;}
-  .multiRows{display:grid;gap:10px;}
-  .multiRow{
-    border:1px solid rgba(255,255,255,0.10);
-    border-radius:12px;
-    padding:10px;
-    background:rgba(255,255,255,0.02);
-  }
-  .multiRowHead{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:8px;
-    font-size:13px;
-  }
-  .miniBtn{
-    padding:6px 10px;
-    font-size:12px;
-    border-radius:10px;
-  }
-</style>
-
-
-
-<header>
-  <div class="wrap">
-    <div class="title">
-      <h1>NIC 和 STC 的換算公式<div class="formula">
-        \[
-        NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
-        \]
-      </div></h1>
-      <div class="tag">STC / NIC / EQ</div>
-    </div>
-    <div class="sub">
-      STC<sub>eq</sub> = 等效 STC（綜合牆面不同材質的 STC）<br>
-      S = 牆面面積（平方公尺）<br>
-      A = 接收房吸音量（Sabin）<br>
-    <nav>
-      <a href="index.html">回到首頁</a>
-      <a href="#tool-eqstc">等效 STC</a>
-      <a href="#tool-nic">NIC 計算器</a>
-      <a href="#tool-reverse">反推門 STC</a>
-    </nav>
-  </div>
-</div></header>
-
-<main class="wrap">
-  <div class="grid">
-
-    <!-- 1) 等效 STC -->
-    <section id="tool-eqstc" class="card half">
-      <h2>① 等效 STC（多段牆體加權）</h2>
-      <p class="desc">同一公式支援多段構件（牆、門、玻璃等），以聲能＋面積加權計算整體等效 STC。</p>
-      <p class="desc">
-        NIC聲學的換算公式的STC必須代入等效STC的原因是,因為每一段牆面都有自己的實驗室數值：門、玻璃牆、輕隔間牆各有不同的隔音能力；
-        當門所在這道牆又有一半是玻璃、另一半是輕隔間牆時，就要把玻璃和輕隔間的隔音數字也納入計算，
-        再一起加權成一個代表整面牆的單一 dB，這個值就是等效 STC。
-        現在可直接輸入多段不同構件（牆、門、玻璃、輕隔間等），系統會自動用同一加權公式計算整體等效 STC。
-      </p>
-
-      <div id="eq_rows" class="multiRows">
-        <div class="multiRow">
-          <div class="multiRowHead">
-            <b>牆</b>
-          </div>
-          <div class="row two">
-            <div>
-              <label>STC (dB)</label>
-              <input class="multi-stc" type="number" value="45">
-            </div>
-            <div>
-              <label>面積 (㎡)</label>
-              <input class="multi-area" type="number" value="6">
-            </div>
-          </div>
-        </div>
-
-        <div class="multiRow">
-          <div class="multiRowHead">
-            <b>門</b>
-          </div>
-          <div class="row two">
-            <div>
-              <label>STC (dB)</label>
-              <input class="multi-stc" type="number" value="38">
-            </div>
-            <div>
-              <label>面積 (㎡)</label>
-              <input class="multi-area" type="number" value="2">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="btns">
-        <button type="button" onclick="addMultiRow()">新增牆段</button>
-        <button type="button" onclick="calcMultiEqSTC()">計算多牆段等效 STC</button>
-      </div>
-
-      <div class="out" id="eq_out">
-        輸入各牆段 STC 與面積後，按「計算多牆段等效 STC」。
-      </div>
-
-      <div class="formula">
-        \[
-        TL_{eq}=
-        -10\log_{10}\left(
-        \frac{\sum_{i=1}^{n} S_i10^{-TL_i/10}}{\sum_{i=1}^{n}S_i}
-        \right)
-        \]
-      </div>
-
-      <div class="hint">
-        <span class="warn">重點：</span>等效 STC 不是算術平均；低 STC 且面積較大的構件會明顯拉低整體結果。
-      </div>
-    </section>
-
-    <!-- 2) NIC -->
-    <section id="tool-nic" class="card half">
-      <h2>② NIC 計算器</h2>
-      <p class="desc">依公式計算 NIC（輸入 等效STC~STCeq、牆面積~S、接收房吸音量~A）。</p>
-
-      <div class="row three">
-        <div>
-          <label>STCeq (dB)</label>
-          <input id="nic_stceq" type="number" value="42">
-        </div>
-        <div>
-          <label>S 受測面積 (㎡)</label>
-          <input id="nic_s" type="number" value="8">
-        </div>
-        <div>
-          <label>A 接收房吸音量 (Sabin)</label>
-          <input id="nic_a" type="number" value="2" step="0.1" min="0">
-        </div>
-      </div>
-
-      <div class="btns">
-        <button onclick="calcNIC()">計算 NIC</button>
-      </div>
-
-      <div class="out" id="nic_out">
-        輸入後按「計算 NIC」。
-      </div>
-
-      <div class="formula">
-        \[
-        NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
-        \]
-      </div>
-
-      <p class="desc">
-        若接收房（分貝計）所在位置吸音量來自多種材質，可用吸音係數(α)×面積加總計算：
-        \[
-        A = \alpha_1 S_1 + \alpha_2 S_2 + \alpha_3 S_3 + \dots
-        \]
-        隔音係數最佳是1，最差是0，一般方塊地毯（塑膠底背）的吸音係數為0.2~0.3，乘上面積後，就能得出整個接收房的 Sabin 值。例如10㎡的房間只貼地毯，隔音Sabin值為0.2*10㎡=2。
-
-一般辦公室常見：
- 計算出來之後大約為6～8 dB（視接收空間吸音量多寡而定，也就是說如果想要更高的NIC結果，那麼可以朝增加吸音量的方式來加強）。
-
-     
-    </section>
-
-    <!-- 3) 反推門 STC -->
-    <section id="tool-reverse" class="card">
-      <h2>③ 目標等效 STC → 反推門 STC</h2>
-      <p class="desc">已知目標 STCeq、牆 STC、牆/門面積，反推出「門需要多少 STC」。</p>
-
-      <div class="row two">
-        <div>
-          <label>目標 STCeq (dB)</label>
-          <input id="rev_target" type="number" value="42">
-        </div>
-        <div>
-          <label>牆 STC (dB)</label>
-          <input id="rev_wall_stc" type="number" value="45">
-        </div>
-        <div>
-          <label>牆面積 (㎡)</label>
-          <input id="rev_wall_area" type="number" value="6">
-        </div>
-        <div>
-          <label>門面積 (㎡)</label>
-          <input id="rev_door_area" type="number" value="2">
-        </div>
-      </div>
-
-      <div class="btns">
-        <button onclick="reverseDoorSTC()">反推門 STC</button>
-      </div>
-
-      <div class="out" id="rev_out">
-        輸入後按「反推門 STC」。
-      </div>
-
-      <div class="hint">
-        若出現無法計算，通常代表：目標 STCeq 過高、或門比例過大、或牆體本身不足以支撐該目標。
-      </div>
-    </section>
-
-  </div>
-</main>
-
-<footer>
-  Acoustic Tools • For engineering estimation &amp; communication • ©
-</footer>
-
-<script>
-  // ===== 共用：輸入檢查 =====
-  function mustPositive(...vals){
-    return vals.every(v => Number.isFinite(v) && v > 0);
-  }
-
-  // ===== 1) 等效 STC（多牆段） =====
-  function addMultiRow(){
-    const wrap = document.getElementById("eq_rows");
-    const nextIndex = wrap.querySelectorAll(".multiRow").length + 1;
-    const row = document.createElement("div");
-    row.className = "multiRow";
-    row.innerHTML = `
-      <div class="multiRowHead">
-        <b>構件 ${nextIndex}</b>
-        <button type="button" class="miniBtn" onclick="removeMultiRow(this)">刪除</button>
-      </div>
-      <div class="row two">
-        <div>
-          <label>STC (dB)</label>
-          <input class="multi-stc" type="number" value="40">
-        </div>
-        <div>
-          <label>面積 (㎡)</label>
-          <input class="multi-area" type="number" value="1">
-        </div>
-      </div>`;
-    wrap.appendChild(row);
-  }
-
-  function removeMultiRow(btn){
-    const wrap = document.getElementById("eq_rows");
-    const rows = wrap.querySelectorAll(".multiRow");
-    if(rows.length <= 2){
-      document.getElementById("eq_out").innerHTML = "至少保留 2 段（例如牆 + 門）。";
-      return;
+  <style>
+    :root{
+      --bg:#0a1220;
+      --bg-2:#101b30;
+      --panel:#111b2d;
+      --panel-2:#16243b;
+      --text:#eaf1ff;
+      --muted:#a8b7d7;
+      --line:rgba(193,211,255,0.22);
+      --accent:#69b1ff;
+      --accent-2:#f3c56f;
+      --good:#8be1a5;
+      --warn:#ffc98d;
+      --shadow:0 16px 44px rgba(0,0,0,.35);
+      --r:18px;
     }
-    btn.closest(".multiRow").remove();
-    wrap.querySelectorAll(".multiRowHead b").forEach((el, i)=>{
-      if(i === 0) el.textContent = "牆";
-      else if(i === 1) el.textContent = "門";
-      else el.textContent = `構件 ${i-1}`;
-    });
-  }
 
-  function calcMultiEqSTC(){
-    const stcInputs = [...document.querySelectorAll(".multi-stc")];
-    const areaInputs = [...document.querySelectorAll(".multi-area")];
-    const out = document.getElementById("eq_out");
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      overflow-x:hidden;
+      overflow-y:auto;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+    body{
+      font-family:"Noto Sans TC", "PingFang TC", "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at -10% -20%, rgba(105,177,255,.16), transparent 62%),
+        radial-gradient(900px 500px at 110% -10%, rgba(243,197,111,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      line-height:1.65;
+    }
 
-    let totalArea = 0;
-    let energySum = 0;
-    let count = 0;
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
 
-    for(let i=0; i<stcInputs.length; i++){
-      const stc = parseFloat(stcInputs[i].value);
-      const area = parseFloat(areaInputs[i].value);
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(10,18,32,.78);
+      border-bottom:1px solid rgba(193,211,255,.16);
+    }
 
-      if(!mustPositive(stc, area)){
-        out.innerHTML = `第 ${i+1} 段輸入無效：STC 與面積都必須 > 0。`;
+    .head-inner{padding:16px 0 14px}
+    .title-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    h1{margin:0;font-size:30px;letter-spacing:.2px}
+    .tag{
+      font-size:12px;
+      padding:4px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+      font-weight:700;
+    }
+
+    .sub{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .hero-formula{
+      margin-top:12px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+    }
+    .hero-formula .formula{
+      margin-top:0;
+    }
+    .symbol-list{
+      margin:10px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    nav{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    nav a{
+      padding:8px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-size:13px;
+      font-weight:700;
+    }
+    nav a:hover{
+      border-color:rgba(105,177,255,.65);
+      background:rgba(105,177,255,.16);
+    }
+
+    .home-btn{
+      border-color:rgba(243,197,111,.65);
+      background:rgba(243,197,111,.14);
+    }
+
+    main{padding:22px 0 26px}
+
+    .flow{
+      margin-bottom:16px;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:rgba(255,255,255,.03);
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .flow-item{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
+      font-size:13px;
+      color:var(--muted);
+    }
+    .flow-item b{color:var(--text);display:block;margin-bottom:2px}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column:span 12;
+      background:linear-gradient(180deg, rgba(22,36,59,.95), rgba(17,27,45,.95));
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    @media(min-width:980px){.half{grid-column:span 6}}
+
+    h2{margin:0 0 6px;font-size:24px}
+    .desc{margin:0 0 12px;color:var(--muted)}
+
+    .row{display:grid;grid-template-columns:1fr;gap:10px}
+    @media(min-width:700px){
+      .row.two{grid-template-columns:1fr 1fr}
+      .row.three{grid-template-columns:1fr 1fr 1fr}
+    }
+
+    label{display:block;font-size:13px;color:#dce8ff;margin:0 0 6px}
+    input{
+      width:100%;
+      border-radius:12px;
+      border:1px solid rgba(193,211,255,.26);
+      background:rgba(4,10,18,.55);
+      color:var(--text);
+      padding:11px 12px;
+      outline:none;
+      font-size:16px;
+    }
+    input:focus{border-color:rgba(105,177,255,.75);box-shadow:0 0 0 3px rgba(105,177,255,.18)}
+
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    button{
+      cursor:pointer;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid rgba(193,211,255,.36);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:800;
+      letter-spacing:.2px;
+    }
+    button:hover{border-color:rgba(105,177,255,.8);background:rgba(105,177,255,.18)}
+    .btn-strong{border-color:rgba(243,197,111,.72);background:rgba(243,197,111,.16)}
+    .btn-strong:hover{background:rgba(243,197,111,.25)}
+
+    .out{
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      border:1px dashed rgba(193,211,255,.32);
+      background:rgba(5,11,19,.45);
+      color:#dce8ff;
+    }
+    .out b{color:var(--good)}
+
+    .hint{margin-top:10px;font-size:13px;color:#c8d9ff}
+    .warn{color:var(--warn);font-weight:700}
+
+    .formula{
+      margin-top:10px;
+      padding:12px;
+      border:1px solid rgba(193,211,255,.2);
+      border-radius:14px;
+      background:rgba(0,0,0,.25);
+      overflow:auto;
+    }
+
+    .divider{height:1px;background:rgba(193,211,255,.18);margin:14px 0}
+
+    .multiRows{display:grid;gap:10px}
+    .multiRow{
+      border:1px solid rgba(193,211,255,.2);
+      border-radius:12px;
+      padding:10px;
+      background:rgba(255,255,255,.02);
+    }
+    .multiRowHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:8px;
+      font-size:13px;
+    }
+    .miniBtn{padding:6px 10px;font-size:12px}
+
+    footer{
+      padding:18px 0 30px;
+      border-top:1px solid rgba(193,211,255,.16);
+      color:var(--muted);
+      text-align:center;
+      font-size:13px;
+    }
+
+    @media(max-width:760px){
+      h1{font-size:24px}
+      .flow{grid-template-columns:1fr}
+      h2{font-size:21px}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap head-inner">
+      <div class="title-row">
+        <h1>NIC 和 STC 的換算公式</h1>
+        <span class="tag">STC / NIC / EQ</span>
+      </div>
+
+      <div class="sub">
+        先看公式，再帶入數值計算。
+      </div>
+
+      <div class="hero-formula">
+        <div class="formula">
+          \[
+          NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
+          \]
+        </div>
+        <ul class="symbol-list">
+          <li><b>NIC</b>：現場噪音隔離指標（Noise Isolation Class）</li>
+          <li><b>STCeq</b>：等效 STC（把牆、門、玻璃等構件加權後的整體隔音值）</li>
+          <li><b>S</b>：受測牆面面積（㎡）</li>
+          <li><b>A</b>：接收房吸音量（Sabin）</li>
+        </ul>
+      </div>
+
+      <nav>
+        <a href="javascript:void(0)" onclick="history.back()">回上一頁</a>
+        <a class="home-btn" href="index.html">回到首頁</a>
+        <a href="#tool-eqstc">等效 STC</a>
+        <a href="#tool-nic">NIC 計算器</a>
+        <a href="#tool-reverse">反推門 STC</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="flow" aria-label="計算流程">
+      <div class="flow-item"><b>Step 1</b>輸入牆、門、玻璃等多段 STC/面積，先算 STCeq。</div>
+      <div class="flow-item"><b>Step 2</b>把 STCeq 搭配 S、A 代入，算出 NIC。</div>
+      <div class="flow-item"><b>Step 3</b>已知目標 STCeq 時，反推門至少需要的 STC。</div>
+    </section>
+
+    <div class="grid">
+      <section id="tool-eqstc" class="card half">
+        <h2>① 等效 STC（多段牆體加權）</h2>
+        <p class="desc">同一公式支援多段構件（牆、門、玻璃、輕隔間），用聲能與面積加權計算整體等效 STC。</p>
+
+        <div id="eq_rows" class="multiRows">
+          <div class="multiRow">
+            <div class="multiRowHead"><b>牆</b></div>
+            <div class="row two">
+              <div>
+                <label>STC (dB)</label>
+                <input class="multi-stc" type="number" value="45">
+              </div>
+              <div>
+                <label>面積 (㎡)</label>
+                <input class="multi-area" type="number" value="6">
+              </div>
+            </div>
+          </div>
+
+          <div class="multiRow">
+            <div class="multiRowHead"><b>門</b></div>
+            <div class="row two">
+              <div>
+                <label>STC (dB)</label>
+                <input class="multi-stc" type="number" value="38">
+              </div>
+              <div>
+                <label>面積 (㎡)</label>
+                <input class="multi-area" type="number" value="2">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btns">
+          <button type="button" onclick="addMultiRow()">新增牆段</button>
+          <button type="button" class="btn-strong" onclick="calcMultiEqSTC()">計算多牆段等效 STC</button>
+        </div>
+
+        <div class="out" id="eq_out">輸入各牆段 STC 與面積後，按「計算多牆段等效 STC」。</div>
+
+        <div class="formula">
+          \[
+          TL_{eq} = -10\log_{10}\left(
+          \frac{\sum_{i=1}^{n} S_i10^{-TL_i/10}}{\sum_{i=1}^{n}S_i}
+          \right)
+          \]
+        </div>
+
+        <div class="hint"><span class="warn">重點：</span>等效 STC 不是算術平均；低 STC 且面積較大的構件會明顯拉低整體結果。</div>
+      </section>
+
+      <section id="tool-nic" class="card half">
+        <h2>② NIC 計算器</h2>
+        <p class="desc">輸入 STCeq、受測面積 S 與接收房吸音量 A，依公式計算 NIC。</p>
+
+        <div class="row three">
+          <div>
+            <label>STCeq (dB)</label>
+            <input id="nic_stceq" type="number" value="42">
+          </div>
+          <div>
+            <label>S 受測面積 (㎡)</label>
+            <input id="nic_s" type="number" value="8">
+          </div>
+          <div>
+            <label>A 接收房吸音量 (Sabin)</label>
+            <input id="nic_a" type="number" value="2" step="0.1" min="0">
+          </div>
+        </div>
+
+        <div class="btns">
+          <button type="button" class="btn-strong" onclick="calcNIC()">計算 NIC</button>
+        </div>
+
+        <div class="out" id="nic_out">輸入後按「計算 NIC」。</div>
+
+        <div class="formula">
+          \[
+          NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
+          \]
+        </div>
+
+        <p class="desc">
+          隔音係數最佳是 1，最差是 0。一般方塊地毯（塑膠底背）的吸音係數約為 0.2~0.3，乘上面積後即可估算整個接收房的 Sabin 值。<br>
+          例如 10㎡ 的房間只貼地毯，Sabin 值約為 0.2 × 10 = 2。<br>
+          一般辦公室常見計算結果約為 6～8 dB（視接收空間吸音量而定）；若要更高的 NIC，可優先增加接收房吸音量。<br>
+          若暫時不知道房間內吸音量，建議可先把 A 設為 <b>2</b> 做初步估算。
+        </p>
+      </section>
+
+      <section id="tool-reverse" class="card">
+        <h2>③ 目標等效 STC 反推門 STC</h2>
+        <p class="desc">已知目標 STCeq、牆 STC、牆/門面積，反推出門至少需要的 STC。</p>
+
+        <div class="row two">
+          <div>
+            <label>目標 STCeq (dB)</label>
+            <input id="rev_target" type="number" value="42">
+          </div>
+          <div>
+            <label>牆 STC (dB)</label>
+            <input id="rev_wall_stc" type="number" value="45">
+          </div>
+          <div>
+            <label>牆面積 (㎡)</label>
+            <input id="rev_wall_area" type="number" value="6">
+          </div>
+          <div>
+            <label>門面積 (㎡)</label>
+            <input id="rev_door_area" type="number" value="2">
+          </div>
+        </div>
+
+        <div class="btns">
+          <button type="button" class="btn-strong" onclick="reverseDoorSTC()">反推門 STC</button>
+        </div>
+
+        <div class="out" id="rev_out">輸入後按「反推門 STC」。</div>
+
+        <div class="hint">若出現無法計算，通常代表：目標 STCeq 過高、門比例過大，或牆體 STC 不足以支撐該目標。</div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Acoustic Tools • For engineering estimation & communication • ©
+  </footer>
+
+  <script>
+    function mustPositive(...vals){
+      return vals.every(v => Number.isFinite(v) && v > 0);
+    }
+
+    function addMultiRow(){
+      const wrap = document.getElementById("eq_rows");
+      const nextIndex = wrap.querySelectorAll(".multiRow").length + 1;
+      const row = document.createElement("div");
+      row.className = "multiRow";
+      row.innerHTML = `
+        <div class="multiRowHead">
+          <b>構件 ${nextIndex - 1}</b>
+          <button type="button" class="miniBtn" onclick="removeMultiRow(this)">刪除</button>
+        </div>
+        <div class="row two">
+          <div>
+            <label>STC (dB)</label>
+            <input class="multi-stc" type="number" value="40">
+          </div>
+          <div>
+            <label>面積 (㎡)</label>
+            <input class="multi-area" type="number" value="1">
+          </div>
+        </div>`;
+      wrap.appendChild(row);
+    }
+
+    function removeMultiRow(btn){
+      const wrap = document.getElementById("eq_rows");
+      const rows = wrap.querySelectorAll(".multiRow");
+      if(rows.length <= 2){
+        document.getElementById("eq_out").innerHTML = "至少保留 2 段（例如牆 + 門）。";
+        return;
+      }
+      btn.closest(".multiRow").remove();
+      wrap.querySelectorAll(".multiRowHead b").forEach((el, i)=>{
+        if(i === 0) el.textContent = "牆";
+        else if(i === 1) el.textContent = "門";
+        else el.textContent = `構件 ${i-1}`;
+      });
+    }
+
+    function calcMultiEqSTC(){
+      const stcInputs = [...document.querySelectorAll(".multi-stc")];
+      const areaInputs = [...document.querySelectorAll(".multi-area")];
+      const out = document.getElementById("eq_out");
+
+      let totalArea = 0;
+      let energySum = 0;
+      let count = 0;
+
+      for(let i=0; i<stcInputs.length; i++){
+        const stc = parseFloat(stcInputs[i].value);
+        const area = parseFloat(areaInputs[i].value);
+
+        if(!mustPositive(stc, area)){
+          out.innerHTML = `第 ${i+1} 段輸入無效：STC 與面積都必須 > 0。`;
+          return;
+        }
+
+        totalArea += area;
+        energySum += area * Math.pow(10, -stc/10);
+        count++;
+      }
+
+      const TLeq = -10 * Math.log10(energySum / totalArea);
+      out.innerHTML = `多牆段等效 STC（STCeq / TLeq）≈ <b>${TLeq.toFixed(2)} dB</b><br>（共 ${count} 段，總面積 ${totalArea.toFixed(2)}㎡）`;
+    }
+
+    function calcNIC(){
+      const STCeq = parseFloat(document.getElementById("nic_stceq").value);
+      const S = parseFloat(document.getElementById("nic_s").value);
+      const A = parseFloat(document.getElementById("nic_a").value);
+      const out = document.getElementById("nic_out");
+
+      if(!mustPositive(STCeq,S,A)){
+        out.innerHTML = "請確認 STCeq、S、A 皆 > 0。";
         return;
       }
 
-      totalArea += area;
-      energySum += area * Math.pow(10, -stc/10);
-      count++;
+      const deduction = 10 * Math.log10(S / A);
+      const NIC = STCeq - deduction;
+
+      out.innerHTML = `10·log10(S/A) = <b>${deduction.toFixed(2)} dB</b><br>NIC ≈ <b>${NIC.toFixed(2)} dB</b>`;
     }
 
-    const TLeq = -10 * Math.log10(energySum / totalArea);
-    out.innerHTML = `多牆段等效 STC（STCeq / TLeq）≈ <b>${TLeq.toFixed(2)} dB</b><br/>
-      （共 ${count} 段，總面積 ${totalArea.toFixed(2)}㎡）`;
-  }
+    function reverseDoorSTC(){
+      const target = parseFloat(document.getElementById("rev_target").value);
+      const TLw = parseFloat(document.getElementById("rev_wall_stc").value);
+      const Sw = parseFloat(document.getElementById("rev_wall_area").value);
+      const Sd = parseFloat(document.getElementById("rev_door_area").value);
+      const out = document.getElementById("rev_out");
 
-  // ===== 2) NIC =====
-  function calcNIC(){
-    const STCeq = parseFloat(document.getElementById("nic_stceq").value);
-    const S = parseFloat(document.getElementById("nic_s").value);
-    const A = parseFloat(document.getElementById("nic_a").value);
+      if(!mustPositive(target,TLw,Sw,Sd)){
+        out.innerHTML = "請確認目標 STCeq、STC 與面積皆 > 0。";
+        return;
+      }
 
-    const out = document.getElementById("nic_out");
+      const St = Sw + Sd;
+      const rhs = (Math.pow(10,-target/10) * St) - (Sw * Math.pow(10,-TLw/10));
+      const energyDoor = rhs / Sd;
 
-    if(!mustPositive(STCeq,S,A)){
-      out.innerHTML = "請確認 STCeq、S、A 皆 > 0。";
-      return;
+      if(energyDoor <= 0 || !Number.isFinite(energyDoor)){
+        out.innerHTML = "無法計算（energyDoor ≤ 0）。<br>可能原因：目標 STCeq 過高、牆體 STC 不足或門比例過大。";
+        return;
+      }
+
+      const TLd = -10 * Math.log10(energyDoor);
+      out.innerHTML = `所需門 STC ≈ <b>${TLd.toFixed(2)} dB</b><br>（目標 STCeq ${target}，牆 ${TLw}dB×${Sw}㎡，門 ${Sd}㎡）`;
     }
-
-    const deduction = 10 * Math.log10(S / A);
-    const NIC = STCeq - deduction;
-
-    out.innerHTML =
-      `10·log₁₀(S/A) = <b>${deduction.toFixed(2)} dB</b><br/>
-       NIC ≈ <b>${NIC.toFixed(2)} dB</b>`;
-  }
-
-  // ===== 3) 反推門 STC =====
-  function reverseDoorSTC(){
-    const target = parseFloat(document.getElementById("rev_target").value);
-    const TLw = parseFloat(document.getElementById("rev_wall_stc").value);
-    const Sw = parseFloat(document.getElementById("rev_wall_area").value);
-    const Sd = parseFloat(document.getElementById("rev_door_area").value);
-
-    const out = document.getElementById("rev_out");
-
-    if(!mustPositive(target,TLw,Sw,Sd)){
-      out.innerHTML = "請確認目標 STCeq、STC 與面積皆 > 0。";
-      return;
-    }
-
-    const St = Sw + Sd;
-
-    // 由等效公式解出門的能量項
-    // 10^(-target/10) = (Sw*10^(-TLw/10) + Sd*10^(-TLd/10)) / St
-    // Sd*10^(-TLd/10) = 10^(-target/10)*St - Sw*10^(-TLw/10)
-    // 10^(-TLd/10) = [10^(-target/10)*St - Sw*10^(-TLw/10)] / Sd
-    // TLd = -10*log10( ... )
-
-    const rhs = (Math.pow(10,-target/10) * St) - (Sw * Math.pow(10,-TLw/10));
-    const energyDoor = rhs / Sd;
-
-    if(energyDoor <= 0 || !Number.isFinite(energyDoor)){
-      out.innerHTML =
-        `無法計算（energyDoor ≤ 0）。<br/>
-         可能原因：目標 STCeq <b>過高</b>，或牆體 STC <b>不足</b>，或門比例 <b>過大</b>。`;
-      return;
-    }
-
-    const TLd = -10 * Math.log10(energyDoor);
-
-    out.innerHTML =
-      `所需門 STC ≈ <b>${TLd.toFixed(2)} dB</b><br/>
-       （目標 STCeq ${target}，牆 ${TLw}dB×${Sw}㎡，門 ${Sd}㎡）`;
-  }
-</script>
+  </script>
+</body>
+</html>
