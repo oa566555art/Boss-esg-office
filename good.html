@@ -269,10 +269,10 @@
           \]
         </div>
         <ul class="symbol-list">
-          <li><b>NIC</b>：現場噪音隔離指標（Noise Isolation Class）</li>
-          <li><b>STCeq</b>：等效 STC（把牆、門、玻璃等構件加權後的整體隔音值）</li>
+          <li><b>NIC</b>：完工之後測量現場噪音隔離指標 以牆面為單位（Noise Isolation Class）</li>
+          <li><b>STCeq</b>：等效 STC（把受測牆面的組成輕隔間、門、玻璃牆等構件的實驗室隔音數值STC加權後的整體隔音值STCeq）</li>
           <li><b>S</b>：受測牆面面積（㎡）</li>
-          <li><b>A</b>：接收房吸音量（Sabin）</li>
+          <li><b>A</b>：分貝計所在房間的吸音量，可以先設定為2（Sabin）</li>
         </ul>
       </div>
 
@@ -296,11 +296,11 @@
     <div class="grid">
       <section id="tool-eqstc" class="card half">
         <h2>① 等效 STC（多段牆體加權）</h2>
-        <p class="desc">同一公式支援多段構件（牆、門、玻璃、輕隔間），用聲能與面積加權計算整體等效 STC。</p>
+        <p class="desc">這公式是用來計算同一道牆面有不同的STC實驗室數值（例如:門STC38、輕隔間STC52、玻璃STC45）的牆壁的真實STC，用聲能與面積加權計算整體等效 STC。</p>
 
         <div id="eq_rows" class="multiRows">
           <div class="multiRow">
-            <div class="multiRowHead"><b>牆</b></div>
+            <div class="multiRowHead"><b>牆1</b></div>
             <div class="row two">
               <div>
                 <label>STC (dB)</label>
@@ -329,13 +329,13 @@
         </div>
 
         <div class="btns">
-          <button type="button" onclick="addMultiRow()">新增牆段</button>
-          <button type="button" class="btn-strong" onclick="calcMultiEqSTC()">計算多牆段等效 STC</button>
+          <button type="button" onclick="addMultiRow()">新增牆2:一道牆有2個STC以上的數值</button>
+          <button type="button" class="btn-strong" onclick="calcMultiEqSTC()">按一下 計算牆等效STC結果</button>
         </div>
 
-        <div class="out" id="eq_out">輸入各牆段 STC 與面積後，按「計算多牆段等效 STC」。</div>
+        <div class="out" id="eq_out">輸入各牆段 STC 與面積後，按「計算牆等效 STC」。</div>
 
-        <div class="formula">
+        <div class="formula">計算公式
           \[
           TL_{eq} = -10\log_{10}\left(
           \frac{\sum_{i=1}^{n} S_i10^{-TL_i/10}}{\sum_{i=1}^{n}S_i}
@@ -347,8 +347,8 @@
       </section>
 
       <section id="tool-nic" class="card half">
-        <h2>② NIC 計算器</h2>
-        <p class="desc">輸入 STCeq、受測面積 S 與接收房吸音量 A，依公式計算 NIC。</p>
+        <h2>② 預測完工測量牆面NIC 計算器</h2>
+        <p class="desc">輸入 STCeq、受測面積 S 與接收房吸音量 A(預設只鋪地毯數值為2)，依公式計算 NIC。</p>
 
         <div class="row three">
           <div>
@@ -366,12 +366,13 @@
         </div>
 
         <div class="btns">
-          <button type="button" class="btn-strong" onclick="calcNIC()">計算 NIC</button>
+          <button type="button" class="btn-strong" onclick="calcNIC()">按一下 計算NIC結果</button>
         </div>
 
         <div class="out" id="nic_out">輸入後按「計算 NIC」。</div>
 
-        <div class="formula">
+        <div class="formula">計算公式
+
           \[
           NIC = STC_{eq} - 10\log_{10}\left(\frac{S}{A}\right)
           \]
@@ -387,7 +388,7 @@
 
       <section id="tool-reverse" class="card">
         <h2>③ 目標等效 STC 反推門 STC</h2>
-        <p class="desc">已知目標 STCeq、牆 STC、牆/門面積，反推出門至少需要的 STC。</p>
+        <p class="desc">一道有門的牆隔音的重點在門，隔音數值越高的門價格越貴。因此這一個計算器可以算出所需選用的隔音門數字：已知目標 STCeq、牆 STC、牆/門面積，反推出門至少需要的 STC。</p>
 
         <div class="row two">
           <div>
