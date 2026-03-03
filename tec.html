@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>技術文件下載｜BOSSOA</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#121c31;
+      --line:rgba(148,163,184,.35);
+      --text:#e5edf9;
+      --muted:#93a4c5;
+      --btn:#1d4ed8;
+      --btn-hover:#1e40af;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Noto Sans TC","PingFang TC",Arial,sans-serif;
+      background:radial-gradient(1000px 500px at -10% -20%, rgba(59,130,246,.22), transparent 62%), var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .card{
+      width:min(820px,100%);
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:28px;
+      box-shadow:0 20px 50px rgba(0,0,0,.35);
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:32px;
+      line-height:1.2;
+    }
+    p{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+    }
+    .downloads{
+      display:grid;
+      gap:12px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:12px;
+      border:1px solid rgba(59,130,246,.45);
+      background:var(--btn);
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      width:fit-content;
+    }
+    .btn:hover{background:var(--btn-hover)}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>技術文件下載</h1>
+    <p>以下為可下載的技術文件，點擊按鈕即可取得檔案。</p>
+
+    <section class="downloads">
+      <a class="btn" href="https://www.dropbox.com/scl/fi/j97dbv3kljdk5cfdmro6t/BOSS-TRL.docx?rlkey=nba8rbiq86fsg93hqh3ds7l3j&dl=1" target="_blank" rel="noopener">
+        TRL 108 招標規範 Word 檔
+      </a>
+    </section>
+  </main>
+</body>
+</html>
