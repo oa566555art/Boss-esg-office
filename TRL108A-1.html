@@ -28,6 +28,32 @@
       border-color: #2563eb;
       transform: translateY(-4px);
     }
+    .logic-box.featured {
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #2563eb;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+    }
+    .logic-box.featured:hover {
+      border-color: #1d4ed8;
+      transform: translateY(-6px);
+      box-shadow: 0 18px 34px rgba(29, 78, 216, 0.28);
+    }
+    .featured-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      background: #ffffff;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
     .highlight-box {
       background: rgba(37, 99, 235, 0.05);
       border: 1px dashed #2563eb;
@@ -44,6 +70,7 @@
         </div>
         <div class="hidden md:flex space-x-8 text-sm font-medium">
           <a href="#context" class="hover:text-blue-600 transition">爭議情境</a>
+          <a href="#dialogue" class="hover:text-blue-600 transition">模擬對話</a>
           <a href="#responsibility" class="hover:text-blue-600 transition">設計方責任</a>
           <a href="#strategy" class="hover:text-blue-600 transition">策略做法</a>
           <a href="#conclusion" class="hover:text-blue-600 transition">結論</a>
@@ -80,9 +107,25 @@
         </div>
         <div class="relative">
           <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
-            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1200" alt="隔音策略與辦公室設計" class="w-full h-auto">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNT_dijhW-lKmfKSjTSvPGfvY_emwyolllnZWy9U52_dfLTpsQhuC8tAU81PZb2TZAtNTBkFjbfMrbkx6rn2KxtxU9SO4D09KdB3zoKcUcOkk3kR-5h5I-i_qq7KArD4MShJr7rpct8rNe2-hWIuj6CMA=w1980-h1320-s-no-gm?authuser=0" alt="隔音策略與辦公室設計" class="w-full h-auto">
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="bg-blue-600 text-white rounded-2xl p-8 shadow-xl">
+        <p class="text-xs font-bold tracking-[0.18em] uppercase text-blue-100 mb-3">Core Guarantee</p>
+        <h2 class="text-2xl lg:text-3xl font-bold leading-snug mb-4">核心論點：基礎隔音不會比較貴，關鍵是找到正確的投標廠商</h2>
+        <p class="text-blue-100 leading-relaxed text-base lg:text-lg">
+          我們設定此規範的前提，就是市場上確實存在能同時滿足性能與預算的廠商。投標方需要多花心思找到正確供應鏈，而不是直接要求降低標準。
+          在隔音玻璃隔間這個項目上，我們的設計原則是：<span class="font-bold text-white">價格可以符合客戶預算，性能不必因此妥協</span>。
+          <span class="font-bold text-white">企業是有機體，我們的設計會對應企業未來 10 年成長，包含隔音升級需求都先考慮進去。</span>
+          <span class="font-bold text-white">我們的設計是不浪費、不重工、也不只看眼前；我們對預算的掌握同樣專業，而且不只隔音。</span>
+          若業主或投標方對此有疑慮，歡迎直接交由我們執行並驗證，這是我們對設計結果的保證。
+        </p>
       </div>
     </div>
   </section>
@@ -113,6 +156,70 @@
   </section>
 
   <section id="responsibility" class="py-20 bg-gray-50">
+    <div id="dialogue" class="max-w-7xl mx-auto px-4 mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">模擬對話情境（業主 / 廠商 / 設計方）</h2>
+        <p class="text-gray-500">用實際溝通語言，把「為什麼不能只看單價」說清楚</p>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-2xl shadow-md overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gray-50">
+          <h3 class="font-bold text-blue-900 flex items-center gap-2">
+            <i class="fas fa-comments"></i> 招標會議現場對話
+          </h3>
+        </div>
+
+        <div class="p-6 space-y-4">
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <p class="text-xs font-bold text-gray-500 mb-1">業主</p>
+            <p class="text-gray-800">「這個規範太高了吧？我只想控制預算，能不能改鬆一點？」</p>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <p class="text-xs font-bold text-amber-700 mb-1">投標廠商</p>
+            <p class="text-amber-900">「符合這個條件的多是進口系統，國內很難找，價格一定會比較高。」</p>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <p class="text-xs font-bold text-blue-700 mb-1">設計方（BOSSOA）</p>
+            <p class="text-blue-900 leading-relaxed">
+              「我們不是要你一次做到最貴，而是要先守住可用的基礎隔音，並保留升級能力。<br>
+              企業是有機體，我們的設計是用未來 10 年成長來看，所以連隔音需求變化都先考慮進去。<br>
+              這樣今天能控制預算，明天需求提高時也不必拆掉重做。重點不是放棄規範，而是找到對的供應商。」
+            </p>
+          </div>
+
+          <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <p class="text-xs font-bold text-gray-500 mb-1">業主</p>
+            <p class="text-gray-800">「那這樣做，真的可以在預算內嗎？」</p>
+          </div>
+
+          <div class="bg-blue-600 text-white rounded-xl p-4">
+            <p class="text-xs font-bold text-blue-100 mb-1">設計方（BOSSOA）</p>
+            <p class="leading-relaxed">
+              「可以。我們會這樣子設計，就是一定有廠商可以符合這樣子的預算。<br>
+              我們會用招標規範與施工策略把風險控住，這就是我們作為專業設計師的保證。」
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 grid md:grid-cols-3 gap-4">
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <p class="text-xs font-bold text-gray-500 mb-2">重點 1</p>
+          <p class="text-sm text-gray-700 leading-relaxed">現在降規看似省錢，但未來需求成長時可能造成拆除重做，總成本反而更高。</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <p class="text-xs font-bold text-gray-500 mb-2">重點 2</p>
+          <p class="text-sm text-gray-700 leading-relaxed">基礎隔音不等於高價，關鍵在於招標條件清楚、供應商篩選正確。</p>
+        </div>
+        <div class="bg-white border border-gray-200 rounded-xl p-4">
+          <p class="text-xs font-bold text-gray-500 mb-2">重點 3</p>
+          <p class="text-sm text-gray-700 leading-relaxed">設計方的價值是把短期預算與長期風險一起管理，並保留可升級路徑。</p>
+        </div>
+      </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-14">
         <h2 class="text-3xl font-bold text-gray-900 mb-4">2. 設計方的專業責任</h2>
@@ -140,12 +247,13 @@
           </p>
         </div>
 
-        <div class="logic-box p-8 rounded-2xl shadow-sm">
-          <div class="w-12 h-12 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-6">
+        <div class="logic-box featured p-8 rounded-2xl shadow-sm">
+          <span class="featured-badge">Key Point</span>
+          <div class="w-14 h-14 bg-blue-700 text-white rounded-xl flex items-center justify-center mb-6">
             <i class="fas fa-comments"></i>
           </div>
-          <h4 class="text-xl font-bold mb-4">翻譯專業給業主</h4>
-          <p class="text-gray-600 text-sm leading-relaxed">
+          <h4 class="text-2xl font-bold mb-4 text-blue-900">翻譯專業給業主</h4>
+          <p class="text-blue-900 text-base leading-relaxed font-medium">
             當業主要求改規範時，正是設計方說明隔音邏輯、長期成本與風險控制的最佳時機。
           </p>
         </div>
@@ -197,6 +305,9 @@
           </p>
           <div class="inline-block border border-blue-400 px-6 py-2 rounded-lg text-sm text-blue-300">
             專業不是把規格做到最貴，而是把未來風險先設計進現在。
+          </div>
+          <div class="mt-3 inline-block border border-blue-300 bg-blue-800/40 px-6 py-2 rounded-lg text-sm text-blue-100">
+            我們的設計是不浪費、不重工、也不只看眼前；預算掌握同樣專業，而且不只隔音。
           </div>
         </div>
         <i class="fas fa-shield-alt absolute right-[-20px] bottom-[-20px] text-[200px] text-white/5"></i>
