@@ -197,7 +197,45 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:10px;
+      margin-top:0;
+    }
+    .focusLinks{
+      margin-top:14px;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(197,160,101,.55);
+      background: rgba(9,22,36,.5);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .focusTitle{
+      margin:0 0 10px;
+      color:#f5d4a0;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+    }
+    .heroPhoto{
+      margin-top:14px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.28);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 12px 24px rgba(0,0,0,.2);
+    }
+    .heroPhoto img{
+      display:block;
+      width:100%;
+      height: clamp(180px, 30vw, 320px);
+      object-fit:cover;
+    }
+    .heroPhoto figcaption{
+      padding:10px 12px;
+      font-size:12px;
+      letter-spacing:.8px;
+      color:rgba(255,255,255,.86);
+      background: rgba(9,22,36,.65);
+      border-top:1px solid rgba(255,255,255,.18);
     }
     .quickLinks .btn{
       border-color: var(--accent);
@@ -457,25 +495,33 @@
           <span class="pill">ESG / 可拆卸 / 可搬移</span>
         </div>
 
-        <h1>把隔間做成「資產」<br>可拆卸、可搬移、可升級</h1>
+        <h1>把隔音玻璃門做成「資產」<br>可搬移、可升級</h1>
 
         <p class="lead">
-          我們提供 Maars Living Walls 系統隔間整合服務：玻璃隔間、實牆、Room-in-Room、聲學與防火配置，
+          我們提供進口隔音玻璃隔間整合服務（TRL、T1、Ｍarrs等）：玻璃隔間、實牆、Room-in-Room、聲學與防火配置，
           協助設計端在「預算、規範、未來變動」之間做出可驗收、可演進的最穩配置。
         </p>
 
         <div class="ctaRow">
           <a class="btn trl" href="TRL108A.html">前往 TRL108A 專頁</a>
-          <a class="btn primary" href="#contact">預約諮詢 / 取得型錄</a>
           <a class="btn ghost" href="#solutions">看系統分類</a>
           <a class="btn" href="https://maarslivingwalls.com/" target="_blank" rel="noopener">荷蘭Maars隔音玻璃門</a>
           <a class="btn" href="https://www.t1glass.com/zh" target="_blank" rel="noopener noreferrer">T1 Glass 官網</a>
         </div>
-        <div class="quickLinks">
-          <a class="btn" href="white.html">白皮書</a>
-          <a class="btn" href="good.html"><span class="iconCalc" aria-hidden="true"></span> 聲學計算公式</a>
-          <a class="btn" href="TRL108A-1.html">降規爭議策略頁</a>
+        <div class="focusLinks" aria-label="重點內容入口">
+          <p class="focusTitle">重點內容</p>
+          <div class="quickLinks">
+            <a class="btn" href="white.html">白皮書</a>
+            <a class="btn" href="good.html"><span class="iconCalc" aria-hidden="true"></span> 聲學計算公式</a>
+            <a class="btn" href="TRL108A.html">隔音投標規範</a>
+            <a class="btn" href="TRL108A-1.html">降規爭議策略頁</a>
+          </div>
         </div>
+
+        <figure class="heroPhoto" aria-label="隔音玻璃隔間案例照片">
+          <img src="s-010.JPG" alt="隔音玻璃隔間現場案例">
+          <figcaption>隔音玻璃隔間案例實景</figcaption>
+        </figure>
 
         <div class="hr"></div>
 
