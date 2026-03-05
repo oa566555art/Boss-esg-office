@@ -146,10 +146,51 @@
       padding:18px;
     }
     .cta b{color:#fff}
+    .key-flag{
+      margin-top:14px;
+      border:2px solid #1e40af;
+      border-radius:14px;
+      background:linear-gradient(135deg,#eff6ff 0%, #dbeafe 100%);
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      box-shadow:0 10px 22px rgba(30,64,175,.14);
+    }
+    .key-flag .icon{
+      width:30px;
+      height:30px;
+      border-radius:999px;
+      background:#1e40af;
+      color:#fff;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      font-size:16px;
+    }
+    .key-flag .label{
+      display:inline-block;
+      margin-bottom:4px;
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#1e3a8a;
+      font-weight:700;
+    }
+    .key-flag .text{
+      margin:0;
+      color:#0f172a;
+      font-size:18px;
+      line-height:1.65;
+      font-weight:800;
+    }
     @media (max-width:860px){
       .grid{grid-template-columns:1fr}
       .panel h2{font-size:24px}
       .hero-card{padding:22px}
+      .key-flag .text{font-size:16px}
     }
   </style>
 </head>
@@ -203,8 +244,8 @@
         <article class="card">
           <h3>讓利執行</h3>
           <p>
-            為確保策略可快速落地，我主動降低售價，毛利控制在不到 10%。這是一個以市場滲透為優先的策略投資，
-            目標是先建立可複製的成功樣板。
+            為確保策略可快速落地，我主動降低售價，毛利控制在不到 10%。但工程型專案若長期維持此毛利，
+            難以支撐穩定營運。因此下一階段的重點不是提高售價，而是優先降低成本結構。
           </p>
         </article>
       </div>
@@ -232,13 +273,21 @@
   <section class="section">
     <div class="wrap">
       <article class="panel">
-        <h2>三、下一階段提案（39dB 版本）</h2>
+        <h2>三、下一階段提案（TRL 39dB 版本）</h2>
         <p>
-          我們希望以同樣策略再進一步升級：提供與進口品牌同等隔音素質的產品，並把雙層玻璃門（39dB）價格壓到
-          新台幣 39,000，協助貴公司在不脫離市場價格帶的前提下，取得更強的規格優勢與更大的業績成長。
+          基於成本與永續經營考量，我們將放掉 JEB 代理，改用具備同等隔音效果的進口品牌 TRL。
+          在不提高售價的原則下，透過成本優化更進一步的把雙層玻璃門（39dB）價格壓到破壞性的價格只要新台幣 39,000，
+          協助貴公司在市場價格帶內取得更強規格優勢與更大的業績成長。
         </p>
+        <div class="key-flag" role="note" aria-label="核心策略標誌">
+          <span class="icon">!</span>
+          <div>
+            <span class="label">策略標誌</span>
+            <p class="text">在不提高售價的情況下，透過成本優化，更進一步把雙層玻璃門（39dB）價格壓到新台幣 39,000。</p>
+          </div>
+        </div>
         <div class="cta">
-          <b>提案核心：</b>用可負擔的價格，交付更高等級的隔音規格，讓標案勝率與品牌專業度同步提升。
+          <b>提案核心：</b>不靠漲價、改靠降成本；以 TRL 同等隔音品質，交付可擴張且可持續的工程策略。
         </div>
       </article>
     </div>
