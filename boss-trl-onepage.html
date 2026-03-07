@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BOSS TRL108｜整合簡報一頁式網站</title>
+  <meta name="description" content="整合 white、TRL108A、TRL108A-1、SLA 策略與技術文件下載的一頁式簡報網站。" />
+  <style>
+    :root{
+      --bg:#071023;
+      --bg2:#0b1833;
+      --panel:#0f2245;
+      --card:#122953;
+      --line:#2b4673;
+      --text:#edf4ff;
+      --muted:#b8c7df;
+      --accent:#4ea1ff;
+      --accent2:#93c5fd;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      background: radial-gradient(circle at 20% 10%, #123063 0%, var(--bg) 60%);
+      color:var(--text);
+      line-height:1.75;
+    }
+    a{color:inherit;text-decoration:none}
+    .topbar{
+      position:fixed; top:0; left:0; right:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,16,35,.82);
+      border-bottom:1px solid rgba(147,197,253,.22);
+    }
+    .nav{
+      max-width:var(--max); margin:0 auto; padding:10px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .brand{font-weight:800; letter-spacing:.4px; color:#dbeafe; font-size:18px}
+    .menu{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+    .menu a{
+      font-size:12px; text-transform:uppercase; letter-spacing:1px;
+      border:1px solid rgba(147,197,253,.35);
+      border-radius:999px;
+      padding:6px 10px;
+      color:#cfe3ff;
+      background:rgba(255,255,255,.02);
+    }
+    .menu a:hover{background:rgba(78,161,255,.18); border-color:#60a5fa}
+
+    main{scroll-snap-type:y mandatory}
+    .slide{
+      min-height:100vh;
+      scroll-snap-align:start;
+      padding:94px 16px 34px;
+      display:flex;
+      align-items:center;
+    }
+    .wrap{max-width:var(--max); margin:0 auto; width:100%}
+
+    .hero{
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:30px;
+      background:linear-gradient(145deg, rgba(16,35,72,.92), rgba(11,24,51,.92));
+      box-shadow:0 26px 40px rgba(0,0,0,.28);
+    }
+    .kicker{
+      display:inline-block; padding:4px 12px; border-radius:999px;
+      border:1px solid rgba(147,197,253,.45); color:#bfdbfe;
+      font-size:12px; letter-spacing:1.4px; text-transform:uppercase;
+    }
+    h1{margin:12px 0 8px; font-size:clamp(32px,6vw,62px); line-height:1.16}
+    h2{margin:0 0 10px; font-size:clamp(28px,4vw,42px); line-height:1.2}
+    h3{margin:0 0 8px; font-size:22px}
+    .lead{color:var(--muted); max-width:82ch; font-size:18px}
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+    .card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(18,41,83,.9), rgba(15,34,69,.92));
+      border-radius:18px;
+      padding:16px;
+    }
+    .card p{margin:0; color:var(--muted)}
+
+    .quote{
+      border-left:4px solid var(--accent);
+      padding:10px 12px;
+      background:rgba(78,161,255,.14);
+      border-radius:10px;
+      color:#e7f1ff;
+      margin-top:8px;
+    }
+
+    .pill{
+      display:inline-block;
+      margin-top:8px;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.6px;
+    }
+    .pill.good{background:rgba(34,197,94,.18); color:#86efac; border:1px solid rgba(34,197,94,.4)}
+    .pill.warn{background:rgba(245,158,11,.18); color:#fcd34d; border:1px solid rgba(245,158,11,.45)}
+
+    .dialogue{display:grid; gap:10px; margin-top:10px}
+    .bubble{
+      padding:12px; border-radius:12px; border:1px solid var(--line);
+      background:rgba(18,41,83,.76);
+    }
+    .bubble b{display:block; font-size:13px; color:#bfdbfe; margin-bottom:4px}
+
+    .timeline{display:grid; gap:10px; margin-top:8px}
+    .time-item{
+      border:1px solid var(--line);
+      background:rgba(11,24,51,.85);
+      border-radius:12px;
+      padding:12px;
+    }
+    .time-item .year{font-size:13px; color:#93c5fd; font-weight:700; letter-spacing:.5px}
+
+    .flag{
+      margin-top:10px;
+      border:2px solid #60a5fa;
+      border-radius:14px;
+      padding:12px;
+      background:linear-gradient(135deg, rgba(59,130,246,.24), rgba(30,64,175,.24));
+      box-shadow:0 16px 26px rgba(30,64,175,.24);
+    }
+    .flag .title{font-size:12px; letter-spacing:1px; text-transform:uppercase; color:#bfdbfe; font-weight:700}
+    .flag .text{margin:4px 0 0; font-size:24px; font-weight:900; line-height:1.4}
+
+    .downloads{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:10px}
+    .dl{
+      border:1px solid var(--line); border-radius:14px; padding:14px;
+      background:rgba(15,34,69,.92);
+    }
+    .dl h4{margin:0 0 4px; font-size:18px}
+    .dl p{margin:0 0 10px; color:var(--muted); font-size:14px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid #60a5fa; border-radius:999px;
+      padding:8px 14px; color:#e7f1ff; background:rgba(59,130,246,.24);
+      font-weight:700; font-size:14px;
+    }
+    .btn:hover{background:rgba(59,130,246,.36)}
+
+    .links{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .links a{font-size:13px; color:#dbeafe; border:1px solid var(--line); padding:6px 10px; border-radius:999px}
+
+    @media (max-width:960px){
+      .grid2,.grid3,.downloads{grid-template-columns:1fr}
+      .menu{display:none}
+      .slide{padding-top:84px}
+      .flag .text{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="nav">
+      <a class="brand" href="#s1">BOSS TRL108 One Page Deck</a>
+      <nav class="menu">
+        <a href="#s1">封面</a>
+        <a href="#s2">白皮書</a>
+        <a href="#s3">投標規範</a>
+        <a href="#s4">降規策略</a>
+        <a href="#s5">SLA成果</a>
+        <a href="#s6">39dB提案</a>
+        <a href="#s7">檔案下載</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="slide" id="s1">
+      <div class="wrap hero">
+        <span class="kicker">Integrated Presentation</span>
+        <h1>BOSS TRL108 隔音系統<br>整合簡報一頁式網站</h1>
+        <p class="lead">本頁整合 `white.html`、`TRL108A.html`、`TRL108A-1.html`、`sla-strategy.html` 與技術檔案，讓業主、設計方與投標方在同一頁完成決策溝通。</p>
+        <div class="links">
+          <a href="index.html">回首頁</a>
+          <a href="white.html">原白皮書</a>
+          <a href="TRL108A.html">原投標規範</a>
+          <a href="TRL108A-1.html">原降規策略</a>
+          <a href="sla-strategy.html">原SLA頁</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="s2">
+      <div class="wrap">
+        <h2>聲學白皮書重點</h2>
+        <div class="grid3">
+          <article class="card">
+            <h3>責任邊界</h3>
+            <p>隔音不是美感問題，而是責任問題。報告是否可追溯、可互認，決定爭議發生時的證據力。</p>
+          </article>
+          <article class="card">
+            <h3>策略判斷</h3>
+            <p>隔音不是單一產品，而是門、牆、縫隙、空調、吸音條件的系統整合。</p>
+          </article>
+          <article class="card">
+            <h3>認證真偽</h3>
+            <p>先看標章再看數字。ILAC-MRA / TAF 的組合，決定跨國專案中的接受度。</p>
+          </article>
+        </div>
+        <p class="quote">核心主張：先看報告可信度，再談 STC/NIC 數字，才能把設計責任講清楚。</p>
+      </div>
+    </section>
+
+    <section class="slide" id="s3">
+      <div class="wrap">
+        <h2>TRL108A 投標規範重點</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>牆體升級條件</h3>
+            <p>單玻配置也要證明可無損升級雙玻，並要求雙層 STC 44dB+ 第三方報告。</p>
+            <span class="pill good">可升級，不重做</span>
+          </article>
+          <article class="card">
+            <h3>門組能力門檻</h3>
+            <p>即便現況木門，仍要檢附 STC 39dB 門組報告，確保日後可升級為專業隔音門。</p>
+            <span class="pill good">先規範，後驗收</span>
+          </article>
+        </div>
+        <p class="quote">規範目的不是做最貴，而是排除不可升級、不可驗收、不可追溯的低價方案。</p>
+      </div>
+    </section>
+
+    <section class="slide" id="s4">
+      <div class="wrap">
+        <h2>降規爭議策略（TRL108A-1）</h2>
+        <div class="dialogue">
+          <div class="bubble"><b>業主</b> 先便宜可不可以？現在不在乎隔音。</div>
+          <div class="bubble"><b>投標方</b> 這規格太高，符合者多是進口，價格會高。</div>
+          <div class="bubble"><b>設計方</b> 先守住可用底線與升級路徑，今天控預算，未來不用拆掉重做。</div>
+        </div>
+        <div class="grid3" style="margin-top:12px;">
+          <article class="card"><h3>重點 1</h3><p>降規可能短期省錢，長期多花更多重工成本。</p></article>
+          <article class="card"><h3>重點 2</h3><p>基礎隔音不一定更貴，關鍵是正確供應鏈與標單設定。</p></article>
+          <article class="card"><h3>重點 3</h3><p>設計方價值在於同時管理短期預算與長期風險。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="s5">
+      <div class="wrap">
+        <h2>SLA 策略合作成果（2014 起）</h2>
+        <div class="timeline">
+          <div class="time-item"><div class="year">2014 下半年</div><div>啟動 SLA 策略合作：32dB 進口門組價格下調至 60,000，與國產同規同價。</div></div>
+          <div class="time-item"><div class="year">1.5 年驗證</div><div>協助拿下安達人壽、LINE Pay、高德美、西門子（台北/新竹）、美光后里、應用材料新竹。</div></div>
+          <div class="time-item"><div class="year">策略結論</div><div>同規格 + 同價格 + 可升級結構 = 可複製的高勝率提案模型。</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="s6">
+      <div class="wrap">
+        <h2>下一階段提案（TRL 39dB）</h2>
+        <div class="grid2">
+          <article class="card">
+            <h3>營運調整</h3>
+            <p>工程案毛利長期 10% 無法永續，因此策略不是漲價，而是降成本結構。</p>
+            <p class="quote">方向：放掉 JEB 代理，改用同等隔音效果的 TRL 進口品牌。</p>
+          </article>
+          <article class="card">
+            <h3>市場提案</h3>
+            <p>維持市場價格帶的前提下，把雙層玻璃門 39dB 價格推進到更具競爭力。</p>
+            <span class="pill warn">不靠漲價，改靠成本優化</span>
+          </article>
+        </div>
+        <div class="flag" role="note" aria-label="策略標誌">
+          <div class="title">策略標誌</div>
+          <p class="text">在不提高售價的情況下，透過成本優化，把雙層玻璃門（39dB）價格壓到新台幣 39,000。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="s7">
+      <div class="wrap">
+        <h2>檔案與原始頁面</h2>
+        <div class="downloads">
+          <article class="dl">
+            <h4>TRL108 系統簡報</h4>
+            <p>PPTX｜整體策略簡報檔</p>
+            <a class="btn" href="assets/docs/boss-trl108-presentation.pptx" download>下載 PPTX</a>
+          </article>
+          <article class="dl">
+            <h4>TRL 招標規範文件</h4>
+            <p>DOCX｜隔音玻璃隔間與玻璃門規範</p>
+            <a class="btn" href="assets/docs/boss-trl-spec.docx" download>下載 DOCX</a>
+          </article>
+        </div>
+        <div class="links" style="margin-top:14px;">
+          <a href="white.html">white.html</a>
+          <a href="TRL108A.html">TRL108A.html</a>
+          <a href="TRL108A-1.html">TRL108A-1.html</a>
+          <a href="sla-strategy.html">sla-strategy.html</a>
+          <a href="index.html">回首頁</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
