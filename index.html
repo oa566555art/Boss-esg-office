@@ -154,6 +154,47 @@
     .btn.line:hover {
       background: linear-gradient(135deg, #00b549, #009f3f);
     }
+    .btn.deck {
+      border-color: #f59e0b;
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: #fff7ed;
+      box-shadow: 0 10px 24px rgba(245, 158, 11, 0.35);
+    }
+    .btn.deck:hover {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+    .btn.gallery {
+      border-color: #22d3ee;
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #ecfeff;
+      box-shadow: 0 10px 24px rgba(14, 165, 233, 0.34);
+    }
+    .btn.gallery:hover {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+    }
+
+    .menu a.deckLink {
+      border-color: rgba(245, 158, 11, 0.75);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.92), rgba(249, 115, 22, 0.92));
+      color: #fff7ed;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.35);
+    }
+    .menu a.deckLink:hover {
+      border-color: #fdba74;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.96), rgba(234, 88, 12, 0.96));
+    }
+    .menu a.galleryLink {
+      border-color: rgba(34, 211, 238, 0.72);
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.92), rgba(14, 165, 233, 0.92));
+      color: #ecfeff;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.28);
+    }
+    .menu a.galleryLink:hover {
+      border-color: #67e8f9;
+      background: linear-gradient(135deg, rgba(3, 105, 161, 0.96), rgba(2, 132, 199, 0.96));
+    }
 
     .menuBtn { display: none; }
 
@@ -193,6 +234,20 @@
       font-weight: 700;
     }
     .mList a.lineLink:hover { background: rgba(6, 199, 85, 0.34); }
+    .mList a.deckLink {
+      border-color: rgba(245, 158, 11, 0.72);
+      background: rgba(245, 158, 11, 0.22);
+      color: #fff7ed;
+      font-weight: 800;
+    }
+    .mList a.deckLink:hover { background: rgba(245, 158, 11, 0.34); }
+    .mList a.galleryLink {
+      border-color: rgba(34, 211, 238, 0.72);
+      background: rgba(14, 165, 233, 0.22);
+      color: #ecfeff;
+      font-weight: 800;
+    }
+    .mList a.galleryLink:hover { background: rgba(14, 165, 233, 0.34); }
 
     .hero {
       padding: 120px 0 52px;
@@ -300,6 +355,44 @@
       color: #cbdcf5;
       border-top: 1px solid rgba(147, 197, 253, 0.3);
       background: rgba(7, 16, 35, 0.7);
+    }
+
+    .sidePhoto {
+      margin-top: 14px;
+    }
+
+    .sidePhoto img {
+      width: 100%;
+      height: clamp(220px, 30vw, 360px);
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .photoStrip {
+      padding: 6px 0 10px;
+    }
+
+    .photoStripGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .photoStripItem {
+      margin: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(147, 197, 253, 0.32);
+      background: rgba(11, 24, 51, 0.72);
+      box-shadow: 0 12px 22px rgba(0, 0, 0, 0.24);
+    }
+
+    .photoStripItem img {
+      display: block;
+      width: 100%;
+      height: clamp(120px, 15vw, 210px);
+      object-fit: cover;
+      object-position: center;
     }
 
     .infoGrid {
@@ -531,6 +624,7 @@
       .miniFlow {
         grid-template-columns: 1fr;
       }
+      .photoStripGrid { grid-template-columns: repeat(2, 1fr); }
       .menu { display: none; }
       .menuBtn { display: inline-flex; }
       .hero { padding-top: 96px; min-height: auto; }
@@ -568,15 +662,12 @@
       </a>
 
       <nav class="menu" aria-label="主選單">
-        <a href="#pain">問題</a>
-        <a href="#solutions">系統</a>
-        <a href="#process">流程</a>
-        <a href="#projects">案例</a>
-        <a href="#resources">資源</a>
         <a href="white.html">白皮書</a>
         <a href="good.html">NIC/STC</a>
         <a href="JEBgraduateSchool.html">聲學研究</a>
         <a href="boss-trl-onepage.html">一頁簡報</a>
+        <a class="deckLink" href="present/presentation.html">新版策略簡報</a>
+        <a class="galleryLink" href="present/dsc-gallery.html">DSC 案例圖庫</a>
         <a href="#contact">聯絡</a>
         <a class="btn line" href="https://lin.ee/823ID2Y" target="_blank" rel="noopener noreferrer">LINE 官方帳號</a>
       </nav>
@@ -591,15 +682,12 @@
       <button class="btn" id="closeMenu" type="button">關閉</button>
     </div>
     <div class="mList">
-      <a href="#pain" data-close>問題</a>
-      <a href="#solutions" data-close>系統</a>
-      <a href="#process" data-close>流程</a>
-      <a href="#projects" data-close>案例</a>
-      <a href="#resources" data-close>資源</a>
       <a href="white.html">白皮書</a>
       <a href="good.html">NIC/STC</a>
       <a href="JEBgraduateSchool.html">聲學研究</a>
       <a href="boss-trl-onepage.html">一頁簡報</a>
+      <a class="deckLink" href="present/presentation.html">新版策略簡報</a>
+      <a class="galleryLink" href="present/dsc-gallery.html">DSC 案例圖庫</a>
       <a class="lineLink" href="https://lin.ee/823ID2Y" target="_blank" rel="noopener noreferrer">LINE 官方帳號</a>
       <a href="#contact" data-close>聯絡</a>
     </div>
@@ -622,6 +710,7 @@
         </p>
 
         <div class="ctaRow">
+          <a class="btn deck" href="present/presentation.html">查看新版策略簡報</a>
           <a class="btn" href="TRL108A.html">前往 TRL108A 規範頁</a>
           <a class="btn ghost" href="#solutions">先看系統分類</a>
           <a class="btn ghost" href="https://maarslivingwalls.com/" target="_blank" rel="noopener noreferrer">Maars 官網</a>
@@ -675,9 +764,32 @@
           <li>把門、牆、縫隙、界面一起考慮，避免最後卡在驗收。</li>
           <li>先做到位，再保留後續強化空間，降低重工風險。</li>
         </ul>
+
+        <figure class="heroPhoto sidePhoto" aria-label="右側案例照片">
+          <img src="https://bossoa.com.tw/img/61DAE784-03EC-4C4C-91FF-C6E596322DA7.PNG" alt="隔音玻璃門案例現場照片" loading="lazy" />
+        </figure>
       </aside>
     </div>
   </main>
+
+  <section class="photoStrip" aria-label="案例橫幅圖集">
+    <div class="wrap">
+      <div class="photoStripGrid">
+        <figure class="photoStripItem">
+          <img src="https://bossoa.com.tw/img/image_Original.jpg" alt="隔音玻璃隔間案例照片 1" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="photoStripItem">
+          <img src="https://bossoa.com.tw/img/DSC01247.jpg" alt="隔音玻璃隔間案例照片 2" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="photoStripItem">
+          <img src="https://bossoa.com.tw/img/DSC01248.jpg" alt="隔音玻璃隔間案例照片 3" loading="lazy" decoding="async" />
+        </figure>
+        <figure class="photoStripItem">
+          <img src="https://bossoa.com.tw/img/DSC01252.jpg" alt="隔音玻璃隔間案例照片 4" loading="lazy" decoding="async" />
+        </figure>
+      </div>
+    </div>
+  </section>
 
   <section id="pain" class="section">
     <div class="wrap">

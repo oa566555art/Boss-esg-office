@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TRL 現場案例圖庫</title>
+  <meta name="description" content="TRL 現場案例圖庫，收錄 DSC02364 至 DSC02515 系列照片。" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --line: #e2e8f0;
+      --line-strong: #cbd5e1;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --max: 1220px;
+      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.07);
+      --shadow-md: 0 14px 30px rgba(15, 23, 42, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Manrope", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    }
+
+    .topInner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .topInner strong {
+      color: var(--text);
+      letter-spacing: 0.2px;
+    }
+
+    .homeBtn {
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent);
+      background: #ffffff;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .homeBtn:hover {
+      transform: translateY(-1px);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .pageHead {
+      padding: 28px 0 18px;
+    }
+
+    .hero {
+      margin: 0;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      top: -90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 66%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: #334155;
+      font-size: 11px;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      font-weight: 800;
+      background: var(--surface-soft);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4.2vw, 54px);
+      line-height: 1.14;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      text-wrap: balance;
+      color: var(--text);
+    }
+
+    .hero p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: clamp(15px, 1.7vw, 19px);
+      max-width: 70ch;
+    }
+
+    .counter {
+      margin-top: 14px;
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 13px;
+      color: #334155;
+      background: var(--surface-soft);
+      font-weight: 700;
+    }
+
+    .galleryWrap {
+      padding: 6px 0 34px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .item {
+      margin: 0;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      transform: translateY(8px);
+      opacity: 0;
+      animation: riseIn 0.58s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+      animation-delay: calc(var(--i) * 50ms);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-3px);
+      border-color: #bfdbfe;
+      box-shadow: var(--shadow-md);
+    }
+
+    .item img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .cap {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #64748b;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+      letter-spacing: 0.2px;
+      font-family: "Manrope", "Noto Sans TC", sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .lightbox.show { display: flex; }
+
+    .lbFrame {
+      width: min(1240px, 96vw);
+      max-height: 94vh;
+      border-radius: 16px;
+      border: 1px solid var(--line-strong);
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 24px 48px rgba(15, 23, 42, 0.32);
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .lbImgWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      background: #f1f5f9;
+    }
+
+    .lbImgWrap img {
+      width: 100%;
+      height: min(80vh, 940px);
+      object-fit: contain;
+      background: #f8fafc;
+    }
+
+    .lbBar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .lbName {
+      font-size: 13px;
+      color: #0f172a;
+      font-weight: 700;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+      letter-spacing: 0.2px;
+    }
+
+    .lbBtns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .lbBtn {
+      border: 1px solid var(--line-strong);
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .lbBtn:hover {
+      transform: translateY(-1px);
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1080px) {
+      .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero { padding: 18px; }
+    }
+    @media (max-width: 520px) {
+      .gallery { grid-template-columns: 1fr; }
+      .lbBar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .lbBtns { justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topInner">
+      <strong>TRL 現場案例圖庫</strong>
+      <a class="homeBtn" href="../index.html">回首頁</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="pageHead">
+      <article class="hero">
+        <span class="badge">Visual Showcase</span>
+        <h1>現場細節一次看完</h1>
+        <p>本頁收錄你指定的 11 張 DSC 系列照片。點擊任何照片會直接開啟該照片網址頁面。</p>
+        <div class="counter" id="counter">照片總數：11 張</div>
+      </article>
+    </section>
+
+    <section class="galleryWrap">
+      <div class="gallery" id="gallery" aria-label="案例照片圖庫"></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lbFrame" role="dialog" aria-modal="true" aria-label="照片放大檢視器">
+      <div class="lbImgWrap">
+        <img id="lbImg" src="" alt="放大照片" />
+      </div>
+      <div class="lbBar">
+        <div class="lbName" id="lbName"></div>
+        <div class="lbBtns">
+          <button class="lbBtn" id="prevBtn" type="button">上一張</button>
+          <button class="lbBtn" id="nextBtn" type="button">下一張</button>
+          <button class="lbBtn" id="openBtn" type="button">開新分頁</button>
+          <button class="lbBtn" id="closeBtn" type="button">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const photos = [
+      "https://bossoa.com.tw/img/DSC02364.jpg",
+      "https://bossoa.com.tw/img/DSC02375.jpg",
+      "https://bossoa.com.tw/img/DSC02378.jpg",
+      "https://bossoa.com.tw/img/DSC02416.jpg",
+      "https://bossoa.com.tw/img/DSC02449.jpg",
+      "https://bossoa.com.tw/img/DSC02450.jpg",
+      "https://bossoa.com.tw/img/DSC02495.jpg",
+      "https://bossoa.com.tw/img/DSC02501.jpg",
+      "https://bossoa.com.tw/img/DSC02504.jpg",
+      "https://bossoa.com.tw/img/DSC02511.jpg",
+      "https://bossoa.com.tw/img/DSC02515.jpg"
+    ];
+
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbName = document.getElementById("lbName");
+    let currentIndex = 0;
+
+    function getName(url) {
+      const match = url.match(/[^/]+$/);
+      return match ? match[0] : url;
+    }
+
+    function renderGallery() {
+      gallery.innerHTML = "";
+      photos.forEach((url, index) => {
+        const item = document.createElement("figure");
+        item.className = "item";
+        item.style.setProperty("--i", index);
+        item.innerHTML = `
+          <img src="${url}" alt="${getName(url)}" loading="lazy" decoding="async">
+          <figcaption class="cap">${getName(url)}</figcaption>
+        `;
+        item.addEventListener("click", () => openLightbox(index));
+        gallery.appendChild(item);
+      });
+    }
+
+    function openLightbox(index) {
+      currentIndex = index;
+      window.open(photos[currentIndex], "_blank", "noopener,noreferrer");
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("show");
+      lightbox.setAttribute("aria-hidden", "true");
+      lbImg.src = "";
+    }
+
+    function updateLightbox() {
+      const src = photos[currentIndex];
+      lbImg.src = src;
+      lbName.textContent = `${currentIndex + 1} / ${photos.length} ・ ${getName(src)}`;
+    }
+
+    function prevPhoto() {
+      currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+      updateLightbox();
+    }
+
+    function nextPhoto() {
+      currentIndex = (currentIndex + 1) % photos.length;
+      updateLightbox();
+    }
+
+    document.getElementById("closeBtn").addEventListener("click", closeLightbox);
+    document.getElementById("prevBtn").addEventListener("click", prevPhoto);
+    document.getElementById("nextBtn").addEventListener("click", nextPhoto);
+    document.getElementById("openBtn").addEventListener("click", () => {
+      window.open(photos[currentIndex], "_blank", "noopener,noreferrer");
+    });
+
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!lightbox.classList.contains("show")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevPhoto();
+      if (e.key === "ArrowRight") nextPhoto();
+    });
+
+    renderGallery();
+  </script>
+</body>
+</html>

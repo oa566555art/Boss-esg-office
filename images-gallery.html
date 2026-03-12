@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TRL 76 張照片圖庫</title>
+  <meta name="description" content="TRL 76 張照片圖庫，支援放大檢視與切換瀏覽。" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --line: #e2e8f0;
+      --line-strong: #cbd5e1;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --max: 1320px;
+      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 14px 30px rgba(15, 23, 42, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Manrope", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+
+    .topInner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.15;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      color: var(--text);
+    }
+
+    .sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+
+    .btn {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 8px 15px;
+      font-weight: 800;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.2px;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    main.wrap {
+      padding-top: 24px;
+      padding-bottom: 36px;
+    }
+
+    .heroPanel {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 22px;
+      margin: 0 0 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heroPanel::before {
+      content: "";
+      position: absolute;
+      inset: -120px -120px auto auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 65%);
+      pointer-events: none;
+    }
+
+    .heroBadge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #334155;
+      background: var(--surface-soft);
+      margin-bottom: 8px;
+    }
+
+    .heroPanel h2 {
+      margin: 0 0 6px;
+      font-size: clamp(20px, 2.3vw, 30px);
+      line-height: 1.25;
+      font-weight: 900;
+      color: var(--text);
+      text-wrap: balance;
+    }
+
+    .heroPanel p {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+      max-width: 70ch;
+    }
+
+    .toolbar {
+      margin: 16px 0 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .chips {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      border: 1px solid var(--line-strong);
+      color: #334155;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      border-color: #93c5fd;
+      background: #f8fbff;
+      color: var(--accent);
+    }
+
+    .chip.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+    }
+
+    .count {
+      color: #334155;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 12px;
+      background: var(--surface-soft);
+    }
+
+    .gallery {
+      column-count: 4;
+      column-gap: 16px;
+      margin: 14px 0 30px;
+    }
+
+    .item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-soft);
+      cursor: zoom-in;
+      transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+      position: relative;
+    }
+
+    .item:hover {
+      transform: translateY(-3px);
+      border-color: #bfdbfe;
+      box-shadow: var(--shadow-md);
+    }
+
+    .item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: saturate(1.02) contrast(1.01);
+    }
+
+    .zoomTag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 3;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+      color: #334155;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .cap {
+      padding: 9px 11px;
+      color: #64748b;
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: "Manrope", "Noto Sans TC", sans-serif;
+      letter-spacing: 0.2px;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.62);
+      backdrop-filter: blur(6px);
+      padding: 20px;
+    }
+
+    .lightbox.show { display: flex; }
+
+    .lbFrame {
+      width: min(1240px, 95vw);
+      max-height: 92vh;
+      border: 1px solid var(--line-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 28px 50px rgba(15, 23, 42, 0.3);
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .lbImgWrap {
+      background: #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .lbImgWrap img {
+      width: 100%;
+      height: min(78vh, 900px);
+      object-fit: contain;
+      background: #f8fafc;
+    }
+
+    .lbBar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 12px;
+      border-top: 1px solid var(--line);
+      background: #ffffff;
+    }
+
+    .lbName {
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      letter-spacing: 0.2px;
+      font-family: "Manrope", "Noto Sans TC", sans-serif;
+    }
+
+    .lbBtns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .lbBtn {
+      border: 1px solid var(--line-strong);
+      background: #ffffff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .lbBtn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 1200px) { .gallery { column-count: 3; } }
+    @media (max-width: 900px) {
+      .gallery { column-count: 2; }
+      .lbFrame { width: 96vw; }
+    }
+    @media (max-width: 560px) {
+      .gallery { column-count: 1; }
+      .title { font-size: 24px; }
+      .sub { font-size: 12px; }
+      .heroPanel { padding: 14px; border-radius: 16px; }
+      .heroPanel h2 { font-size: 21px; }
+      .toolbar { padding: 10px; border-radius: 12px; }
+      .count { font-size: 12px; }
+      .lbBar { flex-direction: column; align-items: stretch; }
+      .lbBtns { justify-content: space-between; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap topInner">
+      <div>
+        <h1 class="title">TRL 76 張照片圖庫</h1>
+        <p class="sub">支援點擊放大、上一張/下一張、鍵盤左右切換</p>
+      </div>
+      <a class="btn" href="index.html">回首頁</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="heroPanel">
+      <span class="heroBadge">TRL Visual Archive</span>
+      <h2>從細節看見系統質感</h2>
+      <p>收錄本次 76 張現場照片。點擊任一照片即可放大檢視，支援鍵盤左右鍵快速切換，比較施工細節與空間氛圍更直覺。</p>
+    </section>
+
+    <div class="toolbar">
+      <div class="chips" id="chips">
+        <button class="chip active" data-filter="all" type="button">全部</button>
+        <button class="chip" data-filter="DSC" type="button">DSC</button>
+        <button class="chip" data-filter="IMG" type="button">IMG</button>
+        <button class="chip" data-filter="other" type="button">其他</button>
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+
+    <section class="gallery" id="gallery" aria-label="照片圖庫"></section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lbFrame" role="dialog" aria-modal="true" aria-label="照片檢視器">
+      <div class="lbImgWrap">
+        <img id="lbImg" src="" alt="放大照片" />
+      </div>
+      <div class="lbBar">
+        <div class="lbName" id="lbName"></div>
+        <div class="lbBtns">
+          <button class="lbBtn" id="prevBtn" type="button">上一張</button>
+          <button class="lbBtn" id="nextBtn" type="button">下一張</button>
+          <button class="lbBtn" id="closeBtn" type="button">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const imageFiles = [
+      "DSC01179.jpg",
+      "DSC01183.jpg",
+      "DSC01204.jpg",
+      "DSC01205.jpg",
+      "DSC01247.jpg",
+      "DSC01248.jpg",
+      "DSC01252.jpg",
+      "DSC01254.jpg",
+      "DSC01260.jpg",
+      "DSC01261.jpg",
+      "DSC01265.jpg",
+      "DSC01266.jpg",
+      "DSC01270.jpg",
+      "DSC01275.jpg",
+      "DSC01276.jpg",
+      "DSC02364.jpg",
+      "DSC02375.jpg",
+      "DSC02378.jpg",
+      "DSC02416.jpg",
+      "DSC02449.jpg",
+      "DSC02450.jpg",
+      "DSC02495.jpg",
+      "DSC02501.jpg",
+      "DSC02504.jpg",
+      "DSC02511.jpg",
+      "DSC02515.jpg",
+      "DSC06222.jpg",
+      "DSC06226.jpg",
+      "DSC06227.jpg",
+      "DSC06228.jpg",
+      "DSC06229.jpg",
+      "DSC06234.jpg",
+      "DSC06235.jpg",
+      "DSC06236.jpg",
+      "DSC06238.jpg",
+      "DSC06240.jpg",
+      "DSC06262.jpg",
+      "DSC06270.jpg",
+      "DSC06271.jpg",
+      "DSC06275.jpg",
+      "DSC06322.jpg",
+      "DSC06325.jpg",
+      "DSC06352.jpg",
+      "DSC07077.jpg",
+      "DSC07082.jpg",
+      "DSC07084.jpg",
+      "DSC07085.jpg",
+      "DSC07089.jpg",
+      "DSC07093.jpg",
+      "DSC07096.jpg",
+      "DSC07106.jpg",
+      "DSC07121.jpg",
+      "IMG_6021.JPG",
+      "IMG_6023.JPG",
+      "IMG_6036.JPG",
+      "IMG_6037.JPG",
+      "IMG_6038.JPG",
+      "IMG_6048.JPG",
+      "IMG_6049.JPG",
+      "IMG_6153.JPG",
+      "IMG_6166.JPG",
+      "IMG_6167.JPG",
+      "IMG_6206.JPG",
+      "IMG_6208.JPG",
+      "IMG_6209.JPG",
+      "IMG_6216.JPG",
+      "IMG_6218.JPG",
+      "IMG_6219.JPG",
+      "IMG_6234.JPG",
+      "IMG_6301.JPG",
+      "IMG_6333.JPG",
+      "IMG_6334.JPG",
+      "IMG_6335.JPG",
+      "IMG_7393.JPG",
+      "IMG_7476.JPG",
+      "index-hero-premium.jpg",
+    ];
+
+    let currentFilter = 'all';
+    let filtered = [...imageFiles];
+    let currentIndex = 0;
+
+    const gallery = document.getElementById('gallery');
+    const count = document.getElementById('count');
+    const chips = document.getElementById('chips');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbName = document.getElementById('lbName');
+
+    function getFilteredList() {
+      if (currentFilter === 'all') return [...imageFiles];
+      if (currentFilter === 'other') {
+        return imageFiles.filter(name => !name.startsWith('DSC') && !name.startsWith('IMG'));
+      }
+      return imageFiles.filter(name => name.startsWith(currentFilter));
+    }
+
+    function render() {
+      filtered = getFilteredList();
+      count.textContent = `目前顯示 ${filtered.length} / ${imageFiles.length} 張`;
+      gallery.innerHTML = '';
+
+      filtered.forEach((name, idx) => {
+        const card = document.createElement('article');
+        card.className = 'item';
+        card.innerHTML = `
+          <span class="zoomTag">放大查看</span>
+          <img src="images/${name}" alt="${name}" loading="lazy" decoding="async">
+          <div class="cap">${name}</div>
+        `;
+        card.addEventListener('click', () => openLightbox(idx));
+        gallery.appendChild(card);
+      });
+    }
+
+    function openLightbox(index) {
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('show');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('show');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lbImg.src = '';
+    }
+
+    function updateLightbox() {
+      const name = filtered[currentIndex];
+      lbImg.src = `images/${name}`;
+      lbName.textContent = `${currentIndex + 1} / ${filtered.length} ・ ${name}`;
+    }
+
+    function prev() {
+      if (!filtered.length) return;
+      currentIndex = (currentIndex - 1 + filtered.length) % filtered.length;
+      updateLightbox();
+    }
+
+    function next() {
+      if (!filtered.length) return;
+      currentIndex = (currentIndex + 1) % filtered.length;
+      updateLightbox();
+    }
+
+    chips.addEventListener('click', (e) => {
+      const target = e.target.closest('.chip');
+      if (!target) return;
+
+      currentFilter = target.dataset.filter;
+      chips.querySelectorAll('.chip').forEach(chip => chip.classList.remove('active'));
+      target.classList.add('active');
+      render();
+    });
+
+    document.getElementById('closeBtn').addEventListener('click', closeLightbox);
+    document.getElementById('prevBtn').addEventListener('click', prev);
+    document.getElementById('nextBtn').addEventListener('click', next);
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('show')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    });
+
+    render();
+  </script>
+</body>
+</html>

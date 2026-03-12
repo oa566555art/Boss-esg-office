@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聲學標準與國際認證深度解析 | Acoustic Standards</title>
+    <!-- 載入 Tailwind CSS 框架 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 FontAwesome 圖示庫 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 設定字體 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', '"Microsoft JhengHei"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 聲波阻斷示意圖的自訂動畫延遲 */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased selection:bg-indigo-200 selection:text-indigo-900">
+
+    <!-- Hero Section (主視覺區) -->
+    <header class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white py-20 px-6 lg:px-12 relative overflow-hidden">
+        <!-- 抽象聲波背景點綴 -->
+        <div class="absolute top-1/2 left-0 w-full h-64 -translate-y-1/2 opacity-10 flex items-center justify-around pointer-events-none">
+            <div class="w-4 bg-white rounded-full animate-pulse h-[40%]" style="animation-delay: 0.1s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[80%]" style="animation-delay: 0.3s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[60%]" style="animation-delay: 0.2s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[90%]" style="animation-delay: 0.5s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[30%]" style="animation-delay: 0.4s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[70%]" style="animation-delay: 0.1s"></div>
+            <div class="w-4 bg-white rounded-full animate-pulse h-[50%]" style="animation-delay: 0.6s"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-indigo-500/30 text-indigo-200 text-sm font-semibold mb-6 border border-indigo-400/30 backdrop-blur-sm">
+                <i class="fa-solid fa-volume-high mr-2"></i>ACOUSTICS & PRIVACY STANDARDS
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                聲音的物理學沒有品牌之分，<br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">
+                    只有「數據」才是真理。
+                </span>
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mb-10 leading-relaxed">
+                突破國際名牌的光環<span class="inline-block font-black text-2xl md:text-3xl text-cyan-300 tracking-wider align-middle">溢價</span>迷思。<br>
+                我們以 ILAC-MRA 國際認證 為全球共通的品質語言，<br>
+                與<span class="inline-block font-black text-cyan-200 bg-indigo-700/50 px-2 rounded-md tracking-wide">世界頂級品牌站在同一標準之上</span>，<br>
+                為企業打造 真正可信賴的語音隱私與聲學防護能力。
+            </p>
+        </div>
+    </header>
+
+    <!-- The "Currency" Section (國際認證區) -->
+    <section class="py-20 px-6 lg:px-12 max-w-6xl mx-auto -mt-10 relative z-20">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row border border-slate-100">
+            <div class="md:w-5/12 bg-indigo-50 p-10 flex flex-col justify-center items-center text-center border-r border-slate-100">
+                <i class="fa-solid fa-award text-7xl text-indigo-600 mb-6"></i>
+                <h2 class="text-3xl font-bold text-indigo-950 mb-4">ilac-MRA 國際認證</h2>
+                <p class="text-indigo-800/80 font-bold tracking-wider">國際實驗室認證聯盟<br>相互承認協議</p>
+            </div>
+            <div class="md:w-7/12 p-10 lg:p-14 flex flex-col justify-center">
+                <h3 class="text-2xl font-bold mb-4 text-slate-800">我們要求的投標門檻，是全球標準</h3>
+                <p class="text-slate-600 leading-relaxed mb-8 text-lg">
+                    外商極度看重國際認證。我們深知這一點，因此我們要求所有投標系統必須附上 <strong>ilac-MRA 國際認證的第三方聲學實驗室報告</strong>。
+                    這意味著，您不需為了追求頂級隔音而支付高昂的品牌<span class="inline-block font-black text-2xl md:text-3xl text-indigo-700 tracking-wider align-middle">溢價</span>；您採購的每一套系統，其底層架構都已經過國際標準驗證。
+                </p>
+                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 mb-8">
+                    <p class="text-slate-700 leading-relaxed text-lg">
+                        聲音的物理學沒有品牌之分，只有數據之分。我們要求投標必須附上 ilac-MRA 國際認證的第三方聲學實驗室報告（STC40dB 或 RW40dB）。這意味著您現在雖然只採購單層，但您獲得的底層架構，是經過國際標準驗證、與全球頂級品牌同級的聲學防護力。
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-lg text-slate-700 font-bold">
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>
+                        <span>客觀公正</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-lg text-slate-700 font-bold">
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>
+                        <span>全球承認</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-lg text-slate-700 font-bold">
+                        <i class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>
+                        <span>數據透明</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STC Translation Section (解密 STC 指標) -->
+    <section class="py-16 px-6 lg:px-12 bg-slate-100">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">解密 STC 40dB：辦公室裡的「語音隱私」</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">對 HR 與高階主管而言，隔音不只是物理數字，而是企業機密與員工專注力的保障。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- STC 30 (Traditional) -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-3xl font-black text-slate-400">STC 30-35</span>
+                        <i class="fa-solid fa-volume-low text-3xl text-slate-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-700">一般傳統單層隔間</h3>
+                    <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                        正常音量的對話能被隔壁清楚聽見。無法提供機密會議所需的隱私保護。
+                    </p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-slate-400 h-full" style="width: 33%"></div>
+                    </div>
+                </div>
+
+                <!-- STC 40 (Our Standard) -->
+                <div class="bg-indigo-600 p-8 rounded-2xl shadow-xl border border-indigo-500 transform md:scale-105 relative z-10 text-white">
+                    <div class="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl">
+                        我們首日交付底層防護
+                    </div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-4xl font-black text-white">STC 40+</span>
+                        <i class="fa-solid fa-ear-listen text-3xl text-indigo-200 line-through"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-indigo-50">頂級隱私標準 (RW40dB)</h3>
+                    <p class="text-indigo-200 text-sm mb-6 leading-relaxed">
+                        大聲說話僅能聽到模糊的聲音，無法辨識對話內容。完美符合機密會議室與高階主管辦公室的隱私需求。
+                    </p>
+                    <div class="w-full bg-indigo-900 h-2 rounded-full overflow-hidden">
+                        <div class="bg-cyan-400 h-full" style="width: 66%"></div>
+                    </div>
+                </div>
+
+                <!-- STC 45+ (Future Upgrade) -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-3xl font-black text-indigo-600">STC 45-50</span>
+                        <i class="fa-solid fa-volume-xmark text-3xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2 text-slate-800">未來的雙層無損升級</h3>
+                    <p class="text-slate-600 text-sm mb-6 leading-relaxed">
+                        大喊大叫也幾乎聽不見。透過我們預留的雙層 DNA，未來只需扣上第二層玻璃，即可達到錄音室等級的絕對靜音。
+                    </p>
+                    <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                        <div class="bg-indigo-600 h-full" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The "Acoustic DNA" Section (隔音 DNA 原理) -->
+    <section class="py-20 px-6 lg:px-12 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <h2 class="text-3xl font-bold mb-6">為什麼單層的預算，能享有頂級聲學基礎？</h2>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                    我們的產品即使以單層玻璃隔間牆交付，後續也只需更換少量零件，即可快速升級為雙層玻璃隔間牆。TRL 門框止口有別於其他品牌，位置設計在門框最外側而非中間，可對應不同厚度門扇，並搭配上下軸心鉸鏈。這套可升級架構可在不破壞主體的前提下完成優化，兼顧隔音效能與未來彈性。
+                </p>
+                
+                <ul class="space-y-8">
+                    <li class="flex items-start">
+                        <div class="bg-indigo-100 p-3 rounded-xl text-indigo-600 mr-5 shrink-0 mt-1">
+                            <i class="fa-solid fa-shield text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-xl mb-2">Feather Seal 雙層氣密膠條</h4>
+                            <p class="text-slate-600 leading-relaxed">徹底封死聲波外洩的縫隙。即使目前只裝單層面板，這套高階氣密系統已在為您阻絕環境雜音，杜絕漏音死角。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-indigo-100 p-3 rounded-xl text-indigo-600 mr-5 shrink-0 mt-1">
+                            <i class="fa-solid fa-wave-square text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-xl mb-2">108mm 深型主框腔體</h4>
+                            <p class="text-slate-600 leading-relaxed">傳統單層框淺薄，無法斷音。我們的深框設計在單層狀態下，為聲波提供了更好的緩衝空間；未來升級雙層時，更無需重新施工即可置入隔音棉與第二層面板。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="md:w-1/2">
+                <figure class="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+                    <img
+                        src="https://bossoa.com.tw/img/DSC01252.jpg"
+                    
+                        class="w-full h-[400px] object-cover"
+                        loading="lazy"
+                    >
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section (行動呼籲) -->
+    <footer class="bg-indigo-600 text-white py-16 text-center px-6">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6">用數據驗證您的投資</h2>
+            <p class="text-indigo-100 mb-10 text-lg">
+                我們拒絕空口無憑。選擇我們，您將獲得具備 ilac-MRA 國際認證的頂級聲學防護，讓您的辦公空間兼具隱私與未來彈性。
+            </p>
+            <a href="https://lin.ee/Q6j3eWl" target="_blank" rel="noopener noreferrer" class="bg-white text-indigo-700 hover:bg-slate-50 font-bold py-4 px-10 rounded-full shadow-xl transition-all inline-flex items-center justify-center mx-auto space-x-3 hover:-translate-y-1 text-lg">
+                <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
+                <span>檢視 ilac-MRA 第三方聲學實測報告</span>
+            </a>
+            <div class="mt-8 pt-6 border-t border-indigo-400/40">
+                <p class="text-sm text-indigo-100/80 mb-3">章節導覽</p>
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <a href="./presentation.html" class="px-4 py-2 rounded-full border border-indigo-200 text-indigo-100 hover:border-white hover:text-white text-sm transition-all">總覽</a>
+                    <a href="./presentation1.html" class="px-4 py-2 rounded-full border border-indigo-200 text-indigo-100 hover:border-white hover:text-white text-sm transition-all">ROI</a>
+                    <a href="./presentation2.html" class="px-4 py-2 rounded-full border border-white text-white font-bold text-sm">聲學</a>
+                    <a href="./presentation3.html" class="px-4 py-2 rounded-full border border-indigo-200 text-indigo-100 hover:border-white hover:text-white text-sm transition-all">維護</a>
+                    <a href="./presentation4.html" class="px-4 py-2 rounded-full border border-indigo-200 text-indigo-100 hover:border-white hover:text-white text-sm transition-all">ESG</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
